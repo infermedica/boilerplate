@@ -90,29 +90,21 @@ import {
   UiInput,
   UiLoader,
 } from '@infermedica/component-library';
-import { results } from './results.ts';
-import type { DropdownHandlersOptions, DropdownModelValue } from '@infermedica/component-library';
 import UiDropdownItem from '@infermedica/component-library/src/components/molecules/UiDropdown/_internal/UiDropdownItem.vue';
-
-type Result = {
-  id: string, 
-  label: string
-}
-
+import { useSearchSymptoms } from '@/composables/useSearchSymptoms';
+import type { DropdownModelValue } from '@infermedica/component-library';
+import type { SearchResult } from '@/composables/types/index';
 type EvidenceSearchProps = {
   modelValue: DropdownModelValue[] | [],
   evidenceIds?: string[],
-  resultsMax?: number,
+  maxResults?: number,
 }
-
 const props = withDefaults(defineProps<EvidenceSearchProps>(), {
   modelValue: () => ([]),
   evidenceIds: () => ([]),
-  resultsMax: 7
+  maxResults: 100,
 })
-
 const emit = defineEmits(['update:modelValue']);
-
 const searchQuery = ref('');
 const dropdowntoggle = ref<ComponentPublicInstance<HTMLInputElement>>();
 const isDropdownOpened = ref(false);
@@ -128,93 +120,76 @@ const inputAttrs = computed(() => ({
 }));
 const inputElement = computed(() => dropdowntoggle.value?.$el.querySelector('input'));
 const isLoading = ref(false);
-const searchResults = ref<Result[] | []>([]);
-const filteredResults: ComputedRef<Result[]> = computed(() => (
+const searchResults = ref<SearchResult[] | []>([]);
+const filteredResults: ComputedRef<SearchResult[]> = computed(() => (
   searchResults.value
-    .filter((result: Result) => (!props.evidenceIds.includes(result.id)))
-    .slice(0, props.resultsMax)
+    .filter((result: SearchResult) => (!props.evidenceIds.includes(result.id)))
 ));
 const hasResults = computed(() => (filteredResults.value.length > 0));
-
-const fetchHandler = (_value: string) => {
-  searchResults.value = results;
-  isLoading.value = false;
-}
-
 function updateHandler(value: DropdownModelValue) {
   emit('update:modelValue', [...props.modelValue, value]);
-
   searchQuery.value = '';
 }
-
-function inputHandler(
+async function inputHandler(
   value: string, 
-  open: ({ focus }?: DropdownHandlersOptions) => Promise<void>, 
-  close: ({ focusToggle }?: DropdownHandlersOptions) => void
+  open: () => void, 
+  close: () => void
   ) {
-  if (value.length > 0) {
+  const inputValueTrimmed = value.trim();
+  
+  if (searchQuery.value === inputValueTrimmed) return;
+  
+  if (inputValueTrimmed.length > 0) {
     open();
-  } else if (value.length < 1) {
+    searchQuery.value = inputValueTrimmed;
+    const { data } = await useSearchSymptoms({
+      phrase: value, 
+      age: 32, 
+      maxResults: props.maxResults,
+    })
+    searchResults.value = data.value;
+    
+  } else if (inputValueTrimmed.length < 1) {
     close();
+    searchQuery.value = '';
+    searchResults.value = [];
   }
-  searchQuery.value = value;
-  isLoading.value = true;
-  fetchHandler(value);
 }
-
-// async function inputHandler(value, open, close) {
-//   if (value.length > 0) {
-//     open();
-//   } else if (value.length < 1) {
-//     close();
-//   }
-//   searchQuery.value = value;
-//   isLoading.value = true;
-//   fetchHandler(value);
-// }
 </script>
 
 <style lang="scss">
 .evidence-search {
   --evidence-search-width: 28.75rem;
+  
   width: var(--evidence-search-width);
   margin-top: var(--space-16);
-
   &__dropdown {
     --dropdown-popover-max-width: var(--evidence-search-width);
     --popover-content-padding: var(--evidence-search-popover-content-padding, 0);
     --dropdown-popover-min-height: var(--evidence-search-dropdown-popover-min-height, 8rem);
-
     position: var(--evidence-search-position, relative);
     width: 100%;
   }
-
   &__input {
     width: var(--evidence-search-input-width, 100%);
   }
-
   &__search-icon {
     --icon-color: var(--evidence-search-icon-color, var(--color-icon-primary));
   }
-
   &__highlighted {
     font: var(--evidence-search-highlighted-font, var(--font-body-1));
-
     &::first-letter {
       text-transform: uppercase;
     }
-
     mark {
       font: var(--evidence-search-highlighted-mark-font, var(--font-body-1-thick));
       color: var(--evidence-search-highlighted-mark-color, inherit);
       background: var(--evidence-search-highlighted-mark-background, transparent);
     }
   }
-
   &__results {
     padding: var(--evidence-search-results-padding, var(--space-8));
   }
-
   .ui-dropdown-item {
     width: 100%;
   }

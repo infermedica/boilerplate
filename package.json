@@ -3,6 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=16.13.2",
+    "pnpm": ">=6.32"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
@@ -10,10 +14,12 @@
   },
   "dependencies": {
     "@infermedica/component-library": "^0.6.9",
+    "axios": "^1.4.0",
     "vite-svg-loader": "^4.0.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {
+    "@types/node": "^20.4.7",
     "@vitejs/plugin-vue": "^4.2.3",
     "sass": "^1.64.1",
     "typescript": "^5.0.2",
