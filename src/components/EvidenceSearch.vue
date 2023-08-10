@@ -91,7 +91,7 @@ import {
   UiLoader,
 } from '@infermedica/component-library';
 import UiDropdownItem from '@infermedica/component-library/src/components/molecules/UiDropdown/_internal/UiDropdownItem.vue';
-import { useSearchSymptoms } from '@/composables/useSearchSymptoms';
+import { useSearch } from '@/composables/useSearch';
 import type { DropdownModelValue } from '@infermedica/component-library';
 import type { SearchResult } from '@/composables/types/index';
 type EvidenceSearchProps = {
@@ -142,12 +142,12 @@ async function inputHandler(
   if (inputValueTrimmed.length > 0) {
     open();
     searchQuery.value = inputValueTrimmed;
-    const { data } = await useSearchSymptoms({
+    const { data } = await useSearch({
       phrase: value, 
       age: 32, 
       maxResults: props.maxResults,
     })
-    searchResults.value = data.value;
+    searchResults.value = data;
     
   } else if (inputValueTrimmed.length < 1) {
     close();

@@ -1,35 +1,29 @@
 import { ref } from 'vue';
 import type { AxiosError } from 'axios';
-import { useSetClientHeaders } from './useSetClientHeaders';
+import { useSetAuthHeaders } from '@/composables/useSetAuthHeaders';
+import { engineApiConfig } from '@/composables/engineApiConfig';
 import type { 
   SearchParamsType, 
   SearchResult,
  } from '@/composables/types';
 
-export async function useSearchSymptoms (
+export async function useSearch (
   params: SearchParamsType
 ) {
 
-  const engineApiConfig = {
-    baseURL: import.meta.env.VITE_API,
-    appId: import.meta.env.VITE_APP_ID, 
-    appKey: import.meta.env.VITE_APP_KEY,
-  }
+  const {
+    phrase,
+    age,
+    ageUnit,
+    maxResults,
+    types,
+  } = params;
 
-  const { engineApi } = useSetClientHeaders(engineApiConfig)
+  const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
   const URI = new URL(`${import.meta.env.VITE_API}/search`);
-    const {
-      phrase,
-      age,
-      ageUnit,
-      maxResults,
-      types,
-    } = params;
-
   const data = ref<SearchResult[] | []>([]);
-
-  let error = ref<Error | AxiosError | null>(null);
+  const error = ref<Error | AxiosError | null>(null);
 
   URI.searchParams.append('phrase', phrase);
   URI.searchParams.append('age.value', age.toString());
@@ -41,10 +35,10 @@ export async function useSearchSymptoms (
     .then((response) => {
       data.value = response.data;
     })
-    .catch((error: Error | AxiosError) => error = error)
+    .catch((error: Error | AxiosError) => error = error);
 
   return {
-    data, 
-    error,
+    data: data.value, 
+    error: error.value,
   }
 }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export function useSetClientHeaders( engineApiConfig: {
+export function useSetAuthHeaders( engineApiConfig: {
   baseURL: string,
   appId: string, 
   appKey: string,
