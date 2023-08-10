@@ -2,7 +2,10 @@ import { ref } from 'vue';
 import type { AxiosError } from 'axios';
 import { useSetAuthHeaders } from '@/composables/useSetAuthHeaders';
 import { engineApiConfig } from '@/composables/engineApiConfig';
-import type { ConceptItemModel, ConceptsParamType } from '@/composables/types/index';
+import type { 
+  ConceptItemModel, 
+  ConceptsParamType,
+} from '@/composables/types/index';
 
 export async function useConcepts ( params: ConceptsParamType) {
   const { 
