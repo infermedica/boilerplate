@@ -1,25 +1,33 @@
 import { ref } from 'vue';
-import type { AxiosError } from 'axios';
-import { useSetAuthHeaders } from '@/composables/useSetAuthHeaders';
-import { engineApiConfig } from '@/composables/engineApiConfig';
-import type { ConceptItemModel } from '@/composables/types/index';
+import type { 
+  AxiosResponse,
+  AxiosError,
+} from 'axios';
+import { 
+  engineApiConfig,
+  useSetAuthHeaders,
+} from '@/composables';
+import type { ConceptItemModel } from '@/composables/types';
 
 export async function useConceptsById ( id: string ) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
   const URI = new URL(`${import.meta.env.VITE_API}/concepts/${id}`);
-  const data = ref<ConceptItemModel | null>(null);
-  const error = ref<Error | AxiosError | null>(null);
+  const response = ref<AxiosResponse | null>(null);
+  const conceptsItem = ref<ConceptItemModel | null>(null);
+  const error = ref<AxiosError | null>(null);
 
   await engineApi.get(URI.toString())
-    .then((response) => {
-      data.value = response.data;
+    .then((res: AxiosResponse) => {
+      response.value = res;
+      conceptsItem.value = res.data;
     })
-    .catch((error: Error | AxiosError) => error = error);
+    .catch((err: AxiosError) => error.value = err);
   
   return {
-    data: data.value, 
+    response: response.value,
+    conceptsItem: conceptsItem.value, 
     error: error.value,
   }
 }

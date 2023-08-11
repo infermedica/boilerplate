@@ -1,11 +1,16 @@
 import { ref } from 'vue';
-import type { AxiosError } from 'axios';
-import { useSetAuthHeaders } from '@/composables/useSetAuthHeaders';
-import { engineApiConfig } from '@/composables/engineApiConfig';
+import type { 
+  AxiosResponse,
+  AxiosError,
+} from 'axios';
+import { 
+  engineApiConfig,
+  useSetAuthHeaders,
+} from '@/composables';
 import type { 
   ConditionsParamsType, 
   ConditionType,
- } from '@/composables/types';
+} from '@/composables/types';
 
 export async function useConditions(params: ConditionsParamsType) {
   const {
@@ -18,8 +23,9 @@ export async function useConditions(params: ConditionsParamsType) {
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
   const URI = new URL(`${import.meta.env.VITE_API}/conditions`);
-  const data = ref<ConditionType[] | []>([]);
-  const error = ref<Error | AxiosError | null>(null);
+  const response = ref<AxiosResponse | null>(null);
+  const conditionsList = ref<ConditionType[] | [] | null>(null);
+  const error = ref<AxiosError | null>(null);
 
   URI.searchParams.append('age.value', age.toString());
   ageUnit && URI.searchParams.append('age.unit', ageUnit);
@@ -27,13 +33,15 @@ export async function useConditions(params: ConditionsParamsType) {
   includeInternal !== undefined && URI.searchParams.append('include_internal', `${includeInternal}`);
 
   await engineApi.get(URI.toString())
-    .then((response) => {
-      data.value = response.data;
+    .then((res: AxiosResponse) => {
+      response.value = res;
+      conditionsList.value = res.data;
     })
-    .catch((error: Error | AxiosError) => error = error);
+    .catch((err: AxiosError) => error.value = err);
 
   return {
-    data: data.value, 
+    response: response.value,
+    conditionsList: conditionsList.value, 
     error: error.value,
   }
 }

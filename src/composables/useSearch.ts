@@ -1,20 +1,23 @@
 import { ref } from 'vue';
-import type { AxiosError } from 'axios';
-import { useSetAuthHeaders } from '@/composables/useSetAuthHeaders';
-import { engineApiConfig } from '@/composables/engineApiConfig';
+import type { 
+  AxiosResponse,
+  AxiosError,
+} from 'axios';
+import { 
+  engineApiConfig,
+  useSetAuthHeaders,
+} from '@/composables';
 import type { 
   SearchParamsType, 
   SearchResultType,
- } from '@/composables/types';
+} from '@/composables/types';
 
-export async function useSearch (
-  params: SearchParamsType
-) {
-
+export async function useSearch ( params: SearchParamsType ) {
   const {
     phrase,
     age,
     ageUnit,
+    sex,
     maxResults,
     types,
   } = params;
@@ -22,23 +25,27 @@ export async function useSearch (
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
   const URI = new URL(`${import.meta.env.VITE_API}/search`);
-  const data = ref<SearchResultType[] | []>([]);
+  const response = ref<AxiosResponse | null>(null);
+  const observationsList = ref<SearchResultType[] | []>([]);
   const error = ref<Error | AxiosError | null>(null);
 
   URI.searchParams.append('phrase', phrase);
   URI.searchParams.append('age.value', age.toString());
   ageUnit && URI.searchParams.append('age.unit', ageUnit);
+  sex && URI.searchParams.append('sex', sex.toString());
   maxResults && URI.searchParams.append('max_results', maxResults.toString());
   types && URI.searchParams.append('types', types);
 
   await engineApi.get(URI.toString())
-    .then((response) => {
-      data.value = response.data;
+    .then((res: AxiosResponse) => {
+      response.value = res;
+      observationsList.value = res.data;
     })
-    .catch((error: Error | AxiosError) => error = error);
+    .catch((err: AxiosError) => error.value = err);
 
   return {
-    data: data.value, 
+    response: response.value,
+    observationsList: observationsList.value, 
     error: error.value,
   }
 }

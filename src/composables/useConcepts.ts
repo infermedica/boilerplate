@@ -1,11 +1,16 @@
 import { ref } from 'vue';
-import type { AxiosError } from 'axios';
-import { useSetAuthHeaders } from '@/composables/useSetAuthHeaders';
-import { engineApiConfig } from '@/composables/engineApiConfig';
+import type { 
+  AxiosResponse,
+  AxiosError,
+} from 'axios';
+import { 
+  engineApiConfig,
+  useSetAuthHeaders, 
+} from '@/composables';
 import type { 
   ConceptItemModel, 
   ConceptsParamType,
-} from '@/composables/types/index';
+} from '@/composables/types';
 
 export async function useConcepts ( params: ConceptsParamType) {
   const { 
@@ -19,17 +24,20 @@ export async function useConcepts ( params: ConceptsParamType) {
   ids && URI.searchParams.append('ids', ids.join(','));
   types && URI.searchParams.append('types', types.join(','));
 
-  const data = ref<ConceptItemModel[] | null>([]);
-  const error = ref<Error | AxiosError | null>(null);
+  const response = ref<AxiosResponse | null>(null);
+  const conceptsList = ref<ConceptItemModel[] | [] | null>([]);
+  const error = ref<AxiosError | null>(null);
 
   await engineApi.get(URI.toString())
-    .then((response) => {
-      data.value = response.data;
+    .then((res: AxiosResponse) => {
+      response.value = res;
+      conceptsList.value = res.data;
     })
-    .catch((error: Error | AxiosError) => error = error);
+    .catch((err: AxiosError) => error.value = err);
   
   return {
-    data: data.value, 
+    response: response.value,
+    conceptsList: conceptsList.value, 
     error: error.value,
   }
 }

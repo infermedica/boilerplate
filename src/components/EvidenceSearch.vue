@@ -59,6 +59,7 @@
               :aria-setsize="filteredResults.length"
               :aria-posinset="position + 1"
               tabindex="-1"
+              class="evidence-search__button"
             >
               <span
                 v-highlight="searchQuery"
@@ -91,7 +92,7 @@ import {
   UiLoader,
 } from '@infermedica/component-library';
 import UiDropdownItem from '@infermedica/component-library/src/components/molecules/UiDropdown/_internal/UiDropdownItem.vue';
-import { useSearch } from '@/composables/useSearch';
+import { useSearch } from '@/composables';
 import type { DropdownModelValue } from '@infermedica/component-library';
 import type { SearchResultType } from '@/composables/types/index';
 type EvidenceSearchProps = {
@@ -142,12 +143,12 @@ async function inputHandler(
   if (inputValueTrimmed.length > 0) {
     open();
     searchQuery.value = inputValueTrimmed;
-    const { data } = await useSearch({
+    const { observationsList } = await useSearch({
       phrase: value, 
       age: 32, 
       maxResults: props.maxResults,
     })
-    searchResults.value = data;
+    searchResults.value = observationsList;
     
   } else if (inputValueTrimmed.length < 1) {
     close();
@@ -163,6 +164,7 @@ async function inputHandler(
   
   width: var(--evidence-search-width);
   margin-top: var(--space-16);
+  
   &__dropdown {
     --dropdown-popover-max-width: var(--evidence-search-width);
     --popover-content-padding: var(--evidence-search-popover-content-padding, 0);
@@ -170,26 +172,37 @@ async function inputHandler(
     position: var(--evidence-search-position, relative);
     width: 100%;
   }
+  
   &__input {
     width: var(--evidence-search-input-width, 100%);
   }
+ 
   &__search-icon {
     --icon-color: var(--evidence-search-icon-color, var(--color-icon-primary));
   }
+
+  &__button {
+    text-align: start;
+  }
+
   &__highlighted {
     font: var(--evidence-search-highlighted-font, var(--font-body-1));
+    
     &::first-letter {
       text-transform: uppercase;
     }
+    
     mark {
       font: var(--evidence-search-highlighted-mark-font, var(--font-body-1-thick));
       color: var(--evidence-search-highlighted-mark-color, inherit);
       background: var(--evidence-search-highlighted-mark-background, transparent);
     }
   }
+  
   &__results {
     padding: var(--evidence-search-results-padding, var(--space-8));
   }
+  
   .ui-dropdown-item {
     width: 100%;
   }

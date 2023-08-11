@@ -61,10 +61,10 @@ export type DiagnosisRequestBodyType = {
 }
 
 export type DiagnosisResponseType = {
-  question: QuestionType | null,
-  conditions: ConditionsItemType[] | [],
-  extras: ExtrasType,
-  has_emergency_evidence: boolean,
-  should_stop: boolean,
-  interview_token: string
+  question?: QuestionType,
+  conditions?: ConditionsItemType[],
+  extras?: ExtrasType,
+  has_emergency_evidence?: boolean,
+  should_stop?: boolean,
+  interview_token?: string
 }
