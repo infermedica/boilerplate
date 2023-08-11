@@ -1,11 +1,16 @@
+import { 
+  AgeUnitType,
+  ExtrasType,
+} from '@/composables/types';
+
 export type ConditionsParamsType = {
   age: number,
-  ageUnit?: 'year' | 'month', 
+  ageUnit?: AgeUnitType, 
   enableTriage3?: boolean,
   includeInternal?: boolean,
 }
 
-export type Condition = {
+export type ConditionType = {
   id: string,
   name: string,
   common_name?: string,
@@ -14,7 +19,7 @@ export type Condition = {
   prevalence?: 'very_rare' | 'rare' | 'moderate' | 'common',
   acuteness?: 'chronic' | 'chronic_with_exacerbations' | 'acute_potentially_chronic' | 'acute',
   severity?: 'mild' | 'moderate' | 'severe',
-  extras?: Record<string, unknown> ,
+  extras?: ExtrasType,
   triage_level?: 'emergency_ambulance' | 'emergency' | 'consultation_24' | 'consultation' | 'self_care',
   recommended_channel?: 'personal_visit' | 'video_teleconsultation' | 'audio_teleconsultation' | 'text_teleconsultation',
 }

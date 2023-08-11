@@ -1,17 +1,19 @@
+import { AgeUnitType } from '@/composables/types';
+
 export type SearchParamsType = {
   phrase: string, 
   age: number, 
-  ageUnit?: 'year' | 'month', 
+  ageUnit?: AgeUnitType, 
   sex?: 'female' | 'male',
   maxResults?: number,
   types?: 'symptoms' | 'risk_factor' | 'lab_test' | 'condition', 
 }
 
-export type SearchResult = {
+export type SearchResultType = {
   id: string,
   label: string,
 }
 
-export type SearchEvidence = {
-  results: SearchResult[]
+export type SearchEvidenceType = {
+  results: SearchResultType[]
 }

@@ -4,7 +4,7 @@ import { useSetAuthHeaders } from '@/composables/useSetAuthHeaders';
 import { engineApiConfig } from '@/composables/engineApiConfig';
 import type { 
   SearchParamsType, 
-  SearchResult,
+  SearchResultType,
  } from '@/composables/types';
 
 export async function useSearch (
@@ -22,7 +22,7 @@ export async function useSearch (
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
   const URI = new URL(`${import.meta.env.VITE_API}/search`);
-  const data = ref<SearchResult[] | []>([]);
+  const data = ref<SearchResultType[] | []>([]);
   const error = ref<Error | AxiosError | null>(null);
 
   URI.searchParams.append('phrase', phrase);

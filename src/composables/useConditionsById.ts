@@ -4,7 +4,7 @@ import { useSetAuthHeaders } from '@/composables/useSetAuthHeaders';
 import { engineApiConfig } from '@/composables/engineApiConfig';
 import type { 
   ConditionsParamsType, 
-  Condition,
+  ConditionType,
  } from '@/composables/types';
 
 export async function useConditionsById(
@@ -21,7 +21,7 @@ export async function useConditionsById(
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
   const URI = new URL(`${import.meta.env.VITE_API}/conditions/${id}`);
-  const data = ref<Condition[] | []>([]);
+  const data = ref<ConditionType[] | []>([]);
   const error = ref<Error | AxiosError | null>(null);
 
   URI.searchParams.append('age.value', age.toString());

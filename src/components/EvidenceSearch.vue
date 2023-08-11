@@ -93,7 +93,7 @@ import {
 import UiDropdownItem from '@infermedica/component-library/src/components/molecules/UiDropdown/_internal/UiDropdownItem.vue';
 import { useSearch } from '@/composables/useSearch';
 import type { DropdownModelValue } from '@infermedica/component-library';
-import type { SearchResult } from '@/composables/types/index';
+import type { SearchResultType } from '@/composables/types/index';
 type EvidenceSearchProps = {
   modelValue: DropdownModelValue[] | [],
   evidenceIds?: string[],
@@ -120,10 +120,10 @@ const inputAttrs = computed(() => ({
 }));
 const inputElement = computed(() => dropdowntoggle.value?.$el.querySelector('input'));
 const isLoading = ref(false);
-const searchResults = ref<SearchResult[] | []>([]);
-const filteredResults: ComputedRef<SearchResult[]> = computed(() => (
+const searchResults = ref<SearchResultType[] | []>([]);
+const filteredResults: ComputedRef<SearchResultType[]> = computed(() => (
   searchResults.value
-    .filter((result: SearchResult) => (!props.evidenceIds.includes(result.id)))
+    .filter((result: SearchResultType) => (!props.evidenceIds.includes(result.id)))
 ));
 const hasResults = computed(() => (filteredResults.value.length > 0));
 function updateHandler(value: DropdownModelValue) {
