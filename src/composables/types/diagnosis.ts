@@ -1,18 +1,8 @@
 import { 
-  AgeUnitType,
+  AgeRequestType,
   ExtrasType,
+  EvidenceType,
 } from '@/composables/types';
-
-export type EvidenceType = {
-  id: string,
-  choice_id: 'present' | 'absent' | 'unknown',
-  observed_at?: string,
-  source?: 'initial' | 'suggest' | 'predefined' | 'red_flags',
-  duration?: {
-    value: number,
-    unit: 'week' | 'day' | 'hour' | 'minute',
-  }
-}
 
 export type ConditionsItemType = {
   id: string,
@@ -51,10 +41,7 @@ export type QuestionType = {
 
 export type DiagnosisRequestBodyType = {
   sex: 'male' | 'female',
-  age: {
-    value: number,
-    unit?: AgeUnitType, 
-  },
+  age: AgeRequestType,
   evidence?: EvidenceType[],
   evaluated_at?: string,
   extras?: ExtrasType,

@@ -6,3 +6,4 @@ export * from './useConditionsById';
 export * from './useDiagnosis';
 export * from './useSearch';
 export * from './useSetAuthHeaders';
+export * from './useExplain';
