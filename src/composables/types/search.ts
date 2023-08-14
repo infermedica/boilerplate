@@ -8,7 +8,7 @@ export type SearchParamsType = {
   phrase: string, 
   age: number, 
   ageUnit?: AgeUnitType, 
-  sex?: Omit<SexType, 'both'>,
+  sex?: SexType,
   maxResults?: number,
   types?: ObservationType, 
 }

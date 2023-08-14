@@ -2,6 +2,7 @@ import {
   AgeRequestType,
   ExtrasType,
   EvidenceType,
+  SexType,
 } from '@/composables/types';
 
 export type ConditionsItemType = {
@@ -40,7 +41,7 @@ export type QuestionType = {
 }
 
 export type DiagnosisRequestBodyType = {
-  sex: 'male' | 'female',
+  sex: SexType,
   age: AgeRequestType,
   evidence?: EvidenceType[],
   evaluated_at?: string,

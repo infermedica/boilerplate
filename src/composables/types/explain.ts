@@ -6,7 +6,7 @@ import {
 } from "@/composables/types";
 
 export type ExplanationRequest = {
-  sex: Omit<SexType, 'both'>,
+  sex: SexType,
   age: AgeRequestType,
   evidence?: EvidenceType[],
   evaluated_at?: string,

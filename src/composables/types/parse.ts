@@ -19,7 +19,7 @@ export type MentionType = {
 
 export type ParseRequestType = {
   age: AgeRequestType,
-  sex?: Omit<SexType, 'both'>,
+  sex?: SexType,
   text: string,
   context?: string[],
   include_tokens?: boolean,

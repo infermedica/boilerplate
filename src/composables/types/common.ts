@@ -5,7 +5,7 @@ export type AgeRequestType = {
   unit?: AgeUnitType,
 }
 
-export type SexType = 'both' | 'male' | 'female';
+export type SexType = 'male' | 'female';
 
 export type PrevalenceType = 'very_rare' | 'rare' | 'moderate' | 'common';
 
