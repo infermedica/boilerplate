@@ -10,3 +10,4 @@ export * from './useExplain';
 export * from './useInfo';
 export * from './useParse';
 export * from './useRationale';
+export * from './useRecommendSpecialist';

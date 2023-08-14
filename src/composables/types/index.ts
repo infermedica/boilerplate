@@ -7,3 +7,4 @@ export * from './explain';
 export * from './info';
 export * from './parse';
 export * from './rationale';
+export * from './recommendSpecialist';

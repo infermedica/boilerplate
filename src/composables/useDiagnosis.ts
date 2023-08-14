@@ -9,13 +9,13 @@ import {
  } from '@/composables';
 import { 
   ConditionsItemType,
-  DiagnosisRequestBodyType,
+  DiagnosisRequestType,
   DiagnosisResponseType,
   ExtrasType,
   QuestionType,
 } from '@/composables/types';
 
-export async function useDiagnosis (requestBody: DiagnosisRequestBodyType) {
+export async function useDiagnosis (requestBody: DiagnosisRequestType) {
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   const URI = new URL(`${import.meta.env.VITE_API}/diagnosis`);
   const response = ref<AxiosResponse<DiagnosisResponseType> | null>(null);

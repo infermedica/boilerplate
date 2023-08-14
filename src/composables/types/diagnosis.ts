@@ -40,7 +40,7 @@ export type QuestionType = {
   extras?: ExtrasType,
 }
 
-export type DiagnosisRequestBodyType = {
+export type DiagnosisRequestType = {
   sex: SexType,
   age: AgeRequestType,
   evidence?: EvidenceType[],
