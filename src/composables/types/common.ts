@@ -19,9 +19,13 @@ export type RecommendedChannelType = 'personal_visit' | 'video_teleconsultation'
 
 export type ExtrasType = Record<string, unknown> | {};
 
+export type ChoiceIdType = 'present' | 'absent' | 'unknown';
+
+export type ObservationType = 'symptoms' | 'risk_factor' | 'lab_test' | 'condition';
+
 export type EvidenceType = {
   id: string,
-  choice_id: 'present' | 'absent' | 'unknown',
+  choice_id: ChoiceIdType,
   observed_at?: string,
   source?: 'initial' | 'suggest' | 'predefined' | 'red_flags',
   duration?: {

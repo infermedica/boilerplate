@@ -8,3 +8,4 @@ export * from './useSearch';
 export * from './useSetAuthHeaders';
 export * from './useExplain';
 export * from './useInfo';
+export * from './useParse';

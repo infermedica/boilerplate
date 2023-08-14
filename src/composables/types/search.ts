@@ -1,5 +1,6 @@
 import { 
   AgeUnitType,
+  ObservationType,
   SexType,
 } from '@/composables/types';
 
@@ -9,7 +10,7 @@ export type SearchParamsType = {
   ageUnit?: AgeUnitType, 
   sex?: Omit<SexType, 'both'>,
   maxResults?: number,
-  types?: 'symptoms' | 'risk_factor' | 'lab_test' | 'condition', 
+  types?: ObservationType, 
 }
 
 export type SearchResultType = {

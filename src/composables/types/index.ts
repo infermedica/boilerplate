@@ -5,3 +5,4 @@ export * from './conditions';
 export * from './diagnosis';
 export * from './explain';
 export * from './info';
+export * from './parse';
