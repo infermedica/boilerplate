@@ -8,7 +8,8 @@ import {
   useSetAuthHeaders,
 } from '@/composables';
 import type { 
-  AgeUnitType, SymptomDetailsType,
+  AgeUnitType, 
+  SymptomDetailsType,
  } from './types';
 
 export async function useSymptomsById (
@@ -37,7 +38,7 @@ export async function useSymptomsById (
   const question = ref<SymptomDetailsType['question']>('');
   const sex_filter = ref<SymptomDetailsType['sex_filter']>('male');
   const category = ref<SymptomDetailsType['category']>('');
-  const seriousness = ref<SymptomDetailsType['seriousness']>('');
+  const seriousness = ref<SymptomDetailsType['seriousness'] | undefined>(undefined);
   const extras = ref<SymptomDetailsType['extras'] | null>(null);
   const children = ref<SymptomDetailsType['children']>([]);
   const image_url = ref<SymptomDetailsType['image_url'] | null>(null);

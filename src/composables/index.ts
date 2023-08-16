@@ -15,3 +15,4 @@ export * from './useRiskFactorsById';
 export * from './useRiskFactors';
 export * from './useSuggest';
 export * from './useSymptomsById';
+export * from './useSymptoms';

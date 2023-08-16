@@ -23,7 +23,7 @@ export type SymptomDetailsType = {
   question_third_person?: string,
   sex_filter: SexType | 'both',
   category?: string,
-  seriousness?: string, // TODO: find type
+  seriousness?: 'emergency' | 'normal' |  'serious' |  'emergency_ambulance', //TODO find all types
   extras?: ExtrasType,
   children?: SymptomChildrenType[],
   image_url?: string,
