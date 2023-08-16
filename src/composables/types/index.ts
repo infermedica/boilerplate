@@ -11,3 +11,4 @@ export * from './recommendSpecialist';
 export * from './riskFactors';
 export * from './suggest';
 export * from './symptoms';
+export * from './triage';

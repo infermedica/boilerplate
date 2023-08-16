@@ -1,4 +1,8 @@
-import { ExtrasType, SexType } from "@/composables/types";
+import { 
+  ExtrasType,
+  SexType,
+  SeriousObservationSeriousnessType,
+ } from "@/composables/types";
 
 export type ParentRelationType = 
   | 'base'
@@ -23,7 +27,7 @@ export type SymptomDetailsType = {
   question_third_person?: string,
   sex_filter: SexType | 'both',
   category?: string,
-  seriousness?: 'emergency' | 'normal' |  'serious' |  'emergency_ambulance', //TODO find all types
+  seriousness?: SeriousObservationSeriousnessType,
   extras?: ExtrasType,
   children?: SymptomChildrenType[],
   image_url?: string,

@@ -33,3 +33,5 @@ export type EvidenceType = {
     unit: 'week' | 'day' | 'hour' | 'minute',
   }
 }
+
+export type SeriousObservationSeriousnessType = 'emergency' | 'normal' |  'serious' |  'emergency_ambulance';
