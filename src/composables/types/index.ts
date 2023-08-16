@@ -10,3 +10,4 @@ export * from './rationale';
 export * from './recommendSpecialist';
 export * from './riskFactors';
 export * from './suggest';
+export * from './symptoms';
