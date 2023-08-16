@@ -12,3 +12,4 @@ export * from './useParse';
 export * from './useRationale';
 export * from './useRecommendSpecialist';
 export * from './useRiskFactorsById';
+export * from './useRiskFactors';

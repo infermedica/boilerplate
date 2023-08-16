@@ -9,7 +9,7 @@ import {
 } from '@/composables';
 import type { 
   AgeUnitType,
-  RiskFactorResponseType,
+  RiskFactorsResponseType,
 } from '@/composables/types';
 
 export async function useRiskFactorsById (params: {
@@ -28,17 +28,17 @@ export async function useRiskFactorsById (params: {
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
   const URI = new URL(`${import.meta.env.VITE_API}/risk_factors/${riskFactorsId}`);
-  const response = ref<AxiosResponse<RiskFactorResponseType> | null>(null);
-  const id = ref<RiskFactorResponseType['id'] | null>(null);
-  const name = ref<RiskFactorResponseType['name'] | null>(null);
-  const common_name = ref<RiskFactorResponseType['common_name'] | undefined>(undefined);
-  const question = ref<RiskFactorResponseType['question'] | null>(null);
-  const question_third_person = ref<RiskFactorResponseType['question_third_person'] | undefined>(undefined);
-  const sex_filter = ref<RiskFactorResponseType['sex_filter'] | null>(null);
-  const category = ref<RiskFactorResponseType['category'] | undefined>(undefined);
-  const extras = ref<RiskFactorResponseType['extras'] | undefined>(undefined);
-  const image_url = ref<RiskFactorResponseType['image_url'] | undefined>(undefined);
-  const image_source = ref<RiskFactorResponseType['image_source'] | undefined>(undefined);
+  const response = ref<AxiosResponse<RiskFactorsResponseType> | null>(null);
+  const id = ref<RiskFactorsResponseType['id'] | null>(null);
+  const name = ref<RiskFactorsResponseType['name'] | null>(null);
+  const common_name = ref<RiskFactorsResponseType['common_name'] | undefined>(undefined);
+  const question = ref<RiskFactorsResponseType['question'] | null>(null);
+  const question_third_person = ref<RiskFactorsResponseType['question_third_person'] | undefined>(undefined);
+  const sex_filter = ref<RiskFactorsResponseType['sex_filter'] | null>(null);
+  const category = ref<RiskFactorsResponseType['category'] | undefined>(undefined);
+  const extras = ref<RiskFactorsResponseType['extras'] | undefined>(undefined);
+  const image_url = ref<RiskFactorsResponseType['image_url'] | undefined>(undefined);
+  const image_source = ref<RiskFactorsResponseType['image_source'] | undefined>(undefined);
   const error = ref<AxiosError | null>(null);
 
   URI.searchParams.append('age.value', age.toString());

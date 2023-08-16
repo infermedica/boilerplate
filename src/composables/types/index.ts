@@ -8,4 +8,4 @@ export * from './info';
 export * from './parse';
 export * from './rationale';
 export * from './recommendSpecialist';
-export * from './riskFactorsById';
+export * from './riskFactors';

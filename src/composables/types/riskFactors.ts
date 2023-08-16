@@ -3,7 +3,7 @@ ExtrasType,
   SexType,
  } from "@/composables/types";
 
-export type RiskFactorResponseType = {
+export type RiskFactorsResponseType = {
   id: string,
   name: string,
   common_name?: string,
