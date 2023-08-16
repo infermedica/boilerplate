@@ -13,3 +13,4 @@ export * from './useRationale';
 export * from './useRecommendSpecialist';
 export * from './useRiskFactorsById';
 export * from './useRiskFactors';
+export * from './useSuggest';
