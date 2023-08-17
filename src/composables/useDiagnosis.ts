@@ -21,7 +21,7 @@ export async function useDiagnosis (requestBody: DiagnosisRequestType) {
   const response = ref<AxiosResponse<DiagnosisResponseType> | null>(null);
   const error = ref<AxiosError | null>(null);
   const question = ref<QuestionType | undefined>(undefined);
-  const conditions = ref<ConditionsItemType | undefined>(undefined);
+  const conditions = ref<ConditionsItemType[] | undefined>(undefined);
   const extras = ref<ExtrasType | undefined>(undefined);
   const has_emergency_evidence = ref<boolean | undefined>(undefined);
   const should_stop = ref<boolean | undefined>(undefined);

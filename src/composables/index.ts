@@ -17,3 +17,4 @@ export * from './useSuggest';
 export * from './useSymptomsById';
 export * from './useSymptoms';
 export * from './useTriage';
+export * from './usePatientEducation';

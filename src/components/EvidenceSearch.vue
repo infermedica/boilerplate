@@ -92,9 +92,10 @@ import {
   UiLoader,
 } from '@infermedica/component-library';
 import UiDropdownItem from '@infermedica/component-library/src/components/molecules/UiDropdown/_internal/UiDropdownItem.vue';
-import { useSearch } from '@/composables';
+import { useSearch, useDiagnosis, usePatientEducation } from '@/composables';
 import type { DropdownModelValue } from '@infermedica/component-library';
-import type { SearchResultType } from '@/composables/types/index';
+import type { SearchResultType, ConditionsItemType } from '@/composables/types';
+
 type EvidenceSearchProps = {
   modelValue: DropdownModelValue[] | [],
   evidenceIds?: string[],
@@ -143,6 +144,35 @@ async function inputHandler(
   if (inputValueTrimmed.length > 0) {
     open();
     searchQuery.value = inputValueTrimmed;
+    const {interview_token, conditions} = await useDiagnosis({
+  "sex": "male",
+  "age": {
+    "value": 30,
+    "unit": "year"
+  },
+  "evidence": [
+    {
+      "id": "s_1193",
+      "choice_id": "present",
+      "observed_at": "2020-06-02",
+      "source": "initial",
+      "duration": {
+        "value": 30,
+        "unit": "day"
+      }
+    }
+  ],
+  "evaluated_at": "2020-06-02",
+  "extras": {}
+})
+
+const {response, patient_education_document, error} = await usePatientEducation({
+  conditionId: (conditions as ConditionsItemType[])[0].id,
+  interviewToken: interview_token as string,
+})
+  console.log('response', response)
+  console.log('patient_education_document', patient_education_document)
+  console.log('error', error)
     const { observationsList } = await useSearch({
       phrase: value, 
       age: 32, 

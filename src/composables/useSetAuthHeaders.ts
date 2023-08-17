@@ -4,12 +4,14 @@ export function useSetAuthHeaders( engineApiConfig: {
   baseURL: string,
   appId: string, 
   appKey: string,
+  // interviewToken?: string,
   }) {
 
   const {
     baseURL,
     appId,
-    appKey
+    appKey,
+    // interviewToken,
   } = engineApiConfig;
   const engineApi = axios.create({
     baseURL: baseURL,
@@ -18,6 +20,11 @@ export function useSetAuthHeaders( engineApiConfig: {
   engineApi.defaults.headers.common['App-Id'] = appId;
   engineApi.defaults.headers.common['App-Key'] = appKey;
   engineApi.defaults.headers.common['Content-Type'] = 'application/json';
+  // if (interviewToken) {
+  //   console.log('intervie', interviewToken)
+  // }
+  // engineApi.defaults.headers.common['Interview-Token'] = interviewToken;
+  // engineApi.defaults.headers.common['Access-Control-Allow-Headers'] = 'App-Id, App-Key,Content-Type, Interview-Token';
 
   return { engineApi };
 }

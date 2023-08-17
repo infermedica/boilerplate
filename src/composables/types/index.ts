@@ -12,3 +12,4 @@ export * from './riskFactors';
 export * from './suggest';
 export * from './symptoms';
 export * from './triage';
+export * from './patientEducation';
