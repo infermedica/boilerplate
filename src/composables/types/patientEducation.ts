@@ -7,4 +7,10 @@ export type SectionsType =
   | 'how_its_prevented'
   | 'when_to_see_professional'
   | 'disclaimer'
-  | 'sources'
+  | 'sources';
+
+  export type PatientEducationParams = {
+    conditionId: string,
+    interviewToken: string,
+    sections?: SectionsType[],
+  }

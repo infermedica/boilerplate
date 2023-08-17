@@ -8,18 +8,11 @@ import {
   useSetAuthHeaders,
 } from '@/composables';
 import type { 
-  AgeUnitType, 
+  SymptomsByIdParams, 
   SymptomDetailsType,
  } from './types';
 
-export async function useSymptomsById (
-  params: {
-    symptomId: string,
-    age: number,
-    ageUnit?: AgeUnitType,
-    enableTriage3?: boolean,
-  }
-) {
+export async function useSymptomsById ( params: SymptomsByIdParams ) {
 
   const {
     symptomId,
@@ -32,20 +25,21 @@ export async function useSymptomsById (
 
   const URI = new URL(`${import.meta.env.VITE_API}/symptoms/${symptomId}`);
   const response = ref<AxiosResponse<SymptomDetailsType> | null>(null);
-  const id= ref<SymptomDetailsType['id']>('');
-  const name = ref<SymptomDetailsType['name']>('');
-  const common_name = ref<SymptomDetailsType['common_name']>('');
-  const question = ref<SymptomDetailsType['question']>('');
-  const sex_filter = ref<SymptomDetailsType['sex_filter']>('male');
-  const category = ref<SymptomDetailsType['category']>('');
-  const seriousness = ref<SymptomDetailsType['seriousness'] | undefined>(undefined);
-  const extras = ref<SymptomDetailsType['extras'] | null>(null);
-  const children = ref<SymptomDetailsType['children']>([]);
-  const image_url = ref<SymptomDetailsType['image_url'] | null>(null);
-  const image_source = ref<SymptomDetailsType['image_source'] | null>(null);
-  const parent_id = ref<SymptomDetailsType['parent_id'] | null>(null);
-  const parent_relation = ref<SymptomDetailsType['parent_relation'] | null>(null);
   const error = ref<AxiosError | null>(null);
+  const id= ref<SymptomDetailsType['id'] | null>(null);
+  const name = ref<SymptomDetailsType['name'] | null>(null);
+  const common_name = ref<SymptomDetailsType['common_name'] | undefined>(undefined);
+  const question = ref<SymptomDetailsType['question'] | null>(null);
+  const question_third_person = ref<SymptomDetailsType['question_third_person'] | null>(null);
+  const sex_filter = ref<SymptomDetailsType['sex_filter'] | null>(null);
+  const category = ref<SymptomDetailsType['category'] | undefined>(undefined);
+  const seriousness = ref<SymptomDetailsType['seriousness'] | undefined>(undefined);
+  const extras = ref<SymptomDetailsType['extras'] | undefined>(undefined);
+  const children = ref<SymptomDetailsType['children'] | undefined>(undefined);
+  const image_url = ref<SymptomDetailsType['image_url'] | undefined>(undefined);
+  const image_source = ref<SymptomDetailsType['image_source'] | undefined>(undefined);
+  const parent_id = ref<SymptomDetailsType['parent_id'] | undefined>(undefined);
+  const parent_relation = ref<SymptomDetailsType['parent_relation'] | undefined>(undefined);
 
   URI.searchParams.append('age.value', age.toString());
   ageUnit && URI.searchParams.append('age.unit', ageUnit);
@@ -58,10 +52,12 @@ export async function useSymptomsById (
       name.value = res.data.name;
       common_name.value = res.data.common_name,
       question.value = res.data.question;
+      question_third_person.value = res.data.question_third_person;
       sex_filter.value = res.data.sex_filter;
       category.value = res.data.category;
       seriousness.value = res.data.seriousness;
       extras.value = res.data.extras;
+      children.value = res.data.children;
       image_url.value = res.data.image_url;
       image_source.value = res.data.image_source;
       parent_id.value = res.data.parent_id;
@@ -75,6 +71,7 @@ export async function useSymptomsById (
     name: name.value,
     common_name: common_name.value,
     question: question.value,
+    question_third_person: question_third_person.value,
     sex_filter: sex_filter.value,
     category: category.value,
     seriousness: seriousness.value,

@@ -8,24 +8,21 @@ import {
   useSetAuthHeaders,
  } from '@/composables';
 import { 
-  ConditionsItemType,
   DiagnosisRequestType,
   DiagnosisResponseType,
-  ExtrasType,
-  QuestionType,
 } from '@/composables/types';
 
 export async function useDiagnosis (requestBody: DiagnosisRequestType) {
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   const URI = new URL(`${import.meta.env.VITE_API}/diagnosis`);
-  const response = ref<AxiosResponse<DiagnosisResponseType> | null>(null);
+  const response = ref<AxiosResponse | null>(null);
   const error = ref<AxiosError | null>(null);
-  const question = ref<QuestionType | undefined>(undefined);
-  const conditions = ref<ConditionsItemType[] | undefined>(undefined);
-  const extras = ref<ExtrasType | undefined>(undefined);
-  const has_emergency_evidence = ref<boolean | undefined>(undefined);
-  const should_stop = ref<boolean | undefined>(undefined);
-  const interview_token = ref<string | undefined>(undefined);
+  const question = ref<DiagnosisResponseType['question'] | undefined>(undefined);
+  const conditions = ref<DiagnosisResponseType['conditions'] | undefined>(undefined);
+  const extras = ref<DiagnosisResponseType['extras'] | undefined>(undefined);
+  const has_emergency_evidence = ref<DiagnosisResponseType['has_emergency_evidence'] | undefined>(undefined);
+  const should_stop = ref<DiagnosisResponseType['should_stop'] | undefined>(undefined);
+  const interview_token = ref<DiagnosisResponseType['interview_token'] | undefined>(undefined);
 
   await engineApi.post(URI.toString(), requestBody)
     .then((res: AxiosResponse) => {

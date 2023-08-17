@@ -18,11 +18,11 @@ import {
   
   const URI = new URL(`${import.meta.env.VITE_API}/triage`);
   const response = ref<AxiosResponse<TriageResponseType> | null>(null);
-  const triage_level = ref<TriageResponseType['triage_level'] | null>();
-  const serious = ref<TriageResponseType['serious'] | null>();
-  const root_cause = ref<TriageResponseType['root_cause'] | null>();
-  const teleconsultation_applicable = ref<TriageResponseType['teleconsultation_applicable'] | null>();
   const error = ref<AxiosError | null>(null);
+  const triage_level = ref<TriageResponseType['triage_level'] | undefined>(undefined);
+  const serious = ref<TriageResponseType['serious'] | undefined>(undefined);
+  const root_cause = ref<TriageResponseType['root_cause'] | undefined>(undefined);
+  const teleconsultation_applicable = ref<TriageResponseType['teleconsultation_applicable'] | undefined>(undefined);
 
   await engineApi.post(URI.toString(), request)
     .then((res: AxiosResponse) => {

@@ -16,10 +16,10 @@ import {
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   const URI = new URL(`${import.meta.env.VITE_API}/parse`);
   const response = ref<AxiosResponse | null>(null);
+  const error = ref<AxiosError | null>(null);
   const mentions = ref<ParseResponseType['mentions'] | undefined>(undefined);
   const obvious = ref<ParseResponseType['obvious'] | undefined>(undefined);
   const tokens = ref<ParseResponseType['tokens'] | undefined>(undefined);
-  const error = ref<AxiosError | null>(null);
 
   await engineApi.post(URI.toString(), requestBody)
   .then((res: AxiosResponse) => {

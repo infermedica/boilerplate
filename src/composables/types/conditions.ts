@@ -20,7 +20,7 @@ export type ConditionType = {
   id: string,
   name: string,
   common_name?: string,
-  sex_filter?: SexType | 'both',
+  sex_filter: SexType | 'both',
   categories: string[],
   prevalence?: PrevalenceType,
   acuteness?: AcutenessType,

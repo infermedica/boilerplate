@@ -13,7 +13,9 @@ import {
  } from '@/composables/types';
 
  export async function useRationale (requestBody: RationaleRequest) {
+  
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
+  
   const URI = new URL(`${import.meta.env.VITE_API}/rationale`);
   const response = ref<AxiosResponse<RationaleResponse> | null>(null);
   const error = ref<AxiosError | null>(null);
@@ -22,13 +24,13 @@ import {
   const condition_params = ref<RationaleResponse['condition_params'] | undefined>(undefined);
 
   await engineApi.post(URI.toString(), requestBody)
-  .then((res: AxiosResponse) => {
-    response.value = res;
-    type.value = res.data.type;
-    observation_params.value = res.data.observation_params;
-    condition_params.value = res.data.condition_params;
-  })
-  .catch((err: AxiosError) => error.value = err);
+    .then((res: AxiosResponse) => {
+      response.value = res;
+      type.value = res.data.type;
+      observation_params.value = res.data.observation_params;
+      condition_params.value = res.data.condition_params;
+    })
+    .catch((err: AxiosError) => error.value = err);
 
   return {
     response: response.value,

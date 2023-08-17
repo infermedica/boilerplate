@@ -8,11 +8,11 @@ import {
   useSetAuthHeaders, 
 } from '@/composables';
 import type { 
-  ConceptItemModel, 
-  ConceptsParamType,
+  ConceptItemModelType, 
+  ConceptsParamsType,
 } from '@/composables/types';
 
-export async function useConcepts ( params: ConceptsParamType) {
+export async function useConcepts ( params: ConceptsParamsType) {
   const { 
     ids,
     types,
@@ -25,19 +25,19 @@ export async function useConcepts ( params: ConceptsParamType) {
   types && URI.searchParams.append('types', types.join(','));
 
   const response = ref<AxiosResponse | null>(null);
-  const conceptsList = ref<ConceptItemModel[] | [] | null>([]);
   const error = ref<AxiosError | null>(null);
+  const concepts = ref<ConceptItemModelType[] | null>(null);
 
   await engineApi.get(URI.toString())
     .then((res: AxiosResponse) => {
       response.value = res;
-      conceptsList.value = res.data;
+      concepts.value = res.data;
     })
     .catch((err: AxiosError) => error.value = err);
   
   return {
     response: response.value,
-    conceptsList: conceptsList.value, 
+    concepts: concepts.value, 
     error: error.value,
   }
 }

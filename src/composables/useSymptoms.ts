@@ -8,17 +8,11 @@ import {
   useSetAuthHeaders,
 } from '@/composables';
 import type { 
-  AgeUnitType, 
-  SymptomDetailsType,
+  SymptomType,
+  SymptomsParams,
  } from './types';
 
-export async function useSymptoms (
-  params: {
-    age: number,
-    ageUnit?: AgeUnitType,
-    enableTriage3?: boolean,
-  }
-) {
+export async function useSymptoms ( params: SymptomsParams ) {
 
   const {
     age,
@@ -29,9 +23,9 @@ export async function useSymptoms (
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
   const URI = new URL(`${import.meta.env.VITE_API}/symptoms`);
-  const response = ref<AxiosResponse<SymptomDetailsType> | null>(null);
-  const symptomslist= ref<SymptomDetailsType[]>([]);
+  const response = ref<AxiosResponse | null>(null);
   const error = ref<AxiosError | null>(null);
+  const symptoms= ref<SymptomType[]>([]);
 
   URI.searchParams.append('age.value', age.toString());
   ageUnit && URI.searchParams.append('age.unit', ageUnit);
@@ -40,13 +34,13 @@ export async function useSymptoms (
   await engineApi.get(URI.toString())
     .then((res: AxiosResponse) => {
       response.value = res;
-      symptomslist.value = res.data;
+      symptoms.value = res.data;
     })
     .catch((err: AxiosError) => error.value = err);
   
   return {
     response: response.value,
-    symptomslist: symptomslist.value,
+    symptoms: symptoms.value,
     error: error.value,
   }
 }

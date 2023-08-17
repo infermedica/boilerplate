@@ -14,15 +14,15 @@ import {
   RecommendSpecialistResponseType,
  } from '@/composables/types';
 
- export async function useRecommendSpecialist (request: DiagnosisRequestType) {
+ export async function useRecommendSpecialist (requestBody: DiagnosisRequestType) {
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   const URI = new URL(`${import.meta.env.VITE_API}/recommend_specialist`);
   const response = ref<AxiosResponse<RecommendSpecialistResponseType> | null>(null);
   const error = ref<AxiosError | null>(null);
-  const recommended_specialist = ref<RecommendSpecialistType | null>(null);
-  const recommended_channel = ref<RecommendedChannelType | null>(null);
+  const recommended_specialist = ref<RecommendSpecialistType | undefined>(undefined);
+  const recommended_channel = ref<RecommendedChannelType | undefined>(undefined);
 
-  await engineApi.post(URI.toString(), request)
+  await engineApi.post(URI.toString(), requestBody)
   .then((res: AxiosResponse) => {
     response.value = res;
     recommended_specialist.value = res.data.recommended_specialist;

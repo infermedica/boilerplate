@@ -8,15 +8,11 @@ import {
   useSetAuthHeaders,
 } from '@/composables';
 import type { 
-  AgeUnitType,
-  RiskFactorsResponseType,
+  RiskFactorType,
+  RiskFactorsParams,
 } from '@/composables/types';
 
-export async function useRiskFactors (params: {
-  age: number,
-  ageUnit?: AgeUnitType,
-  enable_triage_3?: boolean,
-}) {
+export async function useRiskFactors ( params: RiskFactorsParams ) {
   const {
     age,
     ageUnit,
@@ -26,9 +22,9 @@ export async function useRiskFactors (params: {
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
   const URI = new URL(`${import.meta.env.VITE_API}/risk_factors`);
-  const response = ref<AxiosResponse<RiskFactorsResponseType> | null>(null);
-  const riskFactorsList= ref<RiskFactorsResponseType[]>([]);
+  const response = ref<AxiosResponse | null>(null);
   const error = ref<AxiosError | null>(null);
+  const riskFactors = ref<RiskFactorType[]>([]);
 
   URI.searchParams.append('age.value', age.toString());
   ageUnit && URI.searchParams.append('age.unit', ageUnit);
@@ -37,13 +33,13 @@ export async function useRiskFactors (params: {
   await engineApi.get(URI.toString())
     .then((res: AxiosResponse) => {
       response.value = res;
-      riskFactorsList.value =res.data;
+      riskFactors.value =res.data;
     })
     .catch((err: AxiosError) => error.value = err);
   
   return {
     response: response.value,
-    riskFactorsList: riskFactorsList.value,
+    riskFactors: riskFactors.value,
     error: error.value,
   }
 }

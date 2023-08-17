@@ -18,6 +18,11 @@ export type SuggestRequest = {
   age: AgeRequestType,
   evidence?: EvidenceType[],
   evaluated_at?: string,
-  extras: ExtrasType,
+  extras?: ExtrasType,
   suggest_method?: SuggestMethod,
+}
+
+export type SuggestParams = {
+  request: SuggestRequest, 
+  maxResults?: number
 }

@@ -24,8 +24,8 @@ export async function useConditions(params: ConditionsParamsType) {
 
   const URI = new URL(`${import.meta.env.VITE_API}/conditions`);
   const response = ref<AxiosResponse | null>(null);
-  const conditionsList = ref<ConditionType[] | [] | null>(null);
   const error = ref<AxiosError | null>(null);
+  const conditions = ref<ConditionType[] | null>(null);
 
   URI.searchParams.append('age.value', age.toString());
   ageUnit && URI.searchParams.append('age.unit', ageUnit);
@@ -35,13 +35,13 @@ export async function useConditions(params: ConditionsParamsType) {
   await engineApi.get(URI.toString())
     .then((res: AxiosResponse) => {
       response.value = res;
-      conditionsList.value = res.data;
+      conditions.value = res.data;
     })
     .catch((err: AxiosError) => error.value = err);
 
   return {
     response: response.value,
-    conditionsList: conditionsList.value, 
+    conditions: conditions.value, 
     error: error.value,
   }
 }

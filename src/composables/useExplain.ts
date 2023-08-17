@@ -8,8 +8,8 @@ import {
   useSetAuthHeaders,
  } from '@/composables';
  import type {
-  ExplanationEvidence,
   ExplanationRequest,
+  ExplanationResponse,
  } from '@/composables/types';
 
  export async function useExplain (requestBody: ExplanationRequest) {
@@ -17,9 +17,9 @@ import {
   const URI = new URL(`${import.meta.env.VITE_API}/explain`);
   const response = ref<AxiosResponse | null>(null);
   const error = ref<AxiosError | null>(null);
-  const supporting_evidence = ref<ExplanationEvidence | null>(null);
-  const conflicting_evidence = ref<ExplanationEvidence | null>(null);
-  const unconfirmed_evidence = ref<ExplanationEvidence | null>(null);
+  const supporting_evidence = ref<ExplanationResponse['supporting_evidence'] | null>(null);
+  const conflicting_evidence = ref<ExplanationResponse['conflicting_evidence'] | null>(null);
+  const unconfirmed_evidence = ref<ExplanationResponse['unconfirmed_evidence'] | null>(null);
 
   await engineApi.post(URI.toString(), requestBody)
   .then((res: AxiosResponse) => {

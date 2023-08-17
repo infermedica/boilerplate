@@ -19,3 +19,9 @@ export type ExplanationEvidence = {
   name: string,
   common_name?: string,
 }
+
+export type ExplanationResponse = {
+  supporting_evidence: ExplanationEvidence[],
+  conflicting_evidence: ExplanationEvidence[],
+  unconfirmed_evidence: ExplanationEvidence[],
+}

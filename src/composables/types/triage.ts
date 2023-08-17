@@ -15,5 +15,5 @@ export type TriageResponseType = {
   triage_level?: TriageLevelType,
   serious?: SeriousObservationType[],
   root_cause?: string,
-  teleconsultation_applicable?: string,
+  teleconsultation_applicable?: boolean,
 }

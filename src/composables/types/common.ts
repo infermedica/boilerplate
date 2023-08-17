@@ -17,7 +17,7 @@ export type TriageLevelType = 'emergency_ambulance' | 'emergency' | 'consultatio
 
 export type RecommendedChannelType = 'personal_visit' | 'video_teleconsultation' | 'audio_teleconsultation' | 'text_teleconsultation';
 
-export type ExtrasType = Record<string, unknown> | {};
+export type ExtrasType = Record<string, unknown>;
 
 export type ChoiceIdType = 'present' | 'absent' | 'unknown';
 

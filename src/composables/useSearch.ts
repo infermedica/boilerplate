@@ -26,8 +26,8 @@ export async function useSearch ( params: SearchParamsType ) {
 
   const URI = new URL(`${import.meta.env.VITE_API}/search`);
   const response = ref<AxiosResponse | null>(null);
-  const observationsList = ref<SearchResultType[] | []>([]);
   const error = ref<Error | AxiosError | null>(null);
+  const observations = ref<SearchResultType[] | null | []>(null);
 
   URI.searchParams.append('phrase', phrase);
   URI.searchParams.append('age.value', age.toString());
@@ -39,13 +39,13 @@ export async function useSearch ( params: SearchParamsType ) {
   await engineApi.get(URI.toString())
     .then((res: AxiosResponse) => {
       response.value = res;
-      observationsList.value = res.data;
+      observations.value = res.data;
     })
     .catch((err: AxiosError) => error.value = err);
 
   return {
     response: response.value,
-    observationsList: observationsList.value, 
+    observations: observations.value, 
     error: error.value,
   }
 }

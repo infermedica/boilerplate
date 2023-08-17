@@ -1,40 +1,64 @@
 import { 
+  AcutenessType,
   AgeRequestType,
   ExtrasType,
   EvidenceType,
   SexType,
+  PrevalenceType,
+  SeverityType,
+  TriageLevelType,
 } from '@/composables/types';
+
+export type ConditionDetailsModelCategoryType = {
+  id?: string,
+  name?: string,
+}
+
+export type ConditionDetailsModelType = {
+  icd10_code?: string,
+  category?: ConditionDetailsModelCategoryType,
+  prevalence?: PrevalenceType,
+  severity?: SeverityType,
+  acuteness?: AcutenessType,
+  triage_level?: TriageLevelType,
+  hint?: string,
+  has_patient_education?: boolean,
+}
 
 export type ConditionsItemType = {
   id: string,
   name: string,
-  name_common: string,
+  common_name?: string,
   probability: number,
+  condition_details?: ConditionDetailsModelType,
 }
 
-export type ChoicePresentType = {
-  id: 'present',
-  label: 'Yes',
+export enum ChoiceId {
+  Absent = 'absent',
+  Present = 'present',
+  Unknown = 'unknown',
 }
 
-export type ChoiceAbsentType = {
-  id: 'absent',
-  label: 'No',
-}
-
-export type ChoiceUnknownType = {
-  id: 'unknown',
-  label: 'Don\'t know',
+export type ChoiceType = {
+  id: ChoiceId;
+  label: string;
 }
 
 export type QuestionItemsType = {
   id: string,
   name: string,
-  choices: ChoicePresentType[] | ChoiceAbsentType[] | ChoiceUnknownType[],
+  choices: ChoiceType[],
+}
+
+export enum QuestionTypes {
+  GroupMultiple = 'group_multiple',
+  GroupSingle = 'group_single',
+  Single = 'single',
+  Duration = 'duration'
 }
 
 export type QuestionType = {
-  type: 'single' | 'group_single' | 'group_multiple',
+  type?: QuestionTypes,
   text: string,
   items: QuestionItemsType[],
   extras?: ExtrasType,

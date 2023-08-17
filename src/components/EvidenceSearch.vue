@@ -92,9 +92,9 @@ import {
   UiLoader,
 } from '@infermedica/component-library';
 import UiDropdownItem from '@infermedica/component-library/src/components/molecules/UiDropdown/_internal/UiDropdownItem.vue';
-import { useSearch, useDiagnosis, usePatientEducation } from '@/composables';
+import { useSearch } from '@/composables';
 import type { DropdownModelValue } from '@infermedica/component-library';
-import type { SearchResultType, ConditionsItemType } from '@/composables/types';
+import type { SearchResultType } from '@/composables/types';
 
 type EvidenceSearchProps = {
   modelValue: DropdownModelValue[] | [],
@@ -122,10 +122,11 @@ const inputAttrs = computed(() => ({
 }));
 const inputElement = computed(() => dropdowntoggle.value?.$el.querySelector('input'));
 const isLoading = ref(false);
-const searchResults = ref<SearchResultType[] | []>([]);
-const filteredResults: ComputedRef<SearchResultType[]> = computed(() => (
-  searchResults.value
-    .filter((result: SearchResultType) => (!props.evidenceIds.includes(result.id)))
+const searchResults = ref<SearchResultType[] | null>(null);
+const filteredResults: ComputedRef<SearchResultType[] | []> = computed(() => (
+   searchResults.value !== null 
+    ? searchResults.value?.filter((result: SearchResultType) => (!props.evidenceIds.includes(result.id)))
+    : []
 ));
 const hasResults = computed(() => (filteredResults.value.length > 0));
 function updateHandler(value: DropdownModelValue) {
@@ -144,41 +145,12 @@ async function inputHandler(
   if (inputValueTrimmed.length > 0) {
     open();
     searchQuery.value = inputValueTrimmed;
-    const {interview_token, conditions} = await useDiagnosis({
-  "sex": "male",
-  "age": {
-    "value": 30,
-    "unit": "year"
-  },
-  "evidence": [
-    {
-      "id": "s_1193",
-      "choice_id": "present",
-      "observed_at": "2020-06-02",
-      "source": "initial",
-      "duration": {
-        "value": 30,
-        "unit": "day"
-      }
-    }
-  ],
-  "evaluated_at": "2020-06-02",
-  "extras": {}
-})
-
-const {response, patient_education_document, error} = await usePatientEducation({
-  conditionId: (conditions as ConditionsItemType[])[0].id,
-  interviewToken: interview_token as string,
-})
-  console.log('response', response)
-  console.log('patient_education_document', patient_education_document)
-  console.log('error', error)
-    const { observationsList } = await useSearch({
+    const { observations } = await useSearch({
       phrase: value, 
       age: 32, 
       maxResults: props.maxResults,
     })
-    searchResults.value = observationsList;
+    searchResults.value = observations;
     
   } else if (inputValueTrimmed.length < 1) {
     close();

@@ -27,8 +27,9 @@ export type ParseRequestType = {
   concept_types?: string[],
 }
 
+// TODO: find model in API for this type
 export type ParseResponseType = {
-  mentions: MentionType[],
-  obvious: boolean,
-  tokens: string[],
+  mentions?: MentionType[],
+  obvious?: boolean,
+  tokens?: string[],
 }

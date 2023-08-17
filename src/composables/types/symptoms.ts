@@ -1,4 +1,5 @@
 import { 
+  AgeUnitType,
   ExtrasType,
   SexType,
   SeriousObservationSeriousnessType,
@@ -19,19 +20,33 @@ export type SymptomChildrenType = {
   parent_relation: ParentRelationType,
 }
 
-export type SymptomDetailsType = {
+export type SymptomType = {
   id: string,
   name: string,
   common_name?: string,
-  question: string,
-  question_third_person?: string,
   sex_filter: SexType | 'both',
   category?: string,
-  seriousness?: SeriousObservationSeriousnessType,
   extras?: ExtrasType,
-  children?: SymptomChildrenType[],
+  children: SymptomChildrenType[],
   image_url?: string,
   image_source?: string,
   parent_id?: string,
   parent_relation?: ParentRelationType,
+}
+
+export type SymptomDetailsType = SymptomType & {
+  question: string,
+  question_third_person?: string,
+  // TODO: find in api models
+  seriousness?: SeriousObservationSeriousnessType,
+}
+
+export type SymptomsParams = {
+  age: number,
+  ageUnit?: AgeUnitType,
+  enableTriage3?: boolean,
+}
+
+export type SymptomsByIdParams = SymptomsParams & {
+  symptomId: string,
 }

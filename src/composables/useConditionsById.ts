@@ -8,15 +8,8 @@ import {
   useSetAuthHeaders,
  } from '@/composables';
 import type {   
-  AcutenessType,
   ConditionsParamsType, 
   ConditionType,
-  ExtrasType,
-  PrevalenceType,
-  RecommendedChannelType,
-  SeverityType,
-  SexType,
-  TriageLevelType,
  } from '@/composables/types';
 
 export async function useConditionsById(
@@ -34,19 +27,19 @@ export async function useConditionsById(
 
   const URI = new URL(`${import.meta.env.VITE_API}/conditions/${conditionId}`);
   const response = ref<AxiosResponse | null>(null);
-  const condition = ref<ConditionType[] | []>([]);
   const error = ref<AxiosError | null>(null);
-  const id = ref<string>('');
-  const name = ref<string>('');
-  const common_name = ref<string>('');
-  const sex_filter = ref<SexType>('both');
-  const categories = ref<string[] | undefined>(undefined);
-  const prevelance = ref<PrevalenceType | undefined>(undefined);
-  const acuteness = ref<AcutenessType | undefined>(undefined);
-  const severity = ref<SeverityType | undefined>(undefined);
-  const extras = ref<ExtrasType | {}>({}); 
-  const triage_level = ref<TriageLevelType | undefined>(undefined); 
-  const recommended_channel = ref<RecommendedChannelType | undefined>(undefined);
+  const condition = ref<ConditionType | null>(null);
+  const id = ref<ConditionType['id'] | null>(null);
+  const name = ref<ConditionType['name'] | null>(null);
+  const common_name = ref<ConditionType['common_name'] | undefined>(undefined);
+  const sex_filter = ref<ConditionType['sex_filter'] | null>(null);
+  const categories = ref<ConditionType['categories'] | undefined>(undefined);
+  const prevelance = ref<ConditionType['prevalence'] | undefined>(undefined);
+  const acuteness = ref<ConditionType['acuteness'] | undefined>(undefined);
+  const severity = ref<ConditionType['severity'] | undefined>(undefined);
+  const extras = ref<ConditionType['extras'] | {}>({}); 
+  const triage_level = ref<ConditionType['triage_level'] | undefined>(undefined); 
+  const recommended_channel = ref<ConditionType['recommended_channel'] | undefined>(undefined);
 
   URI.searchParams.append('age.value', age.toString());
   ageUnit && URI.searchParams.append('age.unit', ageUnit);

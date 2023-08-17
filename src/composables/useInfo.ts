@@ -16,11 +16,11 @@ export async function useInfo () {
   const response = ref<AxiosResponse | null>(null);
   const error = ref<Error | AxiosError | null>(null);
   const api_version = ref<InfoType['api_version'] | undefined>(undefined);
-  const updated_at = ref<InfoType['updated_at'] | undefined>(undefined);
-  const conditions_count = ref<InfoType['conditions_count'] | undefined>(undefined);
-  const symptoms_count = ref<InfoType['symptoms_count'] | undefined>(undefined);
-  const risk_factors_count = ref<InfoType['risk_factors_count'] | undefined>(undefined);
-  const lab_tests_count = ref<InfoType['lab_tests_count'] | undefined>(undefined);
+  const updated_at = ref<InfoType['updated_at'] | null>(null);
+  const conditions_count = ref<InfoType['conditions_count'] | null>(null);
+  const symptoms_count = ref<InfoType['symptoms_count'] | null>(null);
+  const risk_factors_count = ref<InfoType['risk_factors_count'] | null>(null);
+  const lab_tests_count = ref<InfoType['lab_tests_count'] | null>(null);
 
   await engineApi.get(URI.toString())
     .then((res: AxiosResponse) => {

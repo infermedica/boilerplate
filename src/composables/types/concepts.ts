@@ -1,13 +1,13 @@
-export type ConceptItemModelType = 'condition' | 'symptom' | 'risk_factor' | 'lab_test';
+export type ConceptItemModelTypesType = 'condition' | 'symptom' | 'risk_factor' | 'lab_test';
 
-export type ConceptItemModel = {
+export type ConceptItemModelType = {
   id?: string,
-  type?: ConceptItemModelType,
+  type?: ConceptItemModelTypesType,
   name?: string,
   common_name?: string
 }
 
-export type ConceptsParamType = {
+export type ConceptsParamsType = {
   ids?: string[],
   types?: ConceptItemModelType[],
 }
