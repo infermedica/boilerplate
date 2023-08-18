@@ -11,3 +11,7 @@ export type ConceptsParamsType = {
   ids?: string[],
   types?: ConceptItemModelType[],
 }
+
+export type ConceptsByIdParamsType = {
+  id: string,
+}

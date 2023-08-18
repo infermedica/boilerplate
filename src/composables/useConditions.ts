@@ -15,7 +15,6 @@ import type {
 export async function useConditions(params: ConditionsParamsType) {
   const {
     age,
-    ageUnit, 
     enableTriage3,
     includeInternal,
   } = params;
@@ -27,8 +26,8 @@ export async function useConditions(params: ConditionsParamsType) {
   const error = ref<AxiosError | null>(null);
   const conditions = ref<ConditionType[] | null>(null);
 
-  URI.searchParams.append('age.value', age.toString());
-  ageUnit && URI.searchParams.append('age.unit', ageUnit);
+  URI.searchParams.append('age.value', age.value.toString());
+  age.unit && URI.searchParams.append('age.unit', age.unit);
   enableTriage3 !== undefined && URI.searchParams.append('enable_triage_3', `${enableTriage3}`);
   includeInternal !== undefined && URI.searchParams.append('include_internal', `${includeInternal}`);
 

@@ -8,35 +8,35 @@ import {
   useSetAuthHeaders,
  } from '@/composables';
  import type {
-  RationaleResponse,
-  RationaleRequest,
+  RationaleResponseType,
+  DiagnosisRequestType,
  } from '@/composables/types';
 
- export async function useRationale (requestBody: RationaleRequest) {
+ export async function useRationale (requestBody: DiagnosisRequestType) {
   
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   
   const URI = new URL(`${import.meta.env.VITE_API}/rationale`);
-  const response = ref<AxiosResponse<RationaleResponse> | null>(null);
+  const response = ref<AxiosResponse<RationaleResponseType> | null>(null);
   const error = ref<AxiosError | null>(null);
-  const type = ref<RationaleResponse['type'] | null>(null);
-  const observation_params = ref<RationaleResponse['observation_params'] | undefined>(undefined);
-  const condition_params = ref<RationaleResponse['condition_params'] | undefined>(undefined);
+  const type = ref<RationaleResponseType['type'] | null>(null);
+  const observationParams = ref<RationaleResponseType['observation_params'] | undefined>(undefined);
+  const conditionParams = ref<RationaleResponseType['condition_params'] | undefined>(undefined);
 
   await engineApi.post(URI.toString(), requestBody)
     .then((res: AxiosResponse) => {
       response.value = res;
       type.value = res.data.type;
-      observation_params.value = res.data.observation_params;
-      condition_params.value = res.data.condition_params;
+      observationParams.value = res.data.observation_params;
+      conditionParams.value = res.data.condition_params;
     })
     .catch((err: AxiosError) => error.value = err);
 
   return {
     response: response.value,
     type: type.value,
-    observation_params: observation_params.value,
-    condition_params: condition_params.value,
+    observationParams: observationParams.value,
+    conditionParams: conditionParams.value,
     error: error.value,
   }
 }

@@ -1,17 +1,13 @@
 import axios from 'axios';
+import type { EngineApiConfigType } from '@/composables/types';
 
-export function useSetAuthHeaders( engineApiConfig: {
-  baseURL: string,
-  appId: string, 
-  appKey: string,
-  interviewToken?: string,
-  }) {
+export function useSetAuthHeaders( engineApiConfig: EngineApiConfigType) {
 
   const {
     baseURL,
     appId,
     appKey,
-    interviewToken,
+    // interviewToken,
   } = engineApiConfig;
   const engineApi = axios.create({
     baseURL: baseURL,

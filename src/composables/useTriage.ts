@@ -19,27 +19,27 @@ import {
   const URI = new URL(`${import.meta.env.VITE_API}/triage`);
   const response = ref<AxiosResponse<TriageResponseType> | null>(null);
   const error = ref<AxiosError | null>(null);
-  const triage_level = ref<TriageResponseType['triage_level'] | undefined>(undefined);
+  const triageLevel = ref<TriageResponseType['triage_level'] | undefined>(undefined);
   const serious = ref<TriageResponseType['serious'] | undefined>(undefined);
-  const root_cause = ref<TriageResponseType['root_cause'] | undefined>(undefined);
-  const teleconsultation_applicable = ref<TriageResponseType['teleconsultation_applicable'] | undefined>(undefined);
+  const rootCause = ref<TriageResponseType['root_cause'] | undefined>(undefined);
+  const teleconsultationApplicable = ref<TriageResponseType['teleconsultation_applicable'] | undefined>(undefined);
 
   await engineApi.post(URI.toString(), request)
     .then((res: AxiosResponse) => {
       response.value = res;
-      triage_level.value = res.data.triage_level;
+      triageLevel.value = res.data.triage_level;
       serious.value = res.data.serious;
-      root_cause.value = res.data.root_cause;
-      teleconsultation_applicable.value = res.data.teleconsultation_applicable;
+      rootCause.value = res.data.root_cause;
+      teleconsultationApplicable.value = res.data.teleconsultation_applicable;
     })
     .catch((err: AxiosError) => error.value = err);
 
   return {
     response: response.value,
-    triage_level: triage_level.value,
+    triageLevel: triageLevel.value,
     serious: serious.value,
-    root_cause: root_cause.value,
-    teleconsultation_applicable: teleconsultation_applicable.value,
+    rootCause: rootCause.value,
+    teleconsultationApplicable: teleconsultationApplicable.value,
     error: error.value,
   }
  }

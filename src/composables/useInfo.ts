@@ -15,33 +15,33 @@ export async function useInfo () {
   const URI = new URL(`${import.meta.env.VITE_API}/info`);
   const response = ref<AxiosResponse | null>(null);
   const error = ref<Error | AxiosError | null>(null);
-  const api_version = ref<InfoType['api_version'] | undefined>(undefined);
-  const updated_at = ref<InfoType['updated_at'] | null>(null);
-  const conditions_count = ref<InfoType['conditions_count'] | null>(null);
-  const symptoms_count = ref<InfoType['symptoms_count'] | null>(null);
-  const risk_factors_count = ref<InfoType['risk_factors_count'] | null>(null);
-  const lab_tests_count = ref<InfoType['lab_tests_count'] | null>(null);
+  const apiVersion = ref<InfoType['api_version'] | undefined>(undefined);
+  const updatedAt = ref<InfoType['updated_at'] | null>(null);
+  const conditionsCount = ref<InfoType['conditions_count'] | null>(null);
+  const symptomsCount = ref<InfoType['symptoms_count'] | null>(null);
+  const riskFactorsCount = ref<InfoType['risk_factors_count'] | null>(null);
+  const labTestsCount = ref<InfoType['lab_tests_count'] | null>(null);
 
   await engineApi.get(URI.toString())
     .then((res: AxiosResponse) => {
       response.value = res;
-      api_version.value = res.data.api_version;
-      updated_at.value = res.data.updated_at;
-      conditions_count.value = res.data.conditions_count;
-      symptoms_count.value = res.data.symptoms_count;
-      risk_factors_count.value = res.data.risk_factors_count;
-      lab_tests_count.value = res.data.lab_tests_count;
+      apiVersion.value = res.data.api_version;
+      updatedAt.value = res.data.updated_at;
+      conditionsCount.value = res.data.conditions_count;
+      symptomsCount.value = res.data.symptoms_count;
+      riskFactorsCount.value = res.data.risk_factors_count;
+      labTestsCount.value = res.data.lab_tests_count;
     })
     .catch((err: AxiosError) => error.value = err);
 
   return {
     response: response.value,
-    api_version: api_version.value,
-    updated_at: updated_at.value,
-    conditions_count: conditions_count.value,
-    symptoms_count: symptoms_count.value,
-    risk_factors_count: risk_factors_count.value,
-    lab_tests_count: lab_tests_count.value,
+    apiVersion: apiVersion.value,
+    updatedAt: updatedAt.value,
+    conditionsCount: conditionsCount.value,
+    symptomsCount: symptomsCount.value,
+    riskFactorsCount: riskFactorsCount.value,
+    labTestsCount: labTestsCount.value,
     error: error.value,
   }
 }

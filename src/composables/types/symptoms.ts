@@ -1,5 +1,5 @@
 import { 
-  AgeUnitType,
+  AgeRequestType,
   ExtrasType,
   SexType,
   SeriousObservationSeriousnessType,
@@ -41,12 +41,11 @@ export type SymptomDetailsType = SymptomType & {
   seriousness?: SeriousObservationSeriousnessType,
 }
 
-export type SymptomsParams = {
-  age: number,
-  ageUnit?: AgeUnitType,
+export type SymptomsParamsType = {
+  age: AgeRequestType,
   enableTriage3?: boolean,
 }
 
-export type SymptomsByIdParams = SymptomsParams & {
+export type SymptomsByIdParams = SymptomsParamsType & {
   symptomId: string,
 }

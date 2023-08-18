@@ -9,14 +9,13 @@ import {
 } from '@/composables';
 import type { 
   SymptomType,
-  SymptomsParams,
+  SymptomsParamsType,
  } from './types';
 
-export async function useSymptoms ( params: SymptomsParams ) {
+export async function useSymptoms ( params: SymptomsParamsType ) {
 
   const {
     age,
-    ageUnit,
     enableTriage3
   } = params;
 
@@ -27,8 +26,8 @@ export async function useSymptoms ( params: SymptomsParams ) {
   const error = ref<AxiosError | null>(null);
   const symptoms= ref<SymptomType[]>([]);
 
-  URI.searchParams.append('age.value', age.toString());
-  ageUnit && URI.searchParams.append('age.unit', ageUnit);
+  URI.searchParams.append('age.value', age.value.toString());
+  age.unit && URI.searchParams.append('age.unit', age.unit);
   enableTriage3 && URI.searchParams.append('enable_triage_3', enableTriage3.toString());
 
   await engineApi.get(URI.toString())

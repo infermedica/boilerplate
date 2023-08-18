@@ -1,27 +1,17 @@
-import { 
-  AgeRequestType,
-  EvidenceType,
-  ExtrasType,
-  SexType,
-} from "@/composables/types";
+import { DiagnosisRequestType } from "@/composables/types";
 
-export type ExplanationRequest = {
-  sex: SexType,
-  age: AgeRequestType,
-  evidence?: EvidenceType[],
-  evaluated_at?: string,
-  extras?: ExtrasType,
+export type ExplanationRequestType = DiagnosisRequestType & {
   target: string,
 }
 
-export type ExplanationEvidence = {
+export type ExplanationEvidenceType = {
   id: string,
   name: string,
   common_name?: string,
 }
 
-export type ExplanationResponse = {
-  supporting_evidence: ExplanationEvidence[],
-  conflicting_evidence: ExplanationEvidence[],
-  unconfirmed_evidence: ExplanationEvidence[],
+export type ExplanationResponseType = {
+  supporting_evidence: ExplanationEvidenceType[],
+  conflicting_evidence: ExplanationEvidenceType[],
+  unconfirmed_evidence: ExplanationEvidenceType[],
 }

@@ -1,9 +1,4 @@
-import type { 
-AgeRequestType,
-  EvidenceType,
-  ExtrasType,
-  SexType,
-} from '@/composables/types'
+import type { DiagnosisRequestType } from '@/composables/types'
 
 export type SuggestResult = {
   id: string,
@@ -11,14 +6,13 @@ export type SuggestResult = {
   common_name?: string,
 }
 
-export type SuggestMethod = 'symptoms' | 'demographic_risk_factors' | 'evidence_based_risk_factors' | 'red_flags';
+export type SuggestMethod = 
+  | 'symptoms' 
+  | 'demographic_risk_factors' 
+  | 'evidence_based_risk_factors' 
+  | 'red_flags';
 
-export type SuggestRequest = {
-  sex: SexType,
-  age: AgeRequestType,
-  evidence?: EvidenceType[],
-  evaluated_at?: string,
-  extras?: ExtrasType,
+export type SuggestRequest = DiagnosisRequestType & {
   suggest_method?: SuggestMethod,
 }
 

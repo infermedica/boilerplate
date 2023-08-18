@@ -23,7 +23,7 @@ import type {
   
   const URI = new URL(`${import.meta.env.VITE_API}/suggest`);
   const response = ref<AxiosResponse | null>(null);
-  const suggest = ref<SuggestResult[]>([]);
+  const suggest = ref<SuggestResult[] | null>(null);
   const error = ref<AxiosError | null>(null);
 
   maxResults && URI.searchParams.append('max_results', maxResults.toString());

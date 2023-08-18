@@ -1,13 +1,12 @@
 import { 
-  AgeUnitType,
+  AgeRequestType,
   ObservationType,
   SexType,
 } from '@/composables/types';
 
 export type SearchParamsType = {
   phrase: string, 
-  age: number, 
-  ageUnit?: AgeUnitType, 
+  age: AgeRequestType, 
   sex?: SexType,
   maxResults?: number,
   types?: ObservationType, 

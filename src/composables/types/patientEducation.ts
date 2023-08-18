@@ -9,8 +9,32 @@ export type SectionsType =
   | 'disclaimer'
   | 'sources';
 
-  export type PatientEducationParams = {
-    conditionId: string,
-    interviewToken: string,
-    sections?: SectionsType[],
-  }
+export type PatientEducationParamsType = {
+  conditionId: string,
+  interviewToken: string,
+  sections?: SectionsType[],
+}
+
+type NodeType = 
+  | 'paragraph'
+  | 'heading-1'
+  | 'heading-2'
+  | 'heading-3'
+  | 'link'
+  | 'text'
+  | 'unordered-list'
+  | 'ordered-list'
+  | 'list-item';
+
+export type Node = {
+  content?: Node[];
+  name?: string;
+  node_type: NodeType;
+  target?: string;
+  value?: string;
+  title?: Node;
+}
+
+export type PatientEducationType = {
+  [key: string]: Node | Node[];
+}

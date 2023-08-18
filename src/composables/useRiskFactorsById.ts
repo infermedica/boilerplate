@@ -8,21 +8,15 @@ import {
   useSetAuthHeaders,
 } from '@/composables';
 import type { 
-  AgeUnitType,
   RiskFactorDetailsType,
+  RiskFactorsByIdParams,
 } from '@/composables/types';
 
-export async function useRiskFactorsById (params: {
-  riskFactorsId: string,
-  age: number,
-  ageUnit?: AgeUnitType,
-  enable_triage_3?: boolean,
-}) {
+export async function useRiskFactorsById ( params: RiskFactorsByIdParams ) {
   const {
     riskFactorsId,
     age,
-    ageUnit,
-    enable_triage_3,
+    enableTriage3,
   } = params;
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
@@ -32,32 +26,32 @@ export async function useRiskFactorsById (params: {
   const error = ref<AxiosError | null>(null);
   const id = ref<RiskFactorDetailsType['id'] | null>(null);
   const name = ref<RiskFactorDetailsType['name'] | null>(null);
-  const common_name = ref<RiskFactorDetailsType['common_name'] | undefined>(undefined);
+  const commonName = ref<RiskFactorDetailsType['common_name'] | undefined>(undefined);
   const question = ref<RiskFactorDetailsType['question'] | null>(null);
-  const question_third_person = ref<RiskFactorDetailsType['question_third_person'] | undefined>(undefined);
-  const sex_filter = ref<RiskFactorDetailsType['sex_filter'] | null>(null);
+  const questionThirdPerson = ref<RiskFactorDetailsType['question_third_person'] | undefined>(undefined);
+  const sexFilter = ref<RiskFactorDetailsType['sex_filter'] | null>(null);
   const category = ref<RiskFactorDetailsType['category'] | undefined>(undefined);
   const extras = ref<RiskFactorDetailsType['extras'] | undefined>(undefined);
-  const image_url = ref<RiskFactorDetailsType['image_url'] | undefined>(undefined);
-  const image_source = ref<RiskFactorDetailsType['image_source'] | undefined>(undefined);
+  const imageUrl = ref<RiskFactorDetailsType['image_url'] | undefined>(undefined);
+  const imageSource = ref<RiskFactorDetailsType['image_source'] | undefined>(undefined);
 
-  URI.searchParams.append('age.value', age.toString());
-  ageUnit && URI.searchParams.append('age.unit', ageUnit);
-  enable_triage_3 && URI.searchParams.append('enable_triage_3', enable_triage_3.toString());
+  URI.searchParams.append('age.value', age.value.toString());
+  age.unit && URI.searchParams.append('age.unit', age.unit);
+  enableTriage3 && URI.searchParams.append('enable_triage_3', enableTriage3.toString());
 
   await engineApi.get(URI.toString())
     .then((res: AxiosResponse) => {
       response.value = res;
       id.value = res.data.id;
       name.value = res.data.name;
-      common_name.value = res.data.common_name;
+      commonName.value = res.data.common_name;
       question.value = res.data.question;
-      question_third_person.value = res.data.question_third_person;
-      sex_filter.value = res.data.sex_filter;
+      questionThirdPerson.value = res.data.question_third_person;
+      sexFilter.value = res.data.sex_filter;
       category.value = res.data.category;
       extras.value = res.data.extras;
-      image_url.value = res.data.image_url;
-      image_source.value = res.data.image_source;
+      imageUrl.value = res.data.image_url;
+      imageSource.value = res.data.image_source;
     })
     .catch((err: AxiosError) => error.value = err);
   
@@ -65,14 +59,14 @@ export async function useRiskFactorsById (params: {
     response: response.value,
     id: id.value,
     name: name.value,
-    common_name: common_name.value,
+    commonName: commonName.value,
     question: question.value,
-    question_third_person: question_third_person.value,
-    sex_filter: sex_filter.value,
+    questionThirdPerson: questionThirdPerson.value,
+    sexFilter: sexFilter.value,
     category: category.value,
     extras: extras.value,
-    image_url: image_url.value,
-    image_source: image_source.value,
+    imageUrl: imageUrl.value,
+    imageSource: imageSource.value,
     error: error.value,
   }
 }

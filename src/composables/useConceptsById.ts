@@ -7,9 +7,14 @@ import {
   engineApiConfig,
   useSetAuthHeaders,
 } from '@/composables';
-import type { ConceptItemModelType } from '@/composables/types';
+import type { 
+  ConceptsByIdParamsType,
+  ConceptItemModelType,
+ } from '@/composables/types';
 
-export async function useConceptsById ( id: string ) {
+export async function useConceptsById (params: ConceptsByIdParamsType) {
+
+  const { id } = params;
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 

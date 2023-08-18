@@ -147,7 +147,9 @@ async function inputHandler(
     searchQuery.value = inputValueTrimmed;
     const { observations } = await useSearch({
       phrase: value, 
-      age: 32, 
+      age: {
+        value: 32,
+      }, 
       maxResults: props.maxResults,
     })
     searchResults.value = observations;

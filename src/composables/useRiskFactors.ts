@@ -15,8 +15,7 @@ import type {
 export async function useRiskFactors ( params: RiskFactorsParams ) {
   const {
     age,
-    ageUnit,
-    enable_triage_3,
+    enableTriage3,
   } = params;
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
@@ -26,9 +25,9 @@ export async function useRiskFactors ( params: RiskFactorsParams ) {
   const error = ref<AxiosError | null>(null);
   const riskFactors = ref<RiskFactorType[]>([]);
 
-  URI.searchParams.append('age.value', age.toString());
-  ageUnit && URI.searchParams.append('age.unit', ageUnit);
-  enable_triage_3 && URI.searchParams.append('enable_triage_3', enable_triage_3.toString());
+  URI.searchParams.append('age.value', age.value.toString());
+  age.unit && URI.searchParams.append('age.unit', age.unit);
+  enableTriage3 && URI.searchParams.append('enable_triage_3', enableTriage3.toString());
 
   await engineApi.get(URI.toString())
     .then((res: AxiosResponse) => {

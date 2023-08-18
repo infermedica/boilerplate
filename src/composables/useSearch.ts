@@ -16,7 +16,6 @@ export async function useSearch ( params: SearchParamsType ) {
   const {
     phrase,
     age,
-    ageUnit,
     sex,
     maxResults,
     types,
@@ -30,8 +29,8 @@ export async function useSearch ( params: SearchParamsType ) {
   const observations = ref<SearchResultType[] | null | []>(null);
 
   URI.searchParams.append('phrase', phrase);
-  URI.searchParams.append('age.value', age.toString());
-  ageUnit && URI.searchParams.append('age.unit', ageUnit);
+  URI.searchParams.append('age.value', age.value.toString());
+  age.unit && URI.searchParams.append('age.unit', age.unit);
   sex && URI.searchParams.append('sex', sex.toString());
   maxResults && URI.searchParams.append('max_results', maxResults.toString());
   types && URI.searchParams.append('types', types);

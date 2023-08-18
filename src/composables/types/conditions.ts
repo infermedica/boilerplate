@@ -1,6 +1,6 @@
 import { 
   AcutenessType,
-  AgeUnitType,
+  AgeRequestType,
   ExtrasType,
   PrevalenceType,
   RecommendedChannelType,
@@ -10,8 +10,7 @@ import {
 } from '@/composables/types';
 
 export type ConditionsParamsType = {
-  age: number,
-  ageUnit?: AgeUnitType, 
+  age: AgeRequestType,
   enableTriage3?: boolean,
   includeInternal?: boolean,
 }
@@ -28,4 +27,9 @@ export type ConditionType = {
   extras?: ExtrasType,
   triage_level?: TriageLevelType,
   recommended_channel?: RecommendedChannelType,
+}
+
+export type ConditionsByIdParamsType = {
+  conditionId: string, 
+  conditionsParams: ConditionsParamsType,
 }

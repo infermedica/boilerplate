@@ -1,5 +1,6 @@
 import { 
-ExtrasType,
+  AgeRequestType,
+  ExtrasType,
   SexType,
  } from "@/composables/types";
 
@@ -20,7 +21,10 @@ export type RiskFactorDetailsType = RiskFactorType & {
 }
 
 export type RiskFactorsParams = {
-  age: number,
-  ageUnit?: AgeUnitType,
-  enable_triage_3?: boolean,
+  age: AgeRequestType,
+  enableTriage3?: boolean,
+}
+
+export type RiskFactorsByIdParams = RiskFactorsParams & {
+  riskFactorsId: string,
 }
