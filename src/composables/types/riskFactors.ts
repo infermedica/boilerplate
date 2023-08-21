@@ -1,9 +1,11 @@
 import { 
   AgeRequestType,
   ExtrasType,
+  SeriousObservationSeriousnessType,
   SexType,
  } from "@/composables/types";
 
+ // TODO find correct type
  export type RiskFactorType = {
   id: string,
   name: string,
@@ -13,6 +15,7 @@ import {
   extras?: ExtrasType,
   image_url?: string,
   image_source?: string,
+  seriousness?: SeriousObservationSeriousnessType
 }
 
 export type RiskFactorDetailsType = RiskFactorType & {

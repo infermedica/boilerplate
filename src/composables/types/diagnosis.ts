@@ -25,7 +25,7 @@ export type ConditionDetailsModelType = {
   has_patient_education?: boolean,
 }
 
-export type ConditionsItemType = {
+export type ConditionProbabilityType = {
   id: string,
   name: string,
   common_name?: string,
@@ -74,7 +74,7 @@ export type DiagnosisRequestType = {
 
 export type DiagnosisResponseType = {
   question?: QuestionType,
-  conditions?: ConditionsItemType[],
+  conditions?: ConditionProbabilityType[],
   extras?: ExtrasType,
   has_emergency_evidence?: boolean,
   should_stop?: boolean,

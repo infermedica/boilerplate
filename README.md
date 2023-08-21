@@ -1,12 +1,83 @@
-# Vue 3 + TypeScript + Vite
+## ⚙️ Requirements
+- **Node** minimum version `16.13.2`
+- Additionally, instead of **npm** we decided to use [pnpm](https://pnpm.io/)
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 💡 Env file
+This is basic environment variables file type:
+   - `.env` -  holds the environment values. Here or in `.env.local` should add your **Infermedica's API** `APP_KEY`, `APP_ID` and `MODEL`
+## ⚡️ Quick start
+1. Install `Node`
+2. Install `pnpm`
+3. Install dependencies `pnpm install`
+4. Create `.env.local`, add `VITE_APP_ID`, `VITE_APP_KEY` and `MODEL` with data from your [Infermedica's App](https://developer.infermedica.com/) developer panel
+5. Start the project, `pnpm run dev`
 
-## Recommended IDE Setup
+
+## 📂 About project
+[Infermedica Component Library](https://github.com/infermedica/component-library) allows to make application faster. When we connect [Infermedica API](https://developer.infermedica.com/) and Infermedica Component Library we make a comprehensive solution to create an application using Infermedica API. We want to improve API Developer Experience with a set of functions to handle API reference.
+
+This project base on Vue 3, TypeScript and Vite.
+
+Each of composables refers to one of Infermedica API endpoint. Depend on response composable can return an object or an array of objects. Some of composables needs params to correctly send request.
+
+## 📌 Example
+#### *useSearch*
+```
+import { useSearch } from '@/composables';
+
+const { observations } = await useSearch({
+   phrase: value, 
+   age: { 
+      value: 32,
+      unit: 'year',
+   }, 
+   sex: 'female',
+   maxResults: 8,
+   types: ['condition', 'risk_factor'],
+});
+
+```
+#### *useTriage*
+
+```
+import { useTriage } from '@/composables';
+
+const {
+   triageLevel,
+   serious,
+   rootCause,
+   teleconsultationApplicable,
+   response,
+} = await useTriage({
+      sex: 'male',
+      age: {
+        value: 30,
+        unit: 'year'
+      },
+      evidence: [
+        {
+          id: 's_1193',
+          choice_id: 'present',
+          observed_at: '2023-08-21',
+          source: 'initial',
+          duration: {
+            value: 30,
+            unit: 'day'
+          }
+        }
+      ],
+      evaluated_at: '2023-08-21',
+      extras: {}
+  })
+```
+
+---
+
+### 🤖 Recommended IDE Setup
 
 - [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Type Support For `.vue` Imports in TS
+### 📎 Type Support For `.vue` Imports in TS
 
 TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
 

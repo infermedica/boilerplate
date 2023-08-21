@@ -14,25 +14,38 @@ import type {
 
 export async function useConceptsById (params: ConceptsByIdParamsType) {
 
-  const { id } = params;
+  const { conceptsId } = params;
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
-  const URI = new URL(`${import.meta.env.VITE_API}/concepts/${id}`);
+  const URI = new URL(`${import.meta.env.VITE_API}/concepts/${conceptsId}`);
   const response = ref<AxiosResponse | null>(null);
   const error = ref<AxiosError | null>(null);
-  const conceptsItemModel = ref<ConceptItemModelType | null>(null);
+  const conceptItemModel = ref<ConceptItemModelType | null>(null);
+  
+  const id = ref<ConceptItemModelType['id'] | undefined>(undefined);
+  const type = ref<ConceptItemModelType['type'] | undefined>(undefined);
+  const name = ref<ConceptItemModelType['name'] | undefined>(undefined);
+  const commonName = ref<ConceptItemModelType['common_name'] | undefined>(undefined);
 
   await engineApi.get(URI.toString())
     .then((res: AxiosResponse) => {
       response.value = res;
-      conceptsItemModel.value = res.data;
+      id.value = res.data.id;
+      type.value = res.data.type;
+      name.value = res.data.name;
+      commonName.value = res.data.common_name;
+      conceptItemModel.value = res.data;
     })
     .catch((err: AxiosError) => error.value = err);
   
   return {
     response: response.value,
-    conceptsItemModel: conceptsItemModel.value, 
+    conceptItemModel: conceptItemModel.value,
+    id: id.value,
+    type: type.value,
+    name: name.value,
+    commonName: commonName.value,
     error: error.value,
   }
 }

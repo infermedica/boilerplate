@@ -33,7 +33,7 @@ export async function useSearch ( params: SearchParamsType ) {
   age.unit && URI.searchParams.append('age.unit', age.unit);
   sex && URI.searchParams.append('sex', sex.toString());
   maxResults && URI.searchParams.append('max_results', maxResults.toString());
-  types && URI.searchParams.append('types', types);
+  types && URI.searchParams.append('types', types.join(','));
 
   await engineApi.get(URI.toString())
     .then((res: AxiosResponse) => {

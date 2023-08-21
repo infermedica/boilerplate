@@ -34,6 +34,7 @@ export async function useRiskFactorsById ( params: RiskFactorsByIdParams ) {
   const extras = ref<RiskFactorDetailsType['extras'] | undefined>(undefined);
   const imageUrl = ref<RiskFactorDetailsType['image_url'] | undefined>(undefined);
   const imageSource = ref<RiskFactorDetailsType['image_source'] | undefined>(undefined);
+  const seriousness = ref<RiskFactorDetailsType['seriousness'] | undefined>(undefined);
 
   URI.searchParams.append('age.value', age.value.toString());
   age.unit && URI.searchParams.append('age.unit', age.unit);
@@ -52,6 +53,7 @@ export async function useRiskFactorsById ( params: RiskFactorsByIdParams ) {
       extras.value = res.data.extras;
       imageUrl.value = res.data.image_url;
       imageSource.value = res.data.image_source;
+      seriousness.value = res.data.seriousness;
     })
     .catch((err: AxiosError) => error.value = err);
   
@@ -67,6 +69,7 @@ export async function useRiskFactorsById ( params: RiskFactorsByIdParams ) {
     extras: extras.value,
     imageUrl: imageUrl.value,
     imageSource: imageSource.value,
+    seriousness: seriousness.value,
     error: error.value,
   }
 }

@@ -9,7 +9,7 @@ export type SearchParamsType = {
   age: AgeRequestType, 
   sex?: SexType,
   maxResults?: number,
-  types?: ObservationType, 
+  types?: ObservationType[], 
 }
 
 export type SearchResultType = {

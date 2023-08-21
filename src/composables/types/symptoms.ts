@@ -27,7 +27,7 @@ export type SymptomType = {
   sex_filter: SexType | 'both',
   category?: string,
   extras?: ExtrasType,
-  children: SymptomChildrenType[],
+  children?: SymptomChildrenType[],
   image_url?: string,
   image_source?: string,
   parent_id?: string,

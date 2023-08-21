@@ -13,5 +13,5 @@ export type ConceptsParamsType = {
 }
 
 export type ConceptsByIdParamsType = {
-  id: string,
+  conceptsId: string,
 }
