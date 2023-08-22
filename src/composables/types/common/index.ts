@@ -4,6 +4,7 @@ export * from './choiceId';
 export * from './engineApiConfig';
 export * from './evidence';
 export * from './extras';
+export * from './objectValues';
 export * from './observation';
 export * from './prevalence';
 export * from './recommendedChannel';

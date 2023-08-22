@@ -4,6 +4,7 @@ import {
   ExtrasType,
   EvidenceType,
   SexType,
+  ObjectValues,
   PrevalenceType,
   SeverityType,
   TriageLevelType,
@@ -33,14 +34,16 @@ export type ConditionProbabilityType = {
   condition_details?: ConditionDetailsModelType,
 }
 
-export enum ChoiceId {
-  Absent = 'absent',
-  Present = 'present',
-  Unknown = 'unknown',
-}
+const CHOICE_ID = {
+  ABSENT: 'absent',
+  PRESENT: 'present',
+  UNKNOWN: 'unknown',
+} as const;
+
+export type ChoiceIdType = ObjectValues<typeof CHOICE_ID>
 
 export type ChoiceType = {
-  id: ChoiceId;
+  id: ChoiceIdType;
   label: string;
 }
 
@@ -50,12 +53,14 @@ export type QuestionItemsType = {
   choices: ChoiceType[],
 }
 
-export enum QuestionTypes {
-  GroupMultiple = 'group_multiple',
-  GroupSingle = 'group_single',
-  Single = 'single',
-  Duration = 'duration'
-}
+const QUESTION = {
+  GROUP_MULTIPLE: 'group_multiple',
+  GROUP_SINGLE: 'group_single',
+  SINGLE: 'single',
+  DURATION: 'duration',
+} as const;
+
+export type QuestionTypes = ObjectValues<typeof QUESTION>;
 
 export type QuestionType = {
   type?: QuestionTypes,

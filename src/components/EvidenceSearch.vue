@@ -93,20 +93,18 @@ import {
 } from '@infermedica/component-library';
 import UiDropdownItem from '@infermedica/component-library/src/components/molecules/UiDropdown/_internal/UiDropdownItem.vue';
 import { useSearch } from '@/composables';
-import type { DropdownModelValue } from '@infermedica/component-library';
 import type { SearchResultType } from '@/composables/types';
 
 type EvidenceSearchProps = {
-  modelValue: DropdownModelValue[] | [],
+  age: number,
   evidenceIds?: string[],
   maxResults?: number,
 }
 const props = withDefaults(defineProps<EvidenceSearchProps>(), {
-  modelValue: () => ([]),
   evidenceIds: () => ([]),
-  maxResults: 100,
+  maxResults: 10,
 })
-const emit = defineEmits(['update:modelValue']);
+
 const searchQuery = ref('');
 const dropdowntoggle = ref<ComponentPublicInstance<HTMLInputElement>>();
 const isDropdownOpened = ref(false);
@@ -129,8 +127,7 @@ const filteredResults: ComputedRef<SearchResultType[] | []> = computed(() => (
     : []
 ));
 const hasResults = computed(() => (filteredResults.value.length > 0));
-function updateHandler(value: DropdownModelValue) {
-  emit('update:modelValue', [...props.modelValue, value]);
+function updateHandler() {
   searchQuery.value = '';
 }
 async function inputHandler(
@@ -148,7 +145,7 @@ async function inputHandler(
     const { observations } = await useSearch({
       phrase: value, 
       age: {
-        value: 32,
+        value: props.age,
       }, 
       maxResults: props.maxResults,
     })

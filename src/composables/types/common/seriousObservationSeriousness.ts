@@ -1,5 +1,5 @@
 export type SeriousObservationSeriousnessType = 
   | 'emergency' 
   | 'normal' 
-  |  'serious' 
-  |  'emergency_ambulance';
+  | 'serious' 
+  | 'emergency_ambulance';
