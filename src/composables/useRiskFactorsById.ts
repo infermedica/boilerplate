@@ -21,7 +21,6 @@ export async function useRiskFactorsById ( params: RiskFactorsByIdParams ) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
-  const URI = new URL(`${import.meta.env.VITE_API}/risk_factors/${riskFactorsId}`);
   const response = ref<AxiosResponse | null>(null);
   const error = ref<AxiosError | null>(null);
   const id = ref<RiskFactorDetailsType['id'] | null>(null);
@@ -36,11 +35,13 @@ export async function useRiskFactorsById ( params: RiskFactorsByIdParams ) {
   const imageSource = ref<RiskFactorDetailsType['image_source'] | undefined>(undefined);
   const seriousness = ref<RiskFactorDetailsType['seriousness'] | undefined>(undefined);
 
-  URI.searchParams.append('age.value', age.value.toString());
-  age.unit && URI.searchParams.append('age.unit', age.unit);
-  enableTriage3 && URI.searchParams.append('enable_triage_3', enableTriage3.toString());
-
-  await engineApi.get(URI.toString())
+  await engineApi.get(`/risk_factors/${riskFactorsId}`, {
+    params: {
+      'age.value': age.value,
+      'age.unit': age.unit,
+      'enable_triage_3': enableTriage3,
+    }
+  })
     .then((res: AxiosResponse) => {
       response.value = res;
       id.value = res.data.id;

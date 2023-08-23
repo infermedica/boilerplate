@@ -16,7 +16,6 @@ import {
   
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   
-  const URI = new URL(`${import.meta.env.VITE_API}/triage`);
   const response = ref<AxiosResponse<TriageResponseType> | null>(null);
   const error = ref<AxiosError | null>(null);
   const triageLevel = ref<TriageResponseType['triage_level'] | undefined>(undefined);
@@ -24,7 +23,7 @@ import {
   const rootCause = ref<TriageResponseType['root_cause'] | undefined>(undefined);
   const teleconsultationApplicable = ref<TriageResponseType['teleconsultation_applicable'] | undefined>(undefined);
 
-  await engineApi.post(URI.toString(), request)
+  await engineApi.post('/triage', request)
     .then((res: AxiosResponse) => {
       response.value = res;
       triageLevel.value = res.data.triage_level;

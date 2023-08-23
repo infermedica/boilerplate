@@ -13,15 +13,16 @@ import {
  } from '@/composables/types';
 
  export async function useExplain (requestBody: ExplanationRequestType) {
+
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
-  const URI = new URL(`${import.meta.env.VITE_API}/explain`);
+  
   const response = ref<AxiosResponse | null>(null);
   const error = ref<AxiosError | null>(null);
   const supportingEvidence = ref<ExplanationResponseType['supporting_evidence'] | null>(null);
   const conflictingEvidence = ref<ExplanationResponseType['conflicting_evidence'] | null>(null);
   const unconfirmedEvidence = ref<ExplanationResponseType['unconfirmed_evidence'] | null>(null);
 
-  await engineApi.post(URI.toString(), requestBody)
+  await engineApi.post('/explain', requestBody)
   .then((res: AxiosResponse) => {
     response.value = res;
     supportingEvidence.value = res.data.supporting_evidence;

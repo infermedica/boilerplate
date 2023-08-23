@@ -12,7 +12,6 @@ import type { InfoType } from '@/composables/types';
 export async function useInfo () {
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  const URI = new URL(`${import.meta.env.VITE_API}/info`);
   const response = ref<AxiosResponse | null>(null);
   const error = ref<Error | AxiosError | null>(null);
   const apiVersion = ref<InfoType['api_version'] | undefined>(undefined);
@@ -22,7 +21,7 @@ export async function useInfo () {
   const riskFactorsCount = ref<InfoType['risk_factors_count'] | null>(null);
   const labTestsCount = ref<InfoType['lab_tests_count'] | null>(null);
 
-  await engineApi.get(URI.toString())
+  await engineApi.get('/info')
     .then((res: AxiosResponse) => {
       response.value = res;
       apiVersion.value = res.data.api_version;

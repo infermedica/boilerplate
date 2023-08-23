@@ -18,13 +18,12 @@ import {
   
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   
-  const URI = new URL(`${import.meta.env.VITE_API}/recommend_specialist`);
   const response = ref<AxiosResponse<RecommendSpecialistResponseType> | null>(null);
   const error = ref<AxiosError | null>(null);
   const recommendedSpecialist = ref<RecommendSpecialistType | undefined>(undefined);
   const recommendedChannel = ref<RecommendedChannelType | undefined>(undefined);
 
-  await engineApi.post(URI.toString(), requestBody)
+  await engineApi.post('/recommend_specialist', requestBody)
     .then((res: AxiosResponse) => {
       response.value = res;
       recommendedSpecialist.value = res.data.recommended_specialist;

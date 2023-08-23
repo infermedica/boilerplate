@@ -23,19 +23,20 @@ export async function useSearch ( params: SearchParamsType ) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  const URI = new URL(`${import.meta.env.VITE_API}/search`);
   const response = ref<AxiosResponse | null>(null);
   const error = ref<Error | AxiosError | null>(null);
   const observations = ref<SearchResultType[] | null | []>(null);
 
-  URI.searchParams.append('phrase', phrase);
-  URI.searchParams.append('age.value', age.value.toString());
-  age.unit && URI.searchParams.append('age.unit', age.unit);
-  sex && URI.searchParams.append('sex', sex.toString());
-  maxResults && URI.searchParams.append('max_results', maxResults.toString());
-  types && URI.searchParams.append('types', types.join(','));
-
-  await engineApi.get(URI.toString())
+  await engineApi.get('/search', {
+    params: {
+      phrase,
+      'age.value': age.value,
+      'age.unit': age.unit,
+      sex,
+      maxResults,
+      types: types?.join(','),
+    }
+  })
     .then((res: AxiosResponse) => {
       response.value = res;
       observations.value = res.data;

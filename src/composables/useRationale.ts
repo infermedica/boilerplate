@@ -16,14 +16,13 @@ import {
   
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   
-  const URI = new URL(`${import.meta.env.VITE_API}/rationale`);
   const response = ref<AxiosResponse<RationaleResponseType> | null>(null);
   const error = ref<AxiosError | null>(null);
   const type = ref<RationaleResponseType['type'] | null>(null);
   const observationParams = ref<RationaleResponseType['observation_params'] | undefined>(undefined);
   const conditionParams = ref<RationaleResponseType['condition_params'] | undefined>(undefined);
 
-  await engineApi.post(URI.toString(), requestBody)
+  await engineApi.post('/rationale', requestBody)
     .then((res: AxiosResponse) => {
       response.value = res;
       type.value = res.data.type;

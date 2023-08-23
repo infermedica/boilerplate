@@ -7,7 +7,7 @@ import {
   engineApiConfig,
   useSetAuthHeaders,
 } from '@/composables';
-import { 
+import type { 
   PatientEducationParamsType,
   PatientEducationType,
 } from '@/composables/types';
@@ -22,16 +22,16 @@ export async function usePatientEducation ( params: PatientEducationParamsType )
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
-  const URI = new URL(`${import.meta.env.VITE_API}/patient_education/${conditionId}`);
   const response = ref<AxiosResponse | null>(null);
   const error = ref<AxiosError | null>(null);
   const patient_education_document = ref<PatientEducationType | {}>({});
 
-  sections && URI.searchParams.append('sections', sections.join(','));
-
-  await engineApi.get(URI.toString(), {
+  await engineApi.get(`/patient_education/${conditionId}`, {
     headers: {
       'Interview-Token': interviewToken,
+    },
+    params: {
+      sections: sections?.join(','),
     }
   })
     .then((res: AxiosResponse) => {

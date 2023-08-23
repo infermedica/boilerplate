@@ -7,14 +7,15 @@ import {
   engineApiConfig,
   useSetAuthHeaders,
  } from '@/composables';
-import { 
+import type { 
   DiagnosisRequestType,
   DiagnosisResponseType,
 } from '@/composables/types';
 
 export async function useDiagnosis (requestBody: DiagnosisRequestType) {
+  
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
-  const URI = new URL(`${import.meta.env.VITE_API}/diagnosis`);
+
   const response = ref<AxiosResponse | null>(null);
   const error = ref<AxiosError | null>(null);
   const question = ref<DiagnosisResponseType['question'] | undefined>(undefined);
@@ -24,7 +25,7 @@ export async function useDiagnosis (requestBody: DiagnosisRequestType) {
   const shouldStop = ref<DiagnosisResponseType['should_stop'] | undefined>(undefined);
   const interviewToken = ref<DiagnosisResponseType['interview_token'] | undefined>(undefined);
 
-  await engineApi.post(URI.toString(), requestBody)
+  await engineApi.post('/diagnosis', requestBody)
     .then((res: AxiosResponse) => {
       response.value = res;
       question.value = res.data.question;

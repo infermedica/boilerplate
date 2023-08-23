@@ -12,7 +12,10 @@ import type {
   ConceptsParamsType,
 } from '@/composables/types';
 
-export async function useConcepts ( params: ConceptsParamsType) {
+export async function useConcepts ( params: ConceptsParamsType = {
+  ids: undefined,
+  types: undefined,
+}) {
   const { 
     ids,
     types,
@@ -20,15 +23,16 @@ export async function useConcepts ( params: ConceptsParamsType) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   
-  const URI = new URL(`${import.meta.env.VITE_API}/concepts`);
-  ids && URI.searchParams.append('ids', ids.join(','));
-  types && URI.searchParams.append('types', types.join(','));
-
   const response = ref<AxiosResponse | null>(null);
   const error = ref<AxiosError | null>(null);
   const concepts = ref<ConceptItemModelType[] | null>(null);
 
-  await engineApi.get(URI.toString())
+  await engineApi.get('/concepts', {
+    params: {
+      ids: ids?.join(','),
+      types: types?.join(','),
+    }
+  })
     .then((res: AxiosResponse) => {
       response.value = res;
       concepts.value = res.data;

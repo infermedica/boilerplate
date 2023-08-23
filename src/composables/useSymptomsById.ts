@@ -22,7 +22,6 @@ export async function useSymptomsById ( params: SymptomsByIdParams ) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
-  const URI = new URL(`${import.meta.env.VITE_API}/symptoms/${symptomId}`);
   const response = ref<AxiosResponse<SymptomDetailsType> | null>(null);
   const error = ref<AxiosError | null>(null);
   const id= ref<SymptomDetailsType['id'] | null>(null);
@@ -40,11 +39,13 @@ export async function useSymptomsById ( params: SymptomsByIdParams ) {
   const parentId = ref<SymptomDetailsType['parent_id'] | undefined>(undefined);
   const parentRelation = ref<SymptomDetailsType['parent_relation'] | undefined>(undefined);
 
-  URI.searchParams.append('age.value', age.value.toString());
-  age.unit && URI.searchParams.append('age.unit', age.unit);
-  enableTriage3 && URI.searchParams.append('enable_triage_3', enableTriage3.toString());
-
-  await engineApi.get(URI.toString())
+  await engineApi.get(`/symptoms/${symptomId}`, {
+    params: {
+      'age.value': age.value,
+      'age.unit': age.unit,
+      enable_triage_3: enableTriage3
+    }
+  })
     .then((res: AxiosResponse) => {
       response.value = res;
       id.value = res.data.id;

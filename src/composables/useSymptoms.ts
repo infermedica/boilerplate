@@ -21,16 +21,17 @@ export async function useSymptoms ( params: SymptomsParamsType ) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
-  const URI = new URL(`${import.meta.env.VITE_API}/symptoms`);
   const response = ref<AxiosResponse | null>(null);
   const error = ref<AxiosError | null>(null);
   const symptoms= ref<SymptomType[]>([]);
 
-  URI.searchParams.append('age.value', age.value.toString());
-  age.unit && URI.searchParams.append('age.unit', age.unit);
-  enableTriage3 && URI.searchParams.append('enable_triage_3', enableTriage3.toString());
-
-  await engineApi.get(URI.toString())
+  await engineApi.get('/symptoms', {
+    params: {
+      'age.value': age.value,
+      'age.unit': age.unit,
+      enable_triage_3: enableTriage3,
+    },
+  })
     .then((res: AxiosResponse) => {
       response.value = res;
       symptoms.value = res.data;

@@ -21,17 +21,18 @@ export async function useConditions(params: ConditionsParamsType) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  const URI = new URL(`${import.meta.env.VITE_API}/conditions`);
   const response = ref<AxiosResponse | null>(null);
   const error = ref<AxiosError | null>(null);
   const conditions = ref<ConditionType[] | null>(null);
 
-  URI.searchParams.append('age.value', age.value.toString());
-  age.unit && URI.searchParams.append('age.unit', age.unit);
-  enableTriage3 !== undefined && URI.searchParams.append('enable_triage_3', `${enableTriage3}`);
-  includeInternal !== undefined && URI.searchParams.append('include_internal', `${includeInternal}`);
-
-  await engineApi.get(URI.toString())
+  await engineApi.get('/conditions', {
+    params: {
+      'age.value': age.value,
+      'age.unit': age.unit,
+      enable_triage_3: enableTriage3,
+      include_internal: includeInternal,
+    }
+  })
     .then((res: AxiosResponse) => {
       response.value = res;
       conditions.value = res.data;
