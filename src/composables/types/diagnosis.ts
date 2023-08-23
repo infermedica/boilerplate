@@ -1,6 +1,7 @@
-import { 
+import type { 
   AcutenessType,
   AgeRequestType,
+  ChoiceIdType,
   ExtrasType,
   EvidenceType,
   SexType,
@@ -33,14 +34,6 @@ export type ConditionProbabilityType = {
   probability: number,
   condition_details?: ConditionDetailsModelType,
 }
-
-const CHOICE_ID = {
-  ABSENT: 'absent',
-  PRESENT: 'present',
-  UNKNOWN: 'unknown',
-} as const;
-
-export type ChoiceIdType = ObjectValues<typeof CHOICE_ID>
 
 export type ChoiceType = {
   id: ChoiceIdType;
