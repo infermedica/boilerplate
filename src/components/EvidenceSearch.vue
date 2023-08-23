@@ -1,37 +1,44 @@
 <template>
-  <EvidenceSearchComponent 
-    v-model="phrase"
+  <SearchComponent 
+    v-model="search"
     :results="results"
   />
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { 
+  computed,
+  ref, 
+} from 'vue';
 import { useSearch } from '@/composables';
-import EvidenceSearchComponent from '@/components/EvidenceSearchComponent.vue'
+import SearchComponent from '@/components/SearchComponent.vue'
 import type { SearchResultType } from '@/composables/types';
 
 const age = ref(32);
 const phrase = ref('');
 const maxResults = ref(10);
 const results = ref<SearchResultType[] | null>([]);
+const search = computed({
+  get: () => (phrase.value),
+  set: async (value) => {
+    phrase.value = value;
 
-watch(phrase, async (value) => {
+    if (!phrase.value) {
+      results.value = null;
+      return;
+    }
 
-  if (!value) {
-    results.value = null;
-    return;
-  };
+    const { observations } = await useSearch({
+      phrase: phrase.value, 
+      age: {
+        value: age.value,
+      }, 
+      maxResults: maxResults.value,
+    });
+
+    results.value = observations;
   
-  const { observations } = await useSearch({
-    phrase: value, 
-    age: {
-      value: age.value,
-    }, 
-    maxResults: maxResults.value,
-  });
-
-  results.value = observations;
+  }
 });
 
 </script>
