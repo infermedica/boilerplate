@@ -1,7 +1,6 @@
 import { 
   AcutenessType,
   AgeRequestType,
-  ExtrasType,
   PrevalenceType,
   RecommendedChannelType,
   SeverityType,
@@ -21,12 +20,15 @@ export type ConditionType = {
   common_name?: string,
   sex_filter: SexType | 'both',
   categories: string[],
-  prevalence?: PrevalenceType,
-  acuteness?: AcutenessType,
-  severity?: SeverityType,
-  extras?: ExtrasType,
-  triage_level?: TriageLevelType,
-  recommended_channel?: RecommendedChannelType,
+  prevalence: PrevalenceType,
+  acuteness: AcutenessType,
+  severity: SeverityType,
+  extras?: {
+    hint: string | null,
+    icd10_code: string | null
+  },
+  triage_level: TriageLevelType,
+  recommended_channel: RecommendedChannelType,
 }
 
 export type ConditionsByIdParamsType = {

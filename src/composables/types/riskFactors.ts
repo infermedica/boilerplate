@@ -5,7 +5,6 @@ import {
   SexType,
  } from "@/composables/types";
 
- // TODO find correct type
  export type RiskFactorType = {
   id: string,
   name: string,

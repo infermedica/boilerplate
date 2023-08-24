@@ -1,11 +1,11 @@
 import {
   AgeRequestType,
   ChoiceIdType,
+  ObjectValues,
   ObservationType,
   SexType,
 } from '@/composables/types';
 
-// TODO: find model in API for this type
 export type MentionType = {
   id: string,
   name: string,
@@ -13,9 +13,16 @@ export type MentionType = {
   orth?: string,
   choice_id: ChoiceIdType,
   type: ObservationType,
-  positions: number[],
-  head_position: number,
+  positions?: number[],
+  head_position?: number,
 }
+
+const CONCEPTS = {
+  SYMPTOM: 'symptom',
+  RISK_FACTOR: 'risk_factor',
+} as const;
+
+export type ConceptsTypes = ObjectValues<typeof CONCEPTS>;
 
 export type ParseRequestType = {
   age: AgeRequestType,
@@ -24,12 +31,11 @@ export type ParseRequestType = {
   context?: string[],
   include_tokens?: boolean,
   correct_spelling?: boolean,
-  concept_types?: string[],
+  concept_types?: ConceptsTypes[],
 }
 
-// TODO: find model in API for this type
 export type ParseResponseType = {
-  mentions?: MentionType[],
-  obvious?: boolean,
+  mentions: MentionType[],
+  obvious: boolean,
   tokens?: string[],
 }

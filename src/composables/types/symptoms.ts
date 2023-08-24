@@ -37,7 +37,6 @@ export type SymptomType = {
 export type SymptomDetailsType = SymptomType & {
   question: string,
   question_third_person?: string,
-  // TODO: find in api models
   seriousness?: SeriousObservationSeriousnessType,
 }
 
