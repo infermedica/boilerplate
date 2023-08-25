@@ -6,14 +6,14 @@ import type {
 export type SeriousObservationType = {
   id: string,
   name: string,
-  common_name?: string,
+  commonName?: string,
   seriousness?: SeriousObservationSeriousnessType,
-  is_emergency?: boolean,
+  isEmergency?: boolean,
 }
 
 export type TriageResponseType = {
-  triage_level?: TriageLevelType,
+  triageLevel?: TriageLevelType,
   serious?: SeriousObservationType[],
-  root_cause?: string,
-  teleconsultation_applicable?: boolean,
+  rootCause?: string,
+  teleconsultationApplicable?: boolean,
 }

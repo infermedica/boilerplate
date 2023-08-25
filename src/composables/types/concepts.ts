@@ -4,7 +4,7 @@ export type ConceptItemModelType = {
   id?: string,
   type?: ConceptItemModelTypesType,
   name?: string,
-  common_name?: string
+  commonName?: string
 }
 
 export type ConceptsParamsType = {

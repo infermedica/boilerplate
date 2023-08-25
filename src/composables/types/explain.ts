@@ -7,11 +7,11 @@ export type ExplanationRequestType = DiagnosisRequestType & {
 export type ExplanationEvidenceType = {
   id: string,
   name: string,
-  common_name?: string,
+  commonName?: string,
 }
 
 export type ExplanationResponseType = {
-  supporting_evidence: ExplanationEvidenceType[],
-  conflicting_evidence: ExplanationEvidenceType[],
-  unconfirmed_evidence: ExplanationEvidenceType[],
+  supportingEvidence: ExplanationEvidenceType[],
+  conflictingEvidence: ExplanationEvidenceType[],
+  unconfirmedEvidence: ExplanationEvidenceType[],
 }

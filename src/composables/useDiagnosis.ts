@@ -21,9 +21,9 @@ export async function useDiagnosis (requestBody: DiagnosisRequestType) {
   const question = ref<DiagnosisResponseType['question'] | undefined>(undefined);
   const conditions = ref<DiagnosisResponseType['conditions'] | undefined>(undefined);
   const extras = ref<DiagnosisResponseType['extras'] | undefined>(undefined);
-  const hasEmergencyEvidence = ref<DiagnosisResponseType['has_emergency_evidence'] | undefined>(undefined);
-  const shouldStop = ref<DiagnosisResponseType['should_stop'] | undefined>(undefined);
-  const interviewToken = ref<DiagnosisResponseType['interview_token'] | undefined>(undefined);
+  const hasEmergencyEvidence = ref<DiagnosisResponseType['hasEmergencyEvidence'] | undefined>(undefined);
+  const shouldStop = ref<DiagnosisResponseType['shouldStop'] | undefined>(undefined);
+  const interviewToken = ref<DiagnosisResponseType['interviewToken'] | undefined>(undefined);
 
   await engineApi.post('/diagnosis', requestBody)
     .then((res: AxiosResponse) => {

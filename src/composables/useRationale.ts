@@ -19,8 +19,8 @@ import {
   const response = ref<AxiosResponse<RationaleResponseType> | null>(null);
   const error = ref<AxiosError | null>(null);
   const type = ref<RationaleResponseType['type'] | null>(null);
-  const observationParams = ref<RationaleResponseType['observation_params'] | undefined>(undefined);
-  const conditionParams = ref<RationaleResponseType['condition_params'] | undefined>(undefined);
+  const observationParams = ref<RationaleResponseType['observationParams'] | undefined>(undefined);
+  const conditionParams = ref<RationaleResponseType['conditionParams'] | undefined>(undefined);
 
   await engineApi.post('/rationale', requestBody)
     .then((res: AxiosResponse) => {

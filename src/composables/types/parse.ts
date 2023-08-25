@@ -9,12 +9,12 @@ import {
 export type MentionType = {
   id: string,
   name: string,
-  common_name?: string,
+  commonName?: string,
   orth?: string,
-  choice_id: ChoiceIdType,
+  choiceId: ChoiceIdType,
   type: ObservationType,
   positions?: number[],
-  head_position?: number,
+  headPosition?: number,
 }
 
 const CONCEPTS = {
@@ -29,9 +29,9 @@ export type ParseRequestType = {
   sex?: SexType,
   text: string,
   context?: string[],
-  include_tokens?: boolean,
-  correct_spelling?: boolean,
-  concept_types?: ConceptsTypes[],
+  includeTokens?: boolean,
+  correctSpelling?: boolean,
+  conceptTypes?: ConceptsTypes[],
 }
 
 export type ParseResponseType = {

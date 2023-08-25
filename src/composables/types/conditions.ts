@@ -17,18 +17,18 @@ export type ConditionsParamsType = {
 export type ConditionType = {
   id: string,
   name: string,
-  common_name?: string,
-  sex_filter: SexType | 'both',
+  commonName?: string,
+  sexFilter: SexType | 'both',
   categories: string[],
   prevalence: PrevalenceType,
   acuteness: AcutenessType,
   severity: SeverityType,
   extras?: {
     hint: string | null,
-    icd10_code: string | null
+    icd10Code: string | null
   },
-  triage_level: TriageLevelType,
-  recommended_channel: RecommendedChannelType,
+  triageLevel: TriageLevelType,
+  recommendedChannel: RecommendedChannelType,
 }
 
 export type ConditionsByIdParamsType = {

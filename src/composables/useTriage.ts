@@ -18,10 +18,10 @@ import {
   
   const response = ref<AxiosResponse<TriageResponseType> | null>(null);
   const error = ref<AxiosError | null>(null);
-  const triageLevel = ref<TriageResponseType['triage_level'] | undefined>(undefined);
+  const triageLevel = ref<TriageResponseType['triageLevel'] | undefined>(undefined);
   const serious = ref<TriageResponseType['serious'] | undefined>(undefined);
-  const rootCause = ref<TriageResponseType['root_cause'] | undefined>(undefined);
-  const teleconsultationApplicable = ref<TriageResponseType['teleconsultation_applicable'] | undefined>(undefined);
+  const rootCause = ref<TriageResponseType['rootCause'] | undefined>(undefined);
+  const teleconsultationApplicable = ref<TriageResponseType['teleconsultationApplicable'] | undefined>(undefined);
 
   await engineApi.post('/triage', request)
     .then((res: AxiosResponse) => {

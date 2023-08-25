@@ -2,8 +2,8 @@ import type { ChoiceIdType } from '@/composables/types';
 
 export type EvidenceType = {
   id: string,
-  choice_id: ChoiceIdType,
-  observed_at?: string,
+  choiceId: ChoiceIdType,
+  observedAt?: string,
   source?: 'initial' | 'suggest' | 'predefined' | 'red_flags',
   duration?: {
     value: number,

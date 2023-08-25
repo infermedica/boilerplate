@@ -8,6 +8,6 @@ export type RecommendSpecialistType = {
 }
 
 export type RecommendSpecialistResponseType = {
-  recommended_specialist?: RecommendSpecialistType,
-  recommended_channel?: RecommendedChannelType,
+  recommendedSpecialist?: RecommendSpecialistType,
+  recommendedChannel?: RecommendedChannelType,
 }

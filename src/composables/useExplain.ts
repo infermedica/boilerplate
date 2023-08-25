@@ -18,9 +18,9 @@ import {
   
   const response = ref<AxiosResponse | null>(null);
   const error = ref<AxiosError | null>(null);
-  const supportingEvidence = ref<ExplanationResponseType['supporting_evidence'] | null>(null);
-  const conflictingEvidence = ref<ExplanationResponseType['conflicting_evidence'] | null>(null);
-  const unconfirmedEvidence = ref<ExplanationResponseType['unconfirmed_evidence'] | null>(null);
+  const supportingEvidence = ref<ExplanationResponseType['supportingEvidence'] | null>(null);
+  const conflictingEvidence = ref<ExplanationResponseType['conflictingEvidence'] | null>(null);
+  const unconfirmedEvidence = ref<ExplanationResponseType['unconfirmedEvidence'] | null>(null);
 
   await engineApi.post('/explain', requestBody)
   .then((res: AxiosResponse) => {

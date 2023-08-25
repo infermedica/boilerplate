@@ -29,15 +29,15 @@ export async function useConditionsById( params: ConditionsByIdParamsType ) {
   const condition = ref<ConditionType | null>(null);
   const id = ref<ConditionType['id'] | null>(null);
   const name = ref<ConditionType['name'] | null>(null);
-  const commonName = ref<ConditionType['common_name'] | undefined>(undefined);
-  const sexFilter = ref<ConditionType['sex_filter'] | null>(null);
+  const commonName = ref<ConditionType['commonName'] | undefined>(undefined);
+  const sexFilter = ref<ConditionType['sexFilter'] | null>(null);
   const categories = ref<ConditionType['categories'] | undefined>(undefined);
   const prevelance = ref<ConditionType['prevalence'] | undefined>(undefined);
   const acuteness = ref<ConditionType['acuteness'] | undefined>(undefined);
   const severity = ref<ConditionType['severity'] | undefined>(undefined);
   const extras = ref<ConditionType['extras'] | {}>({}); 
-  const triageLevel = ref<ConditionType['triage_level'] | undefined>(undefined); 
-  const recommendedChannel = ref<ConditionType['recommended_channel'] | undefined>(undefined);
+  const triageLevel = ref<ConditionType['triageLevel'] | undefined>(undefined); 
+  const recommendedChannel = ref<ConditionType['recommendedChannel'] | undefined>(undefined);
 
   await engineApi.get(`/conditions/${conditionId}`, {
     params: {

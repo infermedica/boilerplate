@@ -25,9 +25,8 @@ const search = computed({
 
     if (!phrase.value) {
       results.value = null;
-      return;
     }
-
+    
     const { observations } = await useSearch({
       phrase: phrase.value, 
       age: {

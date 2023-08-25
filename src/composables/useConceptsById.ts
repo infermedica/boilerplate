@@ -24,7 +24,7 @@ export async function useConceptsById (params: ConceptsByIdParamsType) {
   const id = ref<ConceptItemModelType['id'] | undefined>(undefined);
   const type = ref<ConceptItemModelType['type'] | undefined>(undefined);
   const name = ref<ConceptItemModelType['name'] | undefined>(undefined);
-  const commonName = ref<ConceptItemModelType['common_name'] | undefined>(undefined);
+  const commonName = ref<ConceptItemModelType['commonName'] | undefined>(undefined);
 
   await engineApi.get(`/concepts/${conceptsId}`)
     .then((res: AxiosResponse) => {

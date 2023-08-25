@@ -17,12 +17,12 @@ export type ConditionDetailsModelCategoryType = {
 }
 
 export type ConditionDetailsModelType = {
-  icd10_code?: string,
+  icd10Code?: string,
   category?: ConditionDetailsModelCategoryType,
   prevalence?: PrevalenceType,
   severity?: SeverityType,
   acuteness?: AcutenessType,
-  triage_level?: TriageLevelType,
+  triageLevel?: TriageLevelType,
   hint?: string,
   has_patient_education?: boolean,
 }
@@ -30,9 +30,9 @@ export type ConditionDetailsModelType = {
 export type ConditionProbabilityType = {
   id: string,
   name: string,
-  common_name?: string,
+  commonName?: string,
   probability: number,
-  condition_details?: ConditionDetailsModelType,
+  conditionDetails?: ConditionDetailsModelType,
 }
 
 export type ChoiceType = {
@@ -66,7 +66,7 @@ export type DiagnosisRequestType = {
   sex: SexType,
   age: AgeRequestType,
   evidence?: EvidenceType[],
-  evaluated_at?: string,
+  evaluatedAt?: string,
   extras?: ExtrasType,
 }
 
@@ -74,7 +74,7 @@ export type DiagnosisResponseType = {
   question?: QuestionType,
   conditions?: ConditionProbabilityType[],
   extras?: ExtrasType,
-  has_emergency_evidence?: boolean,
-  should_stop?: boolean,
-  interview_token?: string
+  hasEmergencyEvidence?: boolean,
+  shouldStop?: boolean,
+  interviewToken?: string
 }

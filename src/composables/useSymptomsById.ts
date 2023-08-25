@@ -26,18 +26,18 @@ export async function useSymptomsById ( params: SymptomsByIdParams ) {
   const error = ref<AxiosError | null>(null);
   const id= ref<SymptomDetailsType['id'] | null>(null);
   const name = ref<SymptomDetailsType['name'] | null>(null);
-  const commonName = ref<SymptomDetailsType['common_name'] | undefined>(undefined);
+  const commonName = ref<SymptomDetailsType['commonName'] | undefined>(undefined);
   const question = ref<SymptomDetailsType['question'] | null>(null);
-  const questionThirdPerson = ref<SymptomDetailsType['question_third_person'] | null>(null);
-  const sexFilter = ref<SymptomDetailsType['sex_filter'] | null>(null);
+  const questionThirdPerson = ref<SymptomDetailsType['questionThirdPerson'] | null>(null);
+  const sexFilter = ref<SymptomDetailsType['sexFilter'] | null>(null);
   const category = ref<SymptomDetailsType['category'] | undefined>(undefined);
   const seriousness = ref<SymptomDetailsType['seriousness'] | undefined>(undefined);
   const extras = ref<SymptomDetailsType['extras'] | undefined>(undefined);
   const children = ref<SymptomDetailsType['children'] | undefined>(undefined);
-  const imageUrl = ref<SymptomDetailsType['image_url'] | undefined>(undefined);
-  const imageSource = ref<SymptomDetailsType['image_source'] | undefined>(undefined);
-  const parentId = ref<SymptomDetailsType['parent_id'] | undefined>(undefined);
-  const parentRelation = ref<SymptomDetailsType['parent_relation'] | undefined>(undefined);
+  const imageUrl = ref<SymptomDetailsType['imageUrl'] | undefined>(undefined);
+  const imageSource = ref<SymptomDetailsType['imageSource'] | undefined>(undefined);
+  const parentId = ref<SymptomDetailsType['parentId'] | undefined>(undefined);
+  const parentRelation = ref<SymptomDetailsType['parentRelation'] | undefined>(undefined);
 
   await engineApi.get(`/symptoms/${symptomId}`, {
     params: {

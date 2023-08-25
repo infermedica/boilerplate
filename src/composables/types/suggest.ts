@@ -3,7 +3,7 @@ import type { DiagnosisRequestType } from '@/composables/types'
 export type SuggestResult = {
   id: string,
   name: string,
-  common_name?: string,
+  commonName?: string,
 }
 
 export type SuggestMethod = 
@@ -13,7 +13,7 @@ export type SuggestMethod =
   | 'red_flags';
 
 export type SuggestRequest = DiagnosisRequestType & {
-  suggest_method?: SuggestMethod,
+  suggestMethod?: SuggestMethod,
 }
 
 export type SuggestParams = {

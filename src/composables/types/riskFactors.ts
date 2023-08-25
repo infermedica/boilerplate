@@ -8,18 +8,18 @@ import {
  export type RiskFactorType = {
   id: string,
   name: string,
-  common_name?: string,
-  sex_filter: SexType | 'both',
+  commonName?: string,
+  sexFilter: SexType | 'both',
   category?: string,
   extras?: ExtrasType,
-  image_url?: string,
-  image_source?: string,
+  imageUrl?: string,
+  imageSource?: string,
   seriousness?: SeriousObservationSeriousnessType
 }
 
 export type RiskFactorDetailsType = RiskFactorType & {
   question: string,
-  question_third_person?: string,
+  questionThirdPerson?: string,
 }
 
 export type RiskFactorsParams = {

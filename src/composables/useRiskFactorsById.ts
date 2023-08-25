@@ -25,14 +25,14 @@ export async function useRiskFactorsById ( params: RiskFactorsByIdParams ) {
   const error = ref<AxiosError | null>(null);
   const id = ref<RiskFactorDetailsType['id'] | null>(null);
   const name = ref<RiskFactorDetailsType['name'] | null>(null);
-  const commonName = ref<RiskFactorDetailsType['common_name'] | undefined>(undefined);
+  const commonName = ref<RiskFactorDetailsType['commonName'] | undefined>(undefined);
   const question = ref<RiskFactorDetailsType['question'] | null>(null);
-  const questionThirdPerson = ref<RiskFactorDetailsType['question_third_person'] | undefined>(undefined);
-  const sexFilter = ref<RiskFactorDetailsType['sex_filter'] | null>(null);
+  const questionThirdPerson = ref<RiskFactorDetailsType['questionThirdPerson'] | undefined>(undefined);
+  const sexFilter = ref<RiskFactorDetailsType['sexFilter'] | null>(null);
   const category = ref<RiskFactorDetailsType['category'] | undefined>(undefined);
   const extras = ref<RiskFactorDetailsType['extras'] | undefined>(undefined);
-  const imageUrl = ref<RiskFactorDetailsType['image_url'] | undefined>(undefined);
-  const imageSource = ref<RiskFactorDetailsType['image_source'] | undefined>(undefined);
+  const imageUrl = ref<RiskFactorDetailsType['imageUrl'] | undefined>(undefined);
+  const imageSource = ref<RiskFactorDetailsType['imageSource'] | undefined>(undefined);
   const seriousness = ref<RiskFactorDetailsType['seriousness'] | undefined>(undefined);
 
   await engineApi.get(`/risk_factors/${riskFactorsId}`, {

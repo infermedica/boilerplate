@@ -29,7 +29,7 @@ type NodeType =
 export type Node = {
   content?: Node[];
   name?: string;
-  node_type: NodeType;
+  nodeType: NodeType;
   target?: string;
   value?: string;
   title?: Node;
