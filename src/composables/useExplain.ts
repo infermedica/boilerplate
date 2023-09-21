@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import type { 
   AxiosResponse,
   AxiosError,
@@ -16,26 +15,26 @@ import {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   
-  const response = ref<AxiosResponse | null>(null);
-  const error = ref<AxiosError | null>(null);
-  const supportingEvidence = ref<ExplanationResponseType['supportingEvidence'] | null>(null);
-  const conflictingEvidence = ref<ExplanationResponseType['conflictingEvidence'] | null>(null);
-  const unconfirmedEvidence = ref<ExplanationResponseType['unconfirmedEvidence'] | null>(null);
+  let response: AxiosResponse | null = null;
+  let error: AxiosError | null = null;
+  let supportingEvidence: ExplanationResponseType['supportingEvidence'] | null = null;
+  let conflictingEvidence: ExplanationResponseType['conflictingEvidence'] | null = null;
+  let unconfirmedEvidence: ExplanationResponseType['unconfirmedEvidence'] | null = null;
 
   await engineApi.post('/explain', requestBody)
   .then((res: AxiosResponse) => {
-    response.value = res;
-    supportingEvidence.value = res.data.supporting_evidence;
-    conflictingEvidence.value = res.data.conflicting_evidence;
-    unconfirmedEvidence.value = res.data.unconfirmed_evidence;
+    response = res;
+    supportingEvidence = res.data.supporting_evidence;
+    conflictingEvidence = res.data.conflicting_evidence;
+    unconfirmedEvidence = res.data.unconfirmed_evidence;
   })
-  .catch((err: AxiosError) => error.value = err);
+  .catch((err: AxiosError) => error = err);
 
   return {
-    response: response.value,
-    supportingEvidence: supportingEvidence.value,
-    conflictingEvidence: conflictingEvidence.value,
-    unconfirmedEvidence: unconfirmedEvidence.value,
-    error: error.value,
+    response,
+    supportingEvidence,
+    conflictingEvidence,
+    unconfirmedEvidence,
+    error,
   }
 }

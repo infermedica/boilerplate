@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import type { 
   AxiosResponse,
   AxiosError,
@@ -21,9 +20,9 @@ import type {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   
-  const response = ref<AxiosResponse | null>(null);
-  const suggest = ref<SuggestResult[] | null>(null);
-  const error = ref<AxiosError | null>(null);
+  let response: AxiosResponse | null = null;
+  let suggest: SuggestResult[] | null = null;
+  let error: AxiosError | null = null;
 
   await engineApi.post('/suggest', request, {
     params: {
@@ -32,14 +31,14 @@ import type {
     
   },)
     .then((res: AxiosResponse) => {
-      response.value = res;
-      suggest.value = res.data;
+      response = res;
+      suggest = res.data;
     })
-    .catch((err: AxiosError) => error.value = err);
+    .catch((err: AxiosError) => error = err);
 
   return {
-    response: response.value,
-    suggest: suggest.value,
-    error: error.value,
+    response,
+    suggest,
+    error,
   }
  }

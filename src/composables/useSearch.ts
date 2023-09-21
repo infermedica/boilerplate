@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import type { 
   AxiosResponse,
   AxiosError,
@@ -23,9 +22,9 @@ export async function useSearch ( params: SearchParamsType ) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  const response = ref<AxiosResponse | null>(null);
-  const error = ref<Error | AxiosError | null>(null);
-  const observations = ref<SearchResultType[] | null | []>(null);
+  let response:AxiosResponse | null = null;
+  let error:Error | AxiosError | null = null;
+  let observations:SearchResultType[] | null | [] = null;
 
   await engineApi.get('/search', {
     params: {
@@ -38,14 +37,14 @@ export async function useSearch ( params: SearchParamsType ) {
     }
   })
     .then((res: AxiosResponse) => {
-      response.value = res;
-      observations.value = res.data;
+      response = res;
+      observations = res.data;
     })
-    .catch((err: AxiosError) => error.value = err);
+    .catch((err: AxiosError) => error = err);
 
   return {
-    response: response.value,
-    observations: observations.value, 
-    error: error.value,
+    response,
+    observations,
+    error,
   }
 }

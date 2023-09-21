@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import type { 
   AxiosResponse,
   AxiosError,
@@ -21,9 +20,9 @@ export async function useSymptoms ( params: SymptomsParamsType ) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
-  const response = ref<AxiosResponse | null>(null);
-  const error = ref<AxiosError | null>(null);
-  const symptoms= ref<SymptomType[]>([]);
+  let response: AxiosResponse | null = null;
+  let error: AxiosError | null = null;
+  let symptoms: SymptomType[] = [];
 
   await engineApi.get('/symptoms', {
     params: {
@@ -33,14 +32,14 @@ export async function useSymptoms ( params: SymptomsParamsType ) {
     },
   })
     .then((res: AxiosResponse) => {
-      response.value = res;
-      symptoms.value = res.data;
+      response = res;
+      symptoms = res.data;
     })
-    .catch((err: AxiosError) => error.value = err);
+    .catch((err: AxiosError) => error = err);
   
   return {
-    response: response.value,
-    symptoms: symptoms.value,
-    error: error.value,
+    response,
+    symptoms,
+    error,
   }
 }

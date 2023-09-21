@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import type { 
   AxiosResponse,
   AxiosError,
@@ -21,9 +20,9 @@ export async function useConditions(params: ConditionsParamsType) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  const response = ref<AxiosResponse | null>(null);
-  const error = ref<AxiosError | null>(null);
-  const conditions = ref<ConditionType[] | null>(null);
+  let response: AxiosResponse | null = null;
+  let error: AxiosError | null = null;
+  let conditions: ConditionType[] | null = null;
 
   await engineApi.get('/conditions', {
     params: {
@@ -34,14 +33,14 @@ export async function useConditions(params: ConditionsParamsType) {
     }
   })
     .then((res: AxiosResponse) => {
-      response.value = res;
-      conditions.value = res.data;
+      response = res;
+      conditions = res.data;
     })
-    .catch((err: AxiosError) => error.value = err);
+    .catch((err: AxiosError) => error = err);
 
   return {
-    response: response.value,
-    conditions: conditions.value, 
-    error: error.value,
+    response,
+    conditions, 
+    error,
   }
 }

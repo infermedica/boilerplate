@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import type { 
   AxiosResponse,
   AxiosError,
@@ -24,20 +23,20 @@ export async function useConditionsById( params: ConditionsByIdParamsType ) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  const response = ref<AxiosResponse | null>(null);
-  const error = ref<AxiosError | null>(null);
-  const condition = ref<ConditionType | null>(null);
-  const id = ref<ConditionType['id'] | null>(null);
-  const name = ref<ConditionType['name'] | null>(null);
-  const commonName = ref<ConditionType['commonName'] | undefined>(undefined);
-  const sexFilter = ref<ConditionType['sexFilter'] | null>(null);
-  const categories = ref<ConditionType['categories'] | undefined>(undefined);
-  const prevelance = ref<ConditionType['prevalence'] | undefined>(undefined);
-  const acuteness = ref<ConditionType['acuteness'] | undefined>(undefined);
-  const severity = ref<ConditionType['severity'] | undefined>(undefined);
-  const extras = ref<ConditionType['extras'] | {}>({}); 
-  const triageLevel = ref<ConditionType['triageLevel'] | undefined>(undefined); 
-  const recommendedChannel = ref<ConditionType['recommendedChannel'] | undefined>(undefined);
+  let response: AxiosResponse | null = null;
+  let error: AxiosError | null = null;
+  let condition: ConditionType | null = null;
+  let id: ConditionType['id'] | null = null;
+  let name: ConditionType['name'] | null = null;
+  let commonName: ConditionType['commonName'] | undefined = undefined;
+  let sexFilter: ConditionType['sexFilter'] | null = null;
+  let categories: ConditionType['categories'] | undefined = undefined;
+  let prevelance: ConditionType['prevalence'] | undefined = undefined;
+  let acuteness: ConditionType['acuteness'] | undefined = undefined;
+  let severity: ConditionType['severity'] | undefined = undefined;
+  let extras: ConditionType['extras'] | {} = {}; 
+  let triageLevel: ConditionType['triageLevel'] | undefined = undefined; 
+  let recommendedChannel: ConditionType['recommendedChannel'] | undefined = undefined;
 
   await engineApi.get(`/conditions/${conditionId}`, {
     params: {
@@ -48,36 +47,36 @@ export async function useConditionsById( params: ConditionsByIdParamsType ) {
     }
   })
     .then((res: AxiosResponse) => {
-      response.value = res;
-      condition.value = res.data;
-      id.value = res.data.id;
-      name.value = res.data.name;
-      commonName.value = res.data.common_name;
-      sexFilter.value = res.data.sex_filter;
-      categories.value = res.data.categories;
-      prevelance.value = res.data.prevelance;
-      acuteness.value = res.data.acuteness;
-      severity.value = res.data.severity;
-      extras.value = res.data.extras;
-      triageLevel.value = res.data.triage_level;
-      recommendedChannel.value = res.data.recommended_channel;
+      response = res;
+      condition = res.data;
+      id = res.data.id;
+      name = res.data.name;
+      commonName = res.data.common_name;
+      sexFilter = res.data.sex_filter;
+      categories = res.data.categories;
+      prevelance = res.data.prevelance;
+      acuteness = res.data.acuteness;
+      severity = res.data.severity;
+      extras = res.data.extras;
+      triageLevel = res.data.triage_level;
+      recommendedChannel = res.data.recommended_channel;
     })
-    .catch((err: AxiosError) => error.value = err);
+    .catch((err: AxiosError) => error = err);
 
   return {
-    response: response.value,
-    error: error.value,
-    condition: condition.value, 
-    id: id.value,
-    name: name.value,
-    commonName: commonName.value,
-    sexFilter: sexFilter.value,
-    categories: categories.value,
-    prevelance: prevelance.value,
-    acuteness: acuteness.value,
-    severity: severity.value,
-    extras: extras.value,
-    triageLevel: triageLevel.value,
-    recommendedChannel: recommendedChannel.value,
+    response,
+    error,
+    condition, 
+    id,
+    name,
+    commonName,
+    sexFilter,
+    categories,
+    prevelance,
+    acuteness,
+    severity,
+    extras,
+    triageLevel,
+    recommendedChannel,
   }
 }

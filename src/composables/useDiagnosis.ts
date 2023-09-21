@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import type { 
   AxiosResponse,
   AxiosError,
@@ -16,36 +15,36 @@ export async function useDiagnosis (requestBody: DiagnosisRequestType) {
   
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  const response = ref<AxiosResponse | null>(null);
-  const error = ref<AxiosError | null>(null);
-  const question = ref<DiagnosisResponseType['question'] | undefined>(undefined);
-  const conditions = ref<DiagnosisResponseType['conditions'] | undefined>(undefined);
-  const extras = ref<DiagnosisResponseType['extras'] | undefined>(undefined);
-  const hasEmergencyEvidence = ref<DiagnosisResponseType['hasEmergencyEvidence'] | undefined>(undefined);
-  const shouldStop = ref<DiagnosisResponseType['shouldStop'] | undefined>(undefined);
-  const interviewToken = ref<DiagnosisResponseType['interviewToken'] | undefined>(undefined);
+  let response: AxiosResponse | null = null;
+  let error: AxiosError | null = null;
+  let question: DiagnosisResponseType['question'] | undefined = undefined;
+  let conditions: DiagnosisResponseType['conditions'] | undefined = undefined;
+  let extras: DiagnosisResponseType['extras'] | undefined = undefined;
+  let hasEmergencyEvidence: DiagnosisResponseType['hasEmergencyEvidence'] | undefined = undefined;
+  let shouldStop: DiagnosisResponseType['shouldStop'] | undefined = undefined;
+  let interviewToken: DiagnosisResponseType['interviewToken'] | undefined = undefined;
 
   await engineApi.post('/diagnosis', requestBody)
     .then((res: AxiosResponse) => {
-      response.value = res;
-      question.value = res.data.question;
-      conditions.value = res.data.conditions;
-      extras.value = res.data.extras;
-      hasEmergencyEvidence.value = res.data.has_emergency_evidence;
-      shouldStop.value = res.data.should_stop;
-      interviewToken.value = res.data.interview_token;
+      response = res;
+      question = res.data.question;
+      conditions = res.data.conditions;
+      extras = res.data.extras;
+      hasEmergencyEvidence = res.data.has_emergency_evidence;
+      shouldStop = res.data.should_stop;
+      interviewToken = res.data.interview_token;
 
     })
-    .catch((err: AxiosError) => error.value = err);
+    .catch((err: AxiosError) => error = err);
 
   return {
-    response: response.value,
-    question: question.value, 
-    conditions: conditions.value,
-    extras: extras.value,
-    hasEmergencyEvidence: hasEmergencyEvidence.value,
-    shouldStop: shouldStop.value,
-    interviewToken: interviewToken.value,
-    error: error.value,
+    response,
+    question,
+    conditions,
+    extras,
+    hasEmergencyEvidence,
+    shouldStop,
+    interviewToken,
+    error,
   }
 }

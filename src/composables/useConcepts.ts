@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import type { 
   AxiosResponse,
   AxiosError,
@@ -23,9 +22,9 @@ export async function useConcepts ( params: ConceptsParamsType = {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   
-  const response = ref<AxiosResponse | null>(null);
-  const error = ref<AxiosError | null>(null);
-  const concepts = ref<ConceptItemModelType[] | null>(null);
+  let response: AxiosResponse | null = null;
+  let error: AxiosError | null = null;
+  let concepts: ConceptItemModelType[] | null = null;
 
   await engineApi.get('/concepts', {
     params: {
@@ -34,14 +33,14 @@ export async function useConcepts ( params: ConceptsParamsType = {
     }
   })
     .then((res: AxiosResponse) => {
-      response.value = res;
-      concepts.value = res.data;
+      response = res;
+      concepts = res.data;
     })
-    .catch((err: AxiosError) => error.value = err);
+    .catch((err: AxiosError) => error = err);
   
   return {
-    response: response.value,
-    concepts: concepts.value, 
-    error: error.value,
+    response,
+    concepts, 
+    error,
   }
 }

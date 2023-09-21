@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import type { 
   AxiosResponse,
   AxiosError,
@@ -12,35 +11,35 @@ import type { InfoType } from '@/composables/types';
 export async function useInfo () {
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  const response = ref<AxiosResponse | null>(null);
-  const error = ref<Error | AxiosError | null>(null);
-  const apiVersion = ref<InfoType['apiVersion'] | undefined>(undefined);
-  const updatedAt = ref<InfoType['updatedAt'] | null>(null);
-  const conditionsCount = ref<InfoType['conditionsCount'] | null>(null);
-  const symptomsCount = ref<InfoType['symptomsCount'] | null>(null);
-  const riskFactorsCount = ref<InfoType['riskFactorsCount'] | null>(null);
-  const labTestsCount = ref<InfoType['labTestsCount'] | null>(null);
+  let response: AxiosResponse | null = null;
+  let error: Error | AxiosError | null = null;
+  let apiVersion: InfoType['apiVersion'] | undefined = undefined;
+  let updatedAt: InfoType['updatedAt'] | null = null;
+  let conditionsCount: InfoType['conditionsCount'] | null = null;
+  let symptomsCount: InfoType['symptomsCount'] | null = null;
+  let riskFactorsCount: InfoType['riskFactorsCount'] | null = null;
+  let labTestsCount: InfoType['labTestsCount'] | null = null;
 
   await engineApi.get('/info')
     .then((res: AxiosResponse) => {
-      response.value = res;
-      apiVersion.value = res.data.api_version;
-      updatedAt.value = res.data.updated_at;
-      conditionsCount.value = res.data.conditions_count;
-      symptomsCount.value = res.data.symptoms_count;
-      riskFactorsCount.value = res.data.risk_factors_count;
-      labTestsCount.value = res.data.lab_tests_count;
+      response = res;
+      apiVersion = res.data.api_version;
+      updatedAt = res.data.updated_at;
+      conditionsCount = res.data.conditions_count;
+      symptomsCount = res.data.symptoms_count;
+      riskFactorsCount = res.data.risk_factors_count;
+      labTestsCount = res.data.lab_tests_count;
     })
-    .catch((err: AxiosError) => error.value = err);
+    .catch((err: AxiosError) => error = err);
 
   return {
-    response: response.value,
-    apiVersion: apiVersion.value,
-    updatedAt: updatedAt.value,
-    conditionsCount: conditionsCount.value,
-    symptomsCount: symptomsCount.value,
-    riskFactorsCount: riskFactorsCount.value,
-    labTestsCount: labTestsCount.value,
-    error: error.value,
+    response,
+    apiVersion,
+    updatedAt,
+    conditionsCount,
+    symptomsCount,
+    riskFactorsCount,
+    labTestsCount,
+    error,
   }
 }

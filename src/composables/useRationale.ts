@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import type { 
   AxiosResponse,
   AxiosError,
@@ -16,26 +15,26 @@ import {
   
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   
-  const response = ref<AxiosResponse<RationaleResponseType> | null>(null);
-  const error = ref<AxiosError | null>(null);
-  const type = ref<RationaleResponseType['type'] | null>(null);
-  const observationParams = ref<RationaleResponseType['observationParams'] | undefined>(undefined);
-  const conditionParams = ref<RationaleResponseType['conditionParams'] | undefined>(undefined);
+  let response: AxiosResponse<RationaleResponseType> | null = null;
+  let error: AxiosError | null = null;
+  let type: RationaleResponseType['type'] | null = null;
+  let observationParams: RationaleResponseType['observationParams'] | undefined = undefined;
+  let conditionParams: RationaleResponseType['conditionParams'] | undefined = undefined;
 
   await engineApi.post('/rationale', requestBody)
     .then((res: AxiosResponse) => {
-      response.value = res;
-      type.value = res.data.type;
-      observationParams.value = res.data.observation_params;
-      conditionParams.value = res.data.condition_params;
+      response = res;
+      type = res.data.type;
+      observationParams = res.data.observationParams;
+      conditionParams = res.data.conditionParams;
     })
-    .catch((err: AxiosError) => error.value = err);
+    .catch((err: AxiosError) => error = err);
 
   return {
-    response: response.value,
-    type: type.value,
-    observationParams: observationParams.value,
-    conditionParams: conditionParams.value,
-    error: error.value,
+    response,
+    type,
+    observationParams,
+    conditionParams,
+    error,
   }
 }

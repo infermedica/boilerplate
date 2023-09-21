@@ -9,7 +9,7 @@ export type ConceptItemModelType = {
 
 export type ConceptsParamsType = {
   ids?: string[],
-  types?: ConceptItemModelType[],
+  types?: ConceptItemModelTypesType[],
 }
 
 export type ConceptsByIdParamsType = {

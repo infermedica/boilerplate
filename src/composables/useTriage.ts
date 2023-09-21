@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import type { 
   AxiosResponse,
   AxiosError,
@@ -16,29 +15,29 @@ import {
   
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   
-  const response = ref<AxiosResponse<TriageResponseType> | null>(null);
-  const error = ref<AxiosError | null>(null);
-  const triageLevel = ref<TriageResponseType['triageLevel'] | undefined>(undefined);
-  const serious = ref<TriageResponseType['serious'] | undefined>(undefined);
-  const rootCause = ref<TriageResponseType['rootCause'] | undefined>(undefined);
-  const teleconsultationApplicable = ref<TriageResponseType['teleconsultationApplicable'] | undefined>(undefined);
+  let response: AxiosResponse<TriageResponseType> | null = null;
+  let error: AxiosError | null = null;
+  let triageLevel: TriageResponseType['triageLevel'] | undefined = undefined;
+  let serious: TriageResponseType['serious'] | undefined = undefined;
+  let rootCause: TriageResponseType['rootCause'] | undefined = undefined;
+  let teleconsultationApplicable: TriageResponseType['teleconsultationApplicable'] | undefined = undefined;
 
   await engineApi.post('/triage', request)
     .then((res: AxiosResponse) => {
-      response.value = res;
-      triageLevel.value = res.data.triage_level;
-      serious.value = res.data.serious;
-      rootCause.value = res.data.root_cause;
-      teleconsultationApplicable.value = res.data.teleconsultation_applicable;
+      response = res;
+      triageLevel = res.data.triage_level;
+      serious = res.data.serious;
+      rootCause = res.data.root_cause;
+      teleconsultationApplicable = res.data.teleconsultation_applicable;
     })
-    .catch((err: AxiosError) => error.value = err);
+    .catch((err: AxiosError) => error = err);
 
   return {
-    response: response.value,
-    triageLevel: triageLevel.value,
-    serious: serious.value,
-    rootCause: rootCause.value,
-    teleconsultationApplicable: teleconsultationApplicable.value,
-    error: error.value,
+    response,
+    triageLevel,
+    serious,
+    rootCause,
+    teleconsultationApplicable,
+    error,
   }
  }

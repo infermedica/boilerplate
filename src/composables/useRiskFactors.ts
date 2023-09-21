@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import type { 
   AxiosResponse,
   AxiosError,
@@ -20,9 +19,9 @@ export async function useRiskFactors ( params: RiskFactorsParams ) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
-  const response = ref<AxiosResponse | null>(null);
-  const error = ref<AxiosError | null>(null);
-  const riskFactors = ref<RiskFactorType[]>([]);
+  let response: AxiosResponse | null = null;
+  let error: AxiosError | null = null;
+  let riskFactors: RiskFactorType[] = [];
 
   await engineApi.get('/risk_factors', {
     params: {
@@ -32,14 +31,14 @@ export async function useRiskFactors ( params: RiskFactorsParams ) {
     }
   })
     .then((res: AxiosResponse) => {
-      response.value = res;
-      riskFactors.value =res.data;
+      response = res;
+      riskFactors =res.data;
     })
-    .catch((err: AxiosError) => error.value = err);
+    .catch((err: AxiosError) => error = err);
   
   return {
-    response: response.value,
-    riskFactors: riskFactors.value,
-    error: error.value,
+    response,
+    riskFactors,
+    error: error,
   }
 }

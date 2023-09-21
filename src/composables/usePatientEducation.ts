@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import type { 
   AxiosResponse,
   AxiosError,
@@ -22,9 +21,9 @@ export async function usePatientEducation ( params: PatientEducationParamsType )
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
-  const response = ref<AxiosResponse | null>(null);
-  const error = ref<AxiosError | null>(null);
-  const patient_education_document = ref<PatientEducationType | {}>({});
+  let response: AxiosResponse | null = null;
+  let error: AxiosError | null = null;
+  let patientEducationDocument: PatientEducationType | {} = {};
 
   await engineApi.get(`/patient_education/${conditionId}`, {
     headers: {
@@ -35,14 +34,14 @@ export async function usePatientEducation ( params: PatientEducationParamsType )
     }
   })
     .then((res: AxiosResponse) => {
-      response.value = res;
-      patient_education_document.value = res.data
+      response = res;
+      patientEducationDocument = res.data
     })
-    .catch((err: AxiosError) => error.value = err);
+    .catch((err: AxiosError) => error = err);
   
   return {
-    response: response.value,
-    patient_education_document: patient_education_document.value,
-    error: error.value,
+    response,
+    patientEducationDocument,
+    error,
   }
 }
