@@ -1,18 +1,19 @@
 import { snakeCaseToCamelCase, camelCaseToSnakeCase } from '@/composables/helpers';
 
-export function convertResponse(response: { [key: string]: any; }) {
-  let parentKeys = Object.keys(response);
-  parentKeys.forEach((key) => {
-    let currentObj = response[key];
-    delete response[key];
-    let newKey = snakeCaseToCamelCase(key);
-    response[newKey] = currentObj;
-    if (typeof response[newKey] === "object") {
-      convertResponse(response[newKey]);
-    }
-  });
-  return response;
-}
+export const convertResponse = (item: unknown): unknown => {
+  if (Array.isArray(item)) {
+    return item.map(el => convertResponse(el));
+  } else if (typeof item === 'function' || item !== Object(item)) {
+    return item;
+  }
+  return Object.fromEntries(
+    Object.entries(item as Record<string, unknown>).map(([key, value]) => [
+      snakeCaseToCamelCase(key),
+      convertResponse(value),
+    ]),
+  );
+};
+
 export function convertRequest(request: { [key: string]: any; }) {
   let parentKeys = Object.keys(request);
   parentKeys.forEach((key) => {
