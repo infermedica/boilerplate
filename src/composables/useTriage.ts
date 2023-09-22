@@ -2,11 +2,9 @@ import type {
   AxiosResponse,
   AxiosError,
 } from 'axios';
-import { 
-  engineApiConfig,
-  useSetAuthHeaders,
- } from '@/composables';
-import { 
+import { useSetAuthHeaders } from '@/composables';
+import { engineApiConfig } from '@/services/engineApiConfig';
+import type { 
   DiagnosisRequestType,
   TriageResponseType,
  } from '@/composables/types';

@@ -2,11 +2,9 @@ import type {
   AxiosResponse,
   AxiosError,
 } from 'axios';
-import { 
-  engineApiConfig,
-  useSetAuthHeaders,
- } from '@/composables';
- import type {
+import { useSetAuthHeaders } from '@/composables';
+import { engineApiConfig } from '@/services/engineApiConfig';
+import type {
   ParseRequestType,
   ParseResponseType,
  } from '@/composables/types';

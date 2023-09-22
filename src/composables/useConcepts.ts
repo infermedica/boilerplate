@@ -3,9 +3,9 @@ import type {
   AxiosError,
 } from 'axios';
 import { 
-  engineApiConfig,
   useSetAuthHeaders, 
 } from '@/composables';
+import { engineApiConfig } from '@/services/engineApiConfig';
 import type { 
   ConceptItemModelType, 
   ConceptsParamsType,
