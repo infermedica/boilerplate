@@ -18,7 +18,7 @@ export async function useRiskFactorsById ( params: RiskFactorsByIdParams ) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
-  let response: AxiosResponse | null = null;
+  let response: AxiosResponse<RiskFactorDetailsType> | null = null;
   let error: AxiosError | null = null;
   let id: RiskFactorDetailsType['id'] | null = null;
   let name: RiskFactorDetailsType['name'] | null = null;
@@ -39,18 +39,18 @@ export async function useRiskFactorsById ( params: RiskFactorsByIdParams ) {
       'enable_triage_3': enableTriage3,
     }
   })
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<RiskFactorDetailsType>) => {
       response = res;
       id = res.data.id;
       name = res.data.name;
-      commonName = res.data.common_name;
+      commonName = res.data.commonName;
       question = res.data.question;
-      questionThirdPerson = res.data.question_third_person;
-      sexFilter = res.data.sex_filter;
+      questionThirdPerson = res.data.questionThirdPerson;
+      sexFilter = res.data.sexFilter;
       category = res.data.category;
       extras = res.data.extras;
-      imageUrl = res.data.image_url;
-      imageSource = res.data.image_source;
+      imageUrl = res.data.imageUrl;
+      imageSource = res.data.imageSource;
       seriousness = res.data.seriousness;
     })
     .catch((err: AxiosError) => error = err);

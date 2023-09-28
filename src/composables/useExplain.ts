@@ -13,18 +13,18 @@ import type {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   
-  let response: AxiosResponse | null = null;
+  let response: AxiosResponse<ExplanationResponseType> | null = null;
   let error: AxiosError | null = null;
   let supportingEvidence: ExplanationResponseType['supportingEvidence'] | null = null;
   let conflictingEvidence: ExplanationResponseType['conflictingEvidence'] | null = null;
   let unconfirmedEvidence: ExplanationResponseType['unconfirmedEvidence'] | null = null;
 
   await engineApi.post('/explain', requestBody)
-  .then((res: AxiosResponse) => {
+  .then((res: AxiosResponse<ExplanationResponseType>) => {
     response = res;
-    supportingEvidence = res.data.supporting_evidence;
-    conflictingEvidence = res.data.conflicting_evidence;
-    unconfirmedEvidence = res.data.unconfirmed_evidence;
+    supportingEvidence = res.data.supportingEvidence;
+    conflictingEvidence = res.data.conflictingEvidence;
+    unconfirmedEvidence = res.data.unconfirmedEvidence;
   })
   .catch((err: AxiosError) => error = err);
 

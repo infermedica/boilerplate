@@ -24,7 +24,7 @@ export type ConditionDetailsModelType = {
   acuteness?: AcutenessType,
   triageLevel?: TriageLevelType,
   hint?: string,
-  has_patient_education?: boolean,
+  hasPatientEducation?: boolean,
 }
 
 export type ConditionProbabilityType = {

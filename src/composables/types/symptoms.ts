@@ -17,7 +17,7 @@ export type ParentRelationType =
 
 export type SymptomChildrenType = {
   id: string,
-  parent_relation: ParentRelationType,
+  parentRelation: ParentRelationType,
 }
 
 export type SymptomType = {

@@ -21,7 +21,7 @@ export async function useConditionsById( params: ConditionsByIdParamsType ) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  let response: AxiosResponse | null = null;
+  let response: AxiosResponse<ConditionType> | null = null;
   let error: AxiosError | null = null;
   let condition: ConditionType | null = null;
   let id: ConditionType['id'] | null = null;
@@ -44,20 +44,20 @@ export async function useConditionsById( params: ConditionsByIdParamsType ) {
       include_internal: includeInternal
     }
   })
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<ConditionType>) => {
       response = res;
       condition = res.data;
       id = res.data.id;
       name = res.data.name;
-      commonName = res.data.common_name;
-      sexFilter = res.data.sex_filter;
+      commonName = res.data.commonName;
+      sexFilter = res.data.sexFilter;
       categories = res.data.categories;
-      prevelance = res.data.prevelance;
+      prevelance = res.data.prevalence;
       acuteness = res.data.acuteness;
       severity = res.data.severity;
       extras = res.data.extras;
-      triageLevel = res.data.triage_level;
-      recommendedChannel = res.data.recommended_channel;
+      triageLevel = res.data.triageLevel;
+      recommendedChannel = res.data.recommendedChannel;
     })
     .catch((err: AxiosError) => error = err);
 

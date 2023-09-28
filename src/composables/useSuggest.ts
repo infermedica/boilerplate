@@ -18,7 +18,7 @@ import type {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   
-  let response: AxiosResponse | null = null;
+  let response: AxiosResponse<SuggestResult[]> | null = null;
   let suggest: SuggestResult[] | null = null;
   let error: AxiosError | null = null;
 
@@ -28,7 +28,7 @@ import type {
     },
     
   },)
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<SuggestResult[]>) => {
       response = res;
       suggest = res.data;
     })

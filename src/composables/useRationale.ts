@@ -20,7 +20,7 @@ import type {
   let conditionParams: RationaleResponseType['conditionParams'] | undefined = undefined;
 
   await engineApi.post('/rationale', requestBody)
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<RationaleResponseType>) => {
       response = res;
       type = res.data.type;
       observationParams = res.data.observationParams;

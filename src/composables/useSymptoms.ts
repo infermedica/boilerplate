@@ -18,7 +18,7 @@ export async function useSymptoms ( params: SymptomsParamsType ) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
-  let response: AxiosResponse | null = null;
+  let response: AxiosResponse<SymptomType[]> | null = null;
   let error: AxiosError | null = null;
   let symptoms: SymptomType[] = [];
 
@@ -29,7 +29,7 @@ export async function useSymptoms ( params: SymptomsParamsType ) {
       enable_triage_3: enableTriage3,
     },
   })
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<SymptomType[]>) => {
       response = res;
       symptoms = res.data;
     })

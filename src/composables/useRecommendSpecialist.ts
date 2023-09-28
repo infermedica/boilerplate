@@ -21,10 +21,10 @@ import type {
   let recommendedChannel: RecommendedChannelType | undefined = undefined;
 
   await engineApi.post('/recommend_specialist', requestBody)
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<RecommendSpecialistResponseType>) => {
       response = res;
-      recommendedSpecialist = res.data.recommended_specialist;
-      recommendedChannel = res.data.recommended_channel;
+      recommendedSpecialist = res.data.recommendedSpecialist;
+      recommendedChannel = res.data.recommendedChannel;
     })
     .catch((err: AxiosError) => error = err);
 

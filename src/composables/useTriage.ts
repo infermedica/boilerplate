@@ -21,12 +21,12 @@ import type {
   let teleconsultationApplicable: TriageResponseType['teleconsultationApplicable'] | undefined = undefined;
 
   await engineApi.post('/triage', request)
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<TriageResponseType>) => {
       response = res;
-      triageLevel = res.data.triage_level;
+      triageLevel = res.data.triageLevel;
       serious = res.data.serious;
-      rootCause = res.data.root_cause;
-      teleconsultationApplicable = res.data.teleconsultation_applicable;
+      rootCause = res.data.rootCause;
+      teleconsultationApplicable = res.data.teleconsultationApplicable;
     })
     .catch((err: AxiosError) => error = err);
 

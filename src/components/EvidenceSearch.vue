@@ -10,7 +10,7 @@ import {
   computed,
   ref, 
 } from 'vue';
-import { useSearch, useConditions } from '@/composables';
+import { useSearch } from '@/composables';
 import SearchComponent from '@/components/SearchComponent.vue'
 import type { SearchResultType } from '@/composables/types';
 
@@ -27,12 +27,6 @@ const search = computed({
       results.value = null;
     }
 
-    const { response } = await useConditions({
-      age: {
-        value: 32,
-      }
-    });
-    console.log('response', response);
     const { observations } = await useSearch({
       phrase: phrase.value, 
       age: {

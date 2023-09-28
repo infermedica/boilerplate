@@ -9,7 +9,7 @@ import type { InfoType } from '@/composables/types';
 export async function useInfo () {
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  let response: AxiosResponse | null = null;
+  let response: AxiosResponse<InfoType> | null = null;
   let error: Error | AxiosError | null = null;
   let apiVersion: InfoType['apiVersion'] | undefined = undefined;
   let updatedAt: InfoType['updatedAt'] | null = null;
@@ -19,14 +19,14 @@ export async function useInfo () {
   let labTestsCount: InfoType['labTestsCount'] | null = null;
 
   await engineApi.get('/info')
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<InfoType>) => {
       response = res;
-      apiVersion = res.data.api_version;
-      updatedAt = res.data.updated_at;
-      conditionsCount = res.data.conditions_count;
-      symptomsCount = res.data.symptoms_count;
-      riskFactorsCount = res.data.risk_factors_count;
-      labTestsCount = res.data.lab_tests_count;
+      apiVersion = res.data.apiVersion;
+      updatedAt = res.data.updatedAt;
+      conditionsCount = res.data.conditionsCount;
+      symptomsCount = res.data.symptomsCount;
+      riskFactorsCount = res.data.riskFactorsCount;
+      labTestsCount = res.data.labTestsCount;
     })
     .catch((err: AxiosError) => error = err);
 

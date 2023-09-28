@@ -20,7 +20,7 @@ export async function useSearch ( params: SearchParamsType ) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  let response:AxiosResponse | null = null;
+  let response:AxiosResponse<SearchResultType[]> | null = null;
   let error:Error | AxiosError | null = null;
   let observations:SearchResultType[] | null | [] = null;
 
@@ -34,7 +34,7 @@ export async function useSearch ( params: SearchParamsType ) {
       types: types?.join(','),
     }
   })
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<SearchResultType[]>) => {
       response = res;
       observations = res.data;
     })

@@ -43,22 +43,22 @@ export async function useSymptomsById ( params: SymptomsByIdParams ) {
       enable_triage_3: enableTriage3
     }
   })
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<SymptomDetailsType>) => {
       response = res;
       id = res.data.id;
       name = res.data.name;
-      commonName = res.data.common_name,
+      commonName = res.data.commonName,
       question = res.data.question;
-      questionThirdPerson = res.data.question_third_person;
-      sexFilter = res.data.sex_filter;
+      questionThirdPerson = res.data.questionThirdPerson;
+      sexFilter = res.data.sexFilter;
       category = res.data.category;
       seriousness = res.data.seriousness;
       extras = res.data.extras;
       children = res.data.children;
-      imageUrl = res.data.image_url;
-      imageSource = res.data.image_source;
-      parentId = res.data.parent_id;
-      parentRelation = res.data.parent_relation;
+      imageUrl = res.data.imageUrl;
+      imageSource = res.data.imageSource;
+      parentId = res.data.parentId;
+      parentRelation = res.data.parentRelation;
     })
     .catch((err: AxiosError) => error = err);
   

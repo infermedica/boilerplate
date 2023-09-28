@@ -13,7 +13,7 @@ export async function useDiagnosis (requestBody: DiagnosisRequestType) {
   
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  let response: AxiosResponse | null = null;
+  let response: AxiosResponse<DiagnosisResponseType> | null = null;
   let error: AxiosError | null = null;
   let question: DiagnosisResponseType['question'] | undefined = undefined;
   let conditions: DiagnosisResponseType['conditions'] | undefined = undefined;
@@ -23,14 +23,14 @@ export async function useDiagnosis (requestBody: DiagnosisRequestType) {
   let interviewToken: DiagnosisResponseType['interviewToken'] | undefined = undefined;
 
   await engineApi.post('/diagnosis', requestBody)
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<DiagnosisResponseType>) => {
       response = res;
       question = res.data.question;
       conditions = res.data.conditions;
       extras = res.data.extras;
-      hasEmergencyEvidence = res.data.has_emergency_evidence;
-      shouldStop = res.data.should_stop;
-      interviewToken = res.data.interview_token;
+      hasEmergencyEvidence = res.data.hasEmergencyEvidence;
+      shouldStop = res.data.shouldStop;
+      interviewToken = res.data.interviewToken;
 
     })
     .catch((err: AxiosError) => error = err);

@@ -18,7 +18,7 @@ export async function useConditions(params: ConditionsParamsType) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  let response: AxiosResponse | null = null;
+  let response: AxiosResponse<ConditionType[]> | null = null;
   let error: AxiosError | null = null;
   let conditions: ConditionType[] | null = null;
 
@@ -30,7 +30,7 @@ export async function useConditions(params: ConditionsParamsType) {
       include_internal: includeInternal,
     }
   })
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<ConditionType[]>) => {
       response = res;
       conditions = res.data;
     })

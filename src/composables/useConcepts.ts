@@ -22,7 +22,7 @@ export async function useConcepts ( params: ConceptsParamsType = {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
   
-  let response: AxiosResponse | null = null;
+  let response: AxiosResponse<ConceptItemModelType[]> | null = null;
   let error: AxiosError | null = null;
   let concepts: ConceptItemModelType[] | null = null;
 
@@ -32,7 +32,7 @@ export async function useConcepts ( params: ConceptsParamsType = {
       types: types?.join(','),
     }
   })
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<ConceptItemModelType[]>) => {
       response = res;
       concepts = res.data;
     })

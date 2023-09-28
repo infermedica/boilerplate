@@ -15,7 +15,7 @@ export async function useConceptsById (params: ConceptsByIdParamsType) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig)
 
-  let response: AxiosResponse | null = null;
+  let response: AxiosResponse<ConceptItemModelType> | null = null;
   let error: AxiosError | null = null;
   let conceptItemModel: ConceptItemModelType | null = null;
   let id: ConceptItemModelType['id'] | undefined = undefined;
@@ -24,12 +24,12 @@ export async function useConceptsById (params: ConceptsByIdParamsType) {
   let commonName: ConceptItemModelType['commonName'] | undefined = undefined;
 
   await engineApi.get(`/concepts/${conceptsId}`)
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<ConceptItemModelType>) => {
       response = res;
       id = res.data.id;
       type = res.data.type;
       name = res.data.name;
-      commonName = res.data.common_name;
+      commonName = res.data.commonName;
       conceptItemModel = res.data;
     })
     .catch((err: AxiosError) => error = err);

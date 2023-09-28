@@ -13,14 +13,14 @@ import type {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  let response: AxiosResponse | null = null;
+  let response: AxiosResponse<ParseResponseType> | null = null;
   let error: AxiosError | null = null;
   let mentions: ParseResponseType['mentions'] | undefined = undefined;
   let obvious: ParseResponseType['obvious'] | undefined = undefined;
   let tokens: ParseResponseType['tokens'] | undefined = undefined;
 
   await engineApi.post('/parse', requestBody)
-    .then((res: AxiosResponse) => {
+    .then((res: AxiosResponse<ParseResponseType>) => {
       response = res;
       mentions = res.data.mentions;
       obvious = res.data.obvious;
