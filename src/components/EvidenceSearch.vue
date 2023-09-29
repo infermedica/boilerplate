@@ -10,9 +10,11 @@ import {
   computed,
   ref, 
 } from 'vue';
-import { useSearch } from '@/composables';
+import { 
+  useSearch,
+  type SearchResultType,
+} from '@/services';
 import SearchComponent from '@/components/SearchComponent.vue'
-import type { SearchResultType } from '@/composables/types';
 
 const age = ref(32);
 const phrase = ref('');
@@ -23,11 +25,10 @@ const search = computed({
   set: async (value) => {
     phrase.value = value;
 
-    if (!phrase.value) {
-      results.value = null;
-    }
+    if (!phrase.value) results.value = null;
 
-    const { observations } = await useSearch({
+    if ( phrase.value) {
+      const { observations } = await useSearch({
       phrase: phrase.value, 
       age: {
         value: age.value,
@@ -36,6 +37,8 @@ const search = computed({
     });
 
     results.value = observations;
+    }
+    
 
   }
 });

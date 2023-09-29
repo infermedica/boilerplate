@@ -77,11 +77,9 @@
 import { 
   computed,
   ref,
+  type ComponentPublicInstance,
+  type ComputedRef,
  } from 'vue';
- import type {
-  ComponentPublicInstance,
-  ComputedRef,
-} from 'vue';
 import { highlight as vHighlight } from '@infermedica/component-library/src/utilities/directives/index.ts';
 import { 
   UiButton, 
@@ -92,7 +90,7 @@ import {
   UiLoader,
 } from '@infermedica/component-library';
 import UiDropdownItem from '@infermedica/component-library/src/components/molecules/UiDropdown/_internal/UiDropdownItem.vue';
-import type { SearchResultType } from '@/composables/types';
+import type { SearchResultType } from '@/services';
 
 type EvidenceSearchProps = {
   modelValue: string,

@@ -1,4 +1,4 @@
-import type { EngineApiConfigType } from '@/composables/types';
+import type { EngineApiConfigType } from '@/services';
 
 export const engineApiConfig: EngineApiConfigType = {
   baseURL: import.meta.env.VITE_API,
