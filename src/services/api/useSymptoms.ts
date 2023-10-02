@@ -1,22 +1,21 @@
-import type { 
+import type {
   AxiosResponse,
   AxiosError,
 } from 'axios';
-import { 
+import {
   engineApiConfig,
   useSetAuthHeaders,
   type SymptomType,
   type SymptomsParamsType,
 } from '@/services';
 
-export async function useSymptoms ( params: SymptomsParamsType ) {
-
+export async function useSymptoms(params: SymptomsParamsType) {
   const {
     age,
-    enableTriage3
+    enableTriage3,
   } = params;
 
-  const { engineApi } = useSetAuthHeaders(engineApiConfig)
+  const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
   let response: AxiosResponse<SymptomType[]> | null = null;
   let error: AxiosError | null = null;
@@ -33,11 +32,13 @@ export async function useSymptoms ( params: SymptomsParamsType ) {
       response = res;
       symptoms = res.data;
     })
-    .catch((err: AxiosError) => error = err);
-  
+    .catch((err: AxiosError) => {
+      error = err;
+    });
+
   return {
     response,
     symptoms,
     error,
-  }
+  };
 }

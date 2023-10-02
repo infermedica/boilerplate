@@ -1,23 +1,22 @@
-import type { 
+import type {
   AxiosResponse,
   AxiosError,
 } from 'axios';
-import { 
+import {
   engineApiConfig,
   useSetAuthHeaders,
   type RationaleResponseType,
   type DiagnosisRequestType,
 } from '@/services';
 
- export async function useRationale (requestBody: DiagnosisRequestType) {
-  
+export async function useRationale(requestBody: DiagnosisRequestType) {
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
-  
+
   let response: AxiosResponse<RationaleResponseType> | null = null;
   let error: AxiosError | null = null;
   let type: RationaleResponseType['type'] | null = null;
-  let observationParams: RationaleResponseType['observationParams'] | undefined = undefined;
-  let conditionParams: RationaleResponseType['conditionParams'] | undefined = undefined;
+  let observationParams: RationaleResponseType['observationParams'] | undefined;
+  let conditionParams: RationaleResponseType['conditionParams'] | undefined;
 
   await engineApi.post('/rationale', requestBody)
     .then((res: AxiosResponse<RationaleResponseType>) => {
@@ -26,7 +25,9 @@ import {
       observationParams = res.data.observationParams;
       conditionParams = res.data.conditionParams;
     })
-    .catch((err: AxiosError) => error = err);
+    .catch((err: AxiosError) => {
+      error = err;
+    });
 
   return {
     response,
@@ -34,5 +35,5 @@ import {
     observationParams,
     conditionParams,
     error,
-  }
+  };
 }

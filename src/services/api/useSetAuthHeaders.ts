@@ -1,12 +1,11 @@
 import axios from 'axios';
-import { 
+import {
   convertResponse,
   convertRequest,
   type EngineApiConfigType,
 } from '@/services';
 
-export function useSetAuthHeaders( engineApiConfig: EngineApiConfigType) {
-
+export function useSetAuthHeaders(engineApiConfig: EngineApiConfigType) {
   const {
     baseURL,
     appId,
@@ -15,7 +14,7 @@ export function useSetAuthHeaders( engineApiConfig: EngineApiConfigType) {
   } = engineApiConfig;
 
   const engineApi = axios.create({
-    baseURL: baseURL,
+    baseURL,
   });
 
   engineApi.defaults.headers.common['App-Id'] = appId;
@@ -26,18 +25,17 @@ export function useSetAuthHeaders( engineApiConfig: EngineApiConfigType) {
 
   engineApi.interceptors.response.use((response) => {
     if (
-      response.data &&
-      response.headers['content-type'] === 'application/json'
+      response.data
+      && response.headers['content-type'] === 'application/json'
     ) {
       response.data = convertResponse(response.data);
     }
     return response;
-  
   });
 
   engineApi.interceptors.request.use((config) => {
     const newConfig = { ...config };
-  
+
     if (config.data) {
       newConfig.data = convertRequest(config.data);
     }

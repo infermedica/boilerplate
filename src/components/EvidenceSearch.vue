@@ -1,20 +1,20 @@
 <template>
-  <SearchComponent 
+  <SearchComponent
     v-model="search"
     :results="results"
   />
 </template>
 
 <script setup lang="ts">
-import { 
+import {
   computed,
-  ref, 
+  ref,
 } from 'vue';
-import { 
+import {
   useSearch,
   type SearchResultType,
 } from '@/services';
-import SearchComponent from '@/components/SearchComponent.vue'
+import SearchComponent from '@/components/SearchComponent.vue';
 
 const age = ref(32);
 const phrase = ref('');
@@ -27,20 +27,18 @@ const search = computed({
 
     if (!phrase.value) results.value = null;
 
-    if ( phrase.value) {
+    if (phrase.value) {
       const { observations } = await useSearch({
-      phrase: phrase.value, 
-      age: {
-        value: age.value,
-      }, 
-      maxResults: maxResults.value,
-    });
+        phrase: phrase.value,
+        age: {
+          value: age.value,
+        },
+        maxResults: maxResults.value,
+      });
 
-    results.value = observations;
+      results.value = observations;
     }
-    
-
-  }
+  },
 });
 
 </script>

@@ -1,21 +1,21 @@
-import type { 
+import type {
   AxiosResponse,
   AxiosError,
 } from 'axios';
-import { 
+import {
   engineApiConfig,
   useSetAuthHeaders,
   type RiskFactorType,
-  type RiskFactorsParams, 
+  type RiskFactorsParams,
 } from '@/services';
 
-export async function useRiskFactors ( params: RiskFactorsParams ) {
+export async function useRiskFactors(params: RiskFactorsParams) {
   const {
     age,
     enableTriage3,
   } = params;
 
-  const { engineApi } = useSetAuthHeaders(engineApiConfig)
+  const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
   let response: AxiosResponse<RiskFactorType[]> | null = null;
   let error: AxiosError | null = null;
@@ -25,18 +25,20 @@ export async function useRiskFactors ( params: RiskFactorsParams ) {
     params: {
       'age.value': age.value,
       'age.unit': age.unit,
-      'enable_triage_3': enableTriage3,
-    }
+      enable_triage_3: enableTriage3,
+    },
   })
     .then((res: AxiosResponse<RiskFactorType[]>) => {
       response = res;
       riskFactors = res.data;
     })
-    .catch((err: AxiosError) => error = err);
-  
+    .catch((err: AxiosError) => {
+      error = err;
+    });
+
   return {
     response,
     riskFactors,
-    error: error,
-  }
+    error,
+  };
 }

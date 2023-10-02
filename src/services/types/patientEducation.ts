@@ -1,4 +1,4 @@
-export type SectionsType = 
+export type SectionsType =
   | 'summary'
   | 'how_its_defines'
   | 'how_its_cased'
@@ -13,9 +13,9 @@ export type PatientEducationParamsType = {
   conditionId: string,
   interviewToken: string,
   sections?: SectionsType[],
-}
+};
 
-type NodeType = 
+type NodeType =
   | 'paragraph'
   | 'heading-1'
   | 'heading-2'
@@ -33,8 +33,8 @@ export type Node = {
   target?: string;
   value?: string;
   title?: Node;
-}
+};
 
 export type PatientEducationType = {
   [key: string]: Node | Node[];
-}
+};

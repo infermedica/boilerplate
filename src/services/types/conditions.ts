@@ -1,4 +1,4 @@
-import { 
+import {
   AcutenessType,
   AgeRequestType,
   PrevalenceType,
@@ -12,7 +12,7 @@ export type ConditionsParamsType = {
   age: AgeRequestType,
   enableTriage3?: boolean,
   includeInternal?: boolean,
-}
+};
 
 export type ConditionType = {
   id: string,
@@ -29,9 +29,9 @@ export type ConditionType = {
   },
   triageLevel: TriageLevelType,
   recommendedChannel: RecommendedChannelType,
-}
+};
 
 export type ConditionsByIdParamsType = {
-  conditionId: string, 
+  conditionId: string,
   conditionsParams: ConditionsParamsType,
-}
+};

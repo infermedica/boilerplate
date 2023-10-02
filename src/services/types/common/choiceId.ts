@@ -6,4 +6,4 @@ const CHOICE_ID = {
   UNKNOWN: 'unknown',
 } as const;
 
-export type ChoiceIdType = ObjectValues<typeof CHOICE_ID>
+export type ChoiceIdType = ObjectValues<typeof CHOICE_ID>;

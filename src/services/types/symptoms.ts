@@ -1,11 +1,11 @@
-import { 
+import {
   AgeRequestType,
   ExtrasType,
   SexType,
   SeriousObservationSeriousnessType,
- } from "@/services";
+} from '@/services';
 
-export type ParentRelationType = 
+export type ParentRelationType =
   | 'base'
   | 'duration'
   | 'severity'
@@ -18,7 +18,7 @@ export type ParentRelationType =
 export type SymptomChildrenType = {
   id: string,
   parentRelation: ParentRelationType,
-}
+};
 
 export type SymptomType = {
   id: string,
@@ -32,19 +32,19 @@ export type SymptomType = {
   imageSource?: string,
   parentId?: string,
   parentRelation?: ParentRelationType,
-}
+};
 
 export type SymptomDetailsType = SymptomType & {
   question: string,
   questionThirdPerson?: string,
   seriousness?: SeriousObservationSeriousnessType,
-}
+};
 
 export type SymptomsParamsType = {
   age: AgeRequestType,
   enableTriage3?: boolean,
-}
+};
 
 export type SymptomsByIdParams = SymptomsParamsType & {
   symptomId: string,
-}
+};

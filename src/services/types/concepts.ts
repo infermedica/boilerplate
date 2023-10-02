@@ -5,13 +5,13 @@ export type ConceptItemModelType = {
   type?: ConceptItemModelTypesType,
   name?: string,
   commonName?: string
-}
+};
 
 export type ConceptsParamsType = {
   ids?: string[],
   types?: ConceptItemModelTypesType[],
-}
+};
 
 export type ConceptsByIdParamsType = {
   conceptsId: string,
-}
+};

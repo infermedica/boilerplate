@@ -1,4 +1,4 @@
-import type { 
+import type {
   AcutenessType,
   AgeRequestType,
   ChoiceIdType,
@@ -14,7 +14,7 @@ import type {
 export type ConditionDetailsModelCategoryType = {
   id?: string,
   name?: string,
-}
+};
 
 export type ConditionDetailsModelType = {
   icd10Code?: string,
@@ -25,7 +25,7 @@ export type ConditionDetailsModelType = {
   triageLevel?: TriageLevelType,
   hint?: string,
   hasPatientEducation?: boolean,
-}
+};
 
 export type ConditionProbabilityType = {
   id: string,
@@ -33,18 +33,18 @@ export type ConditionProbabilityType = {
   commonName?: string,
   probability: number,
   conditionDetails?: ConditionDetailsModelType,
-}
+};
 
 export type ChoiceType = {
   id: ChoiceIdType;
   label: string;
-}
+};
 
 export type QuestionItemsType = {
   id: string,
   name: string,
   choices: ChoiceType[],
-}
+};
 
 const QUESTION = {
   GROUP_MULTIPLE: 'group_multiple',
@@ -60,7 +60,7 @@ export type QuestionType = {
   text: string,
   items: QuestionItemsType[],
   extras?: ExtrasType,
-}
+};
 
 export type DiagnosisRequestType = {
   sex: SexType,
@@ -68,7 +68,7 @@ export type DiagnosisRequestType = {
   evidence?: EvidenceType[],
   evaluatedAt?: string,
   extras?: ExtrasType,
-}
+};
 
 export type DiagnosisResponseType = {
   question?: QuestionType,
@@ -77,4 +77,4 @@ export type DiagnosisResponseType = {
   hasEmergencyEvidence?: boolean,
   shouldStop?: boolean,
   interviewToken?: string
-}
+};

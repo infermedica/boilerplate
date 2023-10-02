@@ -9,11 +9,11 @@ export type SeriousObservationType = {
   commonName?: string,
   seriousness?: SeriousObservationSeriousnessType,
   isEmergency?: boolean,
-}
+};
 
 export type TriageResponseType = {
   triageLevel?: TriageLevelType,
   serious?: SeriousObservationType[],
   rootCause?: string,
   teleconsultationApplicable?: boolean,
-}
+};

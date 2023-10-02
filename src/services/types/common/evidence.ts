@@ -9,4 +9,4 @@ export type EvidenceType = {
     value: number,
     unit: 'week' | 'day' | 'hour' | 'minute',
   }
-}
+};

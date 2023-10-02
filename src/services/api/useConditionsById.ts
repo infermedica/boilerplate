@@ -1,22 +1,22 @@
-import type { 
+import type {
   AxiosResponse,
   AxiosError,
 } from 'axios';
-import { 
+import {
   engineApiConfig,
   useSetAuthHeaders,
-  type ConditionsByIdParamsType, 
-  type ConditionType, 
- } from '@/services';
+  type ConditionsByIdParamsType,
+  type ConditionType,
+} from '@/services';
 
-export async function useConditionsById( params: ConditionsByIdParamsType ) {
+export async function useConditionsById(params: ConditionsByIdParamsType) {
   const {
     conditionId,
     conditionsParams: {
       age,
       enableTriage3,
       includeInternal,
-    }
+    },
   } = params;
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
@@ -26,23 +26,23 @@ export async function useConditionsById( params: ConditionsByIdParamsType ) {
   let condition: ConditionType | null = null;
   let id: ConditionType['id'] | null = null;
   let name: ConditionType['name'] | null = null;
-  let commonName: ConditionType['commonName'] | undefined = undefined;
+  let commonName: ConditionType['commonName'] | undefined;
   let sexFilter: ConditionType['sexFilter'] | null = null;
-  let categories: ConditionType['categories'] | undefined = undefined;
-  let prevelance: ConditionType['prevalence'] | undefined = undefined;
-  let acuteness: ConditionType['acuteness'] | undefined = undefined;
-  let severity: ConditionType['severity'] | undefined = undefined;
-  let extras: ConditionType['extras'] | {} = {}; 
-  let triageLevel: ConditionType['triageLevel'] | undefined = undefined; 
-  let recommendedChannel: ConditionType['recommendedChannel'] | undefined = undefined;
+  let categories: ConditionType['categories'] | undefined;
+  let prevelance: ConditionType['prevalence'] | undefined;
+  let acuteness: ConditionType['acuteness'] | undefined;
+  let severity: ConditionType['severity'] | undefined;
+  let extras: ConditionType['extras'] | Record<string, unknown> = {};
+  let triageLevel: ConditionType['triageLevel'] | undefined;
+  let recommendedChannel: ConditionType['recommendedChannel'] | undefined;
 
   await engineApi.get(`/conditions/${conditionId}`, {
     params: {
       'age.value': age.value,
       'age.unit': age.unit,
       enable_triage_3: enableTriage3,
-      include_internal: includeInternal
-    }
+      include_internal: includeInternal,
+    },
   })
     .then((res: AxiosResponse<ConditionType>) => {
       response = res;
@@ -59,12 +59,14 @@ export async function useConditionsById( params: ConditionsByIdParamsType ) {
       triageLevel = res.data.triageLevel;
       recommendedChannel = res.data.recommendedChannel;
     })
-    .catch((err: AxiosError) => error = err);
+    .catch((err: AxiosError) => {
+      error = err;
+    });
 
   return {
     response,
     error,
-    condition, 
+    condition,
     id,
     name,
     commonName,
@@ -76,5 +78,5 @@ export async function useConditionsById( params: ConditionsByIdParamsType ) {
     extras,
     triageLevel,
     recommendedChannel,
-  }
+  };
 }

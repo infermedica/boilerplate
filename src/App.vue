@@ -1,5 +1,5 @@
 <template>
-  <EvidenceSearch/>
+  <EvidenceSearch />
 </template>
 
 <script setup lang="ts">

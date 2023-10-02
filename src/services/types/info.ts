@@ -5,4 +5,4 @@ export type InfoType = {
   symptomsCount: number,
   riskFactorsCount: number,
   labTestsCount: number,
-}
+};

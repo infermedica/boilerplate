@@ -15,7 +15,7 @@ export type MentionType = {
   type: ObservationType,
   positions?: number[],
   headPosition?: number,
-}
+};
 
 const CONCEPTS = {
   SYMPTOM: 'symptom',
@@ -32,10 +32,10 @@ export type ParseRequestType = {
   includeTokens?: boolean,
   correctSpelling?: boolean,
   conceptTypes?: ConceptsTypes[],
-}
+};
 
 export type ParseResponseType = {
   mentions: MentionType[],
   obvious: boolean,
   tokens?: string[],
-}
+};

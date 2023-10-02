@@ -11,7 +11,7 @@
       @close="handleDropdownClosed"
     >
       <template #toggle="provideData">
-        <UiInput 
+        <UiInput
           id="evidence-search"
           ref="dropdowntoggle"
           :model-value="modelValue"
@@ -74,16 +74,16 @@
 </template>
 
 <script setup lang="ts">
-import { 
+import {
   computed,
   ref,
   type ComponentPublicInstance,
   type ComputedRef,
- } from 'vue';
+} from 'vue';
 import { highlight as vHighlight } from '@infermedica/component-library/src/utilities/directives/index.ts';
-import { 
-  UiButton, 
-  UiDropdown, 
+import {
+  UiButton,
+  UiDropdown,
   UiFormField,
   UiIcon,
   UiInput,
@@ -96,11 +96,11 @@ type EvidenceSearchProps = {
   modelValue: string,
   results: SearchResultType[] | null,
   evidenceIds?: string[],
-}
+};
 
 type EvidenceSearchEmits = {
   (e: 'update:modelValue', value: string): void;
-}
+};
 
 const props = withDefaults(defineProps<EvidenceSearchProps>(), {
   evidenceIds: () => ([]),
@@ -124,7 +124,7 @@ const inputAttrs = computed(() => ({
 const inputElement = computed(() => dropdowntoggle.value?.$el.querySelector('input'));
 const isLoading = ref(false);
 const filteredResults: ComputedRef<SearchResultType[] | []> = computed(() => (
-   props.results !== null 
+  props.results !== null
     ? props.results?.filter((result: SearchResultType) => (!props.evidenceIds.includes(result.id)))
     : []
 ));
@@ -133,14 +133,14 @@ function updateHandler() {
   emit('update:modelValue', '');
 }
 async function inputHandler(
-  value: string, 
-  open: () => void, 
-  close: () => void
-  ) {
+  value: string,
+  open: () => void,
+  close: () => void,
+) {
   const inputValueTrimmed = value.trim();
-  
+
   if (props.modelValue === inputValueTrimmed) return;
-  
+
   if (inputValueTrimmed.length > 0) {
     open();
     emit('update:modelValue', inputValueTrimmed);
@@ -154,10 +154,10 @@ async function inputHandler(
 <style lang="scss">
 .evidence-search {
   --evidence-search-width: 28.75rem;
-  
+
   width: var(--evidence-search-width);
   margin-top: var(--space-16);
-  
+
   &__dropdown {
     --dropdown-popover-max-width: var(--evidence-search-width);
     --popover-content-padding: var(--evidence-search-popover-content-padding, 0);
@@ -165,11 +165,11 @@ async function inputHandler(
     position: var(--evidence-search-position, relative);
     width: 100%;
   }
-  
+
   &__input {
     width: var(--evidence-search-input-width, 100%);
   }
- 
+
   &__search-icon {
     --icon-color: var(--evidence-search-icon-color, var(--color-icon-primary));
   }
@@ -180,22 +180,22 @@ async function inputHandler(
 
   &__highlighted {
     font: var(--evidence-search-highlighted-font, var(--font-body-1));
-    
+
     &::first-letter {
       text-transform: uppercase;
     }
-    
+
     mark {
       font: var(--evidence-search-highlighted-mark-font, var(--font-body-1-thick));
       color: var(--evidence-search-highlighted-mark-color, inherit);
       background: var(--evidence-search-highlighted-mark-background, transparent);
     }
   }
-  
+
   &__results {
     padding: var(--evidence-search-results-padding, var(--space-8));
   }
-  
+
   .ui-dropdown-item {
     width: 100%;
   }

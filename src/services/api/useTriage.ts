@@ -1,24 +1,23 @@
-import type { 
+import type {
   AxiosResponse,
   AxiosError,
 } from 'axios';
-import { 
+import {
   engineApiConfig,
   useSetAuthHeaders,
   type DiagnosisRequestType,
   type TriageResponseType,
 } from '@/services';
 
- export async function useTriage (request: DiagnosisRequestType) {
-  
+export async function useTriage(request: DiagnosisRequestType) {
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
-  
+
   let response: AxiosResponse<TriageResponseType> | null = null;
   let error: AxiosError | null = null;
-  let triageLevel: TriageResponseType['triageLevel'] | undefined = undefined;
-  let serious: TriageResponseType['serious'] | undefined = undefined;
-  let rootCause: TriageResponseType['rootCause'] | undefined = undefined;
-  let teleconsultationApplicable: TriageResponseType['teleconsultationApplicable'] | undefined = undefined;
+  let triageLevel: TriageResponseType['triageLevel'] | undefined;
+  let serious: TriageResponseType['serious'] | undefined;
+  let rootCause: TriageResponseType['rootCause'] | undefined;
+  let teleconsultationApplicable: TriageResponseType['teleconsultationApplicable'] | undefined;
 
   await engineApi.post('/triage', request)
     .then((res: AxiosResponse<TriageResponseType>) => {
@@ -28,7 +27,9 @@ import {
       rootCause = res.data.rootCause;
       teleconsultationApplicable = res.data.teleconsultationApplicable;
     })
-    .catch((err: AxiosError) => error = err);
+    .catch((err: AxiosError) => {
+      error = err;
+    });
 
   return {
     response,
@@ -37,5 +38,5 @@ import {
     rootCause,
     teleconsultationApplicable,
     error,
-  }
- }
+  };
+}

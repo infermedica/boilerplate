@@ -1,15 +1,15 @@
-import type { 
+import type {
   AxiosResponse,
   AxiosError,
 } from 'axios';
-import { 
+import {
   engineApiConfig,
   useSetAuthHeaders,
-  type SearchParamsType, 
+  type SearchParamsType,
   type SearchResultType,
 } from '@/services';
 
-export async function useSearch ( params: SearchParamsType ) {
+export async function useSearch(params: SearchParamsType) {
   const {
     phrase,
     age,
@@ -32,17 +32,19 @@ export async function useSearch ( params: SearchParamsType ) {
       sex,
       maxResults,
       types: types?.join(','),
-    }
+    },
   })
     .then((res: AxiosResponse<SearchResultType[]>) => {
       response = res;
       observations = res.data;
     })
-    .catch((err: AxiosError) => error = err);
+    .catch((err: AxiosError) => {
+      error = err;
+    });
 
   return {
     response,
     observations,
     error,
-  }
+  };
 }

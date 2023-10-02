@@ -1,26 +1,25 @@
-import type { 
+import type {
   AxiosResponse,
   AxiosError,
 } from 'axios';
-import { 
+import {
   engineApiConfig,
   useSetAuthHeaders,
   type DiagnosisRequestType,
-  type DiagnosisResponseType, 
+  type DiagnosisResponseType,
 } from '@/services';
 
-export async function useDiagnosis (requestBody: DiagnosisRequestType) {
-  
+export async function useDiagnosis(requestBody: DiagnosisRequestType) {
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
   let response: AxiosResponse<DiagnosisResponseType> | null = null;
   let error: AxiosError | null = null;
-  let question: DiagnosisResponseType['question'] | undefined = undefined;
-  let conditions: DiagnosisResponseType['conditions'] | undefined = undefined;
-  let extras: DiagnosisResponseType['extras'] | undefined = undefined;
-  let hasEmergencyEvidence: DiagnosisResponseType['hasEmergencyEvidence'] | undefined = undefined;
-  let shouldStop: DiagnosisResponseType['shouldStop'] | undefined = undefined;
-  let interviewToken: DiagnosisResponseType['interviewToken'] | undefined = undefined;
+  let question: DiagnosisResponseType['question'] | undefined;
+  let conditions: DiagnosisResponseType['conditions'] | undefined;
+  let extras: DiagnosisResponseType['extras'] | undefined;
+  let hasEmergencyEvidence: DiagnosisResponseType['hasEmergencyEvidence'] | undefined;
+  let shouldStop: DiagnosisResponseType['shouldStop'] | undefined;
+  let interviewToken: DiagnosisResponseType['interviewToken'] | undefined;
 
   await engineApi.post('/diagnosis', requestBody)
     .then((res: AxiosResponse<DiagnosisResponseType>) => {
@@ -31,9 +30,10 @@ export async function useDiagnosis (requestBody: DiagnosisRequestType) {
       hasEmergencyEvidence = res.data.hasEmergencyEvidence;
       shouldStop = res.data.shouldStop;
       interviewToken = res.data.interviewToken;
-
     })
-    .catch((err: AxiosError) => error = err);
+    .catch((err: AxiosError) => {
+      error = err;
+    });
 
   return {
     response,
@@ -44,5 +44,5 @@ export async function useDiagnosis (requestBody: DiagnosisRequestType) {
     shouldStop,
     interviewToken,
     error,
-  }
+  };
 }

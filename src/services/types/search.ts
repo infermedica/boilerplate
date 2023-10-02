@@ -1,22 +1,22 @@
-import { 
+import {
   AgeRequestType,
   ObservationType,
   SexType,
 } from '@/services';
 
 export type SearchParamsType = {
-  phrase: string, 
-  age: AgeRequestType, 
+  phrase: string,
+  age: AgeRequestType,
   sex?: SexType,
   maxResults?: number,
-  types?: ObservationType[], 
-}
+  types?: ObservationType[],
+};
 
 export type SearchResultType = {
   id: string,
   label: string,
-}
+};
 
 export type SearchEvidenceType = {
   results: SearchResultType[]
-}
+};

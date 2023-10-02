@@ -1,24 +1,23 @@
-import type { 
+import type {
   AxiosResponse,
   AxiosError,
 } from 'axios';
-import { 
+import {
   engineApiConfig,
   useSetAuthHeaders,
   type DiagnosisRequestType,
   type RecommendSpecialistType,
   type RecommendedChannelType,
-  type RecommendSpecialistResponseType, 
+  type RecommendSpecialistResponseType,
 } from '@/services';
 
- export async function useRecommendSpecialist (requestBody: DiagnosisRequestType) {
-  
+export async function useRecommendSpecialist(requestBody: DiagnosisRequestType) {
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
-  
+
   let response: AxiosResponse<RecommendSpecialistResponseType> | null = null;
   let error: AxiosError | null = null;
-  let recommendedSpecialist: RecommendSpecialistType | undefined = undefined;
-  let recommendedChannel: RecommendedChannelType | undefined = undefined;
+  let recommendedSpecialist: RecommendSpecialistType | undefined;
+  let recommendedChannel: RecommendedChannelType | undefined;
 
   await engineApi.post('/recommend_specialist', requestBody)
     .then((res: AxiosResponse<RecommendSpecialistResponseType>) => {
@@ -26,12 +25,14 @@ import {
       recommendedSpecialist = res.data.recommendedSpecialist;
       recommendedChannel = res.data.recommendedChannel;
     })
-    .catch((err: AxiosError) => error = err);
+    .catch((err: AxiosError) => {
+      error = err;
+    });
 
   return {
     response,
     recommendedSpecialist,
     recommendedChannel,
     error,
-  }
+  };
 }

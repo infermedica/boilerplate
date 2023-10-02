@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import { fileURLToPath, URL } from "url";
+import path from 'path';
 
-import svgLoader from 'vite-svg-loader'
+import svgLoader from 'vite-svg-loader';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -19,14 +19,12 @@ export default defineConfig({
     }),
   ],
   resolve: {
-    alias: [
-      { 
-        find: '@',
-        replacement: fileURLToPath(new URL('./src', import.meta.url)),
-      },
-    ],
+    alias: [ {
+      find: '@',
+      replacement: path.resolve(__dirname, 'src'),
+    } ],
   },
   optimizeDeps: {
-    include: ['fast-deep-equal'],
+    include: [ 'fast-deep-equal' ],
   },
 });

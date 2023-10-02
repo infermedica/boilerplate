@@ -1,19 +1,19 @@
-import type { 
+import type {
   AxiosResponse,
   AxiosError,
 } from 'axios';
-import { 
+import {
   engineApiConfig,
   useSetAuthHeaders,
   type InfoType,
 } from '@/services';
 
-export async function useInfo () {
+export async function useInfo() {
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
   let response: AxiosResponse<InfoType> | null = null;
   let error: Error | AxiosError | null = null;
-  let apiVersion: InfoType['apiVersion'] | undefined = undefined;
+  let apiVersion: InfoType['apiVersion'] | undefined;
   let updatedAt: InfoType['updatedAt'] | null = null;
   let conditionsCount: InfoType['conditionsCount'] | null = null;
   let symptomsCount: InfoType['symptomsCount'] | null = null;
@@ -30,7 +30,9 @@ export async function useInfo () {
       riskFactorsCount = res.data.riskFactorsCount;
       labTestsCount = res.data.labTestsCount;
     })
-    .catch((err: AxiosError) => error = err);
+    .catch((err: AxiosError) => {
+      error = err;
+    });
 
   return {
     response,
@@ -41,5 +43,5 @@ export async function useInfo () {
     riskFactorsCount,
     labTestsCount,
     error,
-  }
+  };
 }

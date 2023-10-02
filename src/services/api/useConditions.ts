@@ -1,12 +1,12 @@
-import type { 
+import type {
   AxiosResponse,
   AxiosError,
 } from 'axios';
-import { 
+import {
   engineApiConfig,
   useSetAuthHeaders,
-  type  ConditionsParamsType, 
-  type ConditionType, 
+  type ConditionsParamsType,
+  type ConditionType,
 } from '@/services';
 
 export async function useConditions(params: ConditionsParamsType) {
@@ -28,17 +28,19 @@ export async function useConditions(params: ConditionsParamsType) {
       'age.unit': age.unit,
       enable_triage_3: enableTriage3,
       include_internal: includeInternal,
-    }
+    },
   })
     .then((res: AxiosResponse<ConditionType[]>) => {
       response = res;
       conditions = res.data;
     })
-    .catch((err: AxiosError) => error = err);
+    .catch((err: AxiosError) => {
+      error = err;
+    });
 
   return {
     response,
-    conditions, 
+    conditions,
     error,
-  }
+  };
 }

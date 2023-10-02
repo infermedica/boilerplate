@@ -1,27 +1,26 @@
-import type { 
+import type {
   AxiosResponse,
   AxiosError,
 } from 'axios';
-import { 
+import {
   engineApiConfig,
   useSetAuthHeaders,
   type ConceptsByIdParamsType,
-  type ConceptItemModelType, 
+  type ConceptItemModelType,
 } from '@/services';
 
-export async function useConceptsById (params: ConceptsByIdParamsType) {
-
+export async function useConceptsById(params: ConceptsByIdParamsType) {
   const { conceptsId } = params;
 
-  const { engineApi } = useSetAuthHeaders(engineApiConfig)
+  const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
   let response: AxiosResponse<ConceptItemModelType> | null = null;
   let error: AxiosError | null = null;
   let conceptItemModel: ConceptItemModelType | null = null;
-  let id: ConceptItemModelType['id'] | undefined = undefined;
-  let type: ConceptItemModelType['type'] | undefined = undefined;
-  let name: ConceptItemModelType['name'] | undefined = undefined;
-  let commonName: ConceptItemModelType['commonName'] | undefined = undefined;
+  let id: ConceptItemModelType['id'] | undefined;
+  let type: ConceptItemModelType['type'] | undefined;
+  let name: ConceptItemModelType['name'] | undefined;
+  let commonName: ConceptItemModelType['commonName'] | undefined;
 
   await engineApi.get(`/concepts/${conceptsId}`)
     .then((res: AxiosResponse<ConceptItemModelType>) => {
@@ -32,8 +31,10 @@ export async function useConceptsById (params: ConceptsByIdParamsType) {
       commonName = res.data.commonName;
       conceptItemModel = res.data;
     })
-    .catch((err: AxiosError) => error = err);
-  
+    .catch((err: AxiosError) => {
+      error = err;
+    });
+
   return {
     response,
     conceptItemModel,
@@ -42,5 +43,5 @@ export async function useConceptsById (params: ConceptsByIdParamsType) {
     name,
     commonName,
     error,
-  }
+  };
 }
