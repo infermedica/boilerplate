@@ -1,3 +1,3 @@
 export type ExtrasType = {
-  [key: string]: unknown,
+  [key: string]: unknown;
 };

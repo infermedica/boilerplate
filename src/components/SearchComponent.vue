@@ -80,7 +80,6 @@ import {
   type ComponentPublicInstance,
   type ComputedRef,
 } from 'vue';
-import { highlight as vHighlight } from '@infermedica/component-library/src/utilities/directives/index.ts';
 import {
   UiButton,
   UiDropdown,
@@ -89,13 +88,15 @@ import {
   UiInput,
   UiLoader,
 } from '@infermedica/component-library';
+// eslint-disable-next-line import/extensions
+import { highlight as vHighlight } from '@infermedica/component-library/src/utilities/directives/index.ts';
 import UiDropdownItem from '@infermedica/component-library/src/components/molecules/UiDropdown/_internal/UiDropdownItem.vue';
 import type { SearchResultType } from '@/services';
 
 type EvidenceSearchProps = {
-  modelValue: string,
-  results: SearchResultType[] | null,
-  evidenceIds?: string[],
+  modelValue: string;
+  results: SearchResultType[] | null;
+  evidenceIds?: string[];
 };
 
 type EvidenceSearchEmits = {

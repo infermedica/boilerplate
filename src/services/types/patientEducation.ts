@@ -10,9 +10,9 @@ export type SectionsType =
   | 'sources';
 
 export type PatientEducationParamsType = {
-  conditionId: string,
-  interviewToken: string,
-  sections?: SectionsType[],
+  conditionId: string;
+  interviewToken: string;
+  sections?: SectionsType[];
 };
 
 type NodeType =

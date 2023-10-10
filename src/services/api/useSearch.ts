@@ -20,9 +20,9 @@ export async function useSearch(params: SearchParamsType) {
 
   const { engineApi } = useSetAuthHeaders(engineApiConfig);
 
-  let response:AxiosResponse<SearchResultType[]> | null = null;
-  let error:Error | AxiosError | null = null;
-  let observations:SearchResultType[] | null | [] = null;
+  let response: AxiosResponse<SearchResultType[]> | null = null;
+  let error: Error | AxiosError | null = null;
+  let observations: SearchResultType[] | null | [] = null;
 
   await engineApi.get('/search', {
     params: {

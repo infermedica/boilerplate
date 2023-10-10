@@ -4,16 +4,16 @@ import type {
 } from '@/services';
 
 export type SeriousObservationType = {
-  id: string,
-  name: string,
-  commonName?: string,
-  seriousness?: SeriousObservationSeriousnessType,
-  isEmergency?: boolean,
+  id: string;
+  name: string;
+  commonName?: string;
+  seriousness?: SeriousObservationSeriousnessType;
+  isEmergency?: boolean;
 };
 
 export type TriageResponseType = {
-  triageLevel?: TriageLevelType,
-  serious?: SeriousObservationType[],
-  rootCause?: string,
-  teleconsultationApplicable?: boolean,
+  triageLevel?: TriageLevelType;
+  serious?: SeriousObservationType[];
+  rootCause?: string;
+  teleconsultationApplicable?: boolean;
 };

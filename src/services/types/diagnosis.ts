@@ -12,27 +12,27 @@ import type {
 } from '@/services';
 
 export type ConditionDetailsModelCategoryType = {
-  id?: string,
-  name?: string,
+  id?: string;
+  name?: string;
 };
 
 export type ConditionDetailsModelType = {
-  icd10Code?: string,
-  category?: ConditionDetailsModelCategoryType,
-  prevalence?: PrevalenceType,
-  severity?: SeverityType,
-  acuteness?: AcutenessType,
-  triageLevel?: TriageLevelType,
-  hint?: string,
-  hasPatientEducation?: boolean,
+  icd10Code?: string;
+  category?: ConditionDetailsModelCategoryType;
+  prevalence?: PrevalenceType;
+  severity?: SeverityType;
+  acuteness?: AcutenessType;
+  triageLevel?: TriageLevelType;
+  hint?: string;
+  hasPatientEducation?: boolean;
 };
 
 export type ConditionProbabilityType = {
-  id: string,
-  name: string,
-  commonName?: string,
-  probability: number,
-  conditionDetails?: ConditionDetailsModelType,
+  id: string;
+  name: string;
+  commonName?: string;
+  probability: number;
+  conditionDetails?: ConditionDetailsModelType;
 };
 
 export type ChoiceType = {
@@ -41,9 +41,9 @@ export type ChoiceType = {
 };
 
 export type QuestionItemsType = {
-  id: string,
-  name: string,
-  choices: ChoiceType[],
+  id: string;
+  name: string;
+  choices: ChoiceType[];
 };
 
 const QUESTION = {
@@ -56,25 +56,25 @@ const QUESTION = {
 export type QuestionTypes = ObjectValues<typeof QUESTION>;
 
 export type QuestionType = {
-  type?: QuestionTypes,
-  text: string,
-  items: QuestionItemsType[],
-  extras?: ExtrasType,
+  type?: QuestionTypes;
+  text: string;
+  items: QuestionItemsType[];
+  extras?: ExtrasType;
 };
 
 export type DiagnosisRequestType = {
-  sex: SexType,
-  age: AgeRequestType,
-  evidence?: EvidenceType[],
-  evaluatedAt?: string,
-  extras?: ExtrasType,
+  sex: SexType;
+  age: AgeRequestType;
+  evidence?: EvidenceType[];
+  evaluatedAt?: string;
+  extras?: ExtrasType;
 };
 
 export type DiagnosisResponseType = {
-  question?: QuestionType,
-  conditions?: ConditionProbabilityType[],
-  extras?: ExtrasType,
-  hasEmergencyEvidence?: boolean,
-  shouldStop?: boolean,
-  interviewToken?: string
+  question?: QuestionType;
+  conditions?: ConditionProbabilityType[];
+  extras?: ExtrasType;
+  hasEmergencyEvidence?: boolean;
+  shouldStop?: boolean;
+  interviewToken?: string;
 };

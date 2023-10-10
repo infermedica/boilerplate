@@ -10,11 +10,11 @@ import {
   computed,
   ref,
 } from 'vue';
+import SearchComponent from '@/components/SearchComponent.vue';
 import {
   useSearch,
   type SearchResultType,
 } from '@/services';
-import SearchComponent from '@/components/SearchComponent.vue';
 
 const age = ref(32);
 const phrase = ref('');

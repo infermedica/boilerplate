@@ -7,14 +7,14 @@ import {
 } from '@/services';
 
 export type MentionType = {
-  id: string,
-  name: string,
-  commonName?: string,
-  orth?: string,
-  choiceId: ChoiceIdType,
-  type: ObservationType,
-  positions?: number[],
-  headPosition?: number,
+  id: string;
+  name: string;
+  commonName?: string;
+  orth?: string;
+  choiceId: ChoiceIdType;
+  type: ObservationType;
+  positions?: number[];
+  headPosition?: number;
 };
 
 const CONCEPTS = {
@@ -25,17 +25,17 @@ const CONCEPTS = {
 export type ConceptsTypes = ObjectValues<typeof CONCEPTS>;
 
 export type ParseRequestType = {
-  age: AgeRequestType,
-  sex?: SexType,
-  text: string,
-  context?: string[],
-  includeTokens?: boolean,
-  correctSpelling?: boolean,
-  conceptTypes?: ConceptsTypes[],
+  age: AgeRequestType;
+  sex?: SexType;
+  text: string;
+  context?: string[];
+  includeTokens?: boolean;
+  correctSpelling?: boolean;
+  conceptTypes?: ConceptsTypes[];
 };
 
 export type ParseResponseType = {
-  mentions: MentionType[],
-  obvious: boolean,
-  tokens?: string[],
+  mentions: MentionType[];
+  obvious: boolean;
+  tokens?: string[];
 };

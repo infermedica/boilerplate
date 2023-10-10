@@ -1,9 +1,9 @@
 import type { DiagnosisRequestType } from '@/services';
 
 export type SuggestResult = {
-  id: string,
-  name: string,
-  commonName?: string,
+  id: string;
+  name: string;
+  commonName?: string;
 };
 
 export type SuggestMethod =
@@ -13,10 +13,10 @@ export type SuggestMethod =
   | 'red_flags';
 
 export type SuggestRequest = DiagnosisRequestType & {
-  suggestMethod?: SuggestMethod,
+  suggestMethod?: SuggestMethod;
 };
 
 export type SuggestParams = {
-  request: SuggestRequest,
-  maxResults?: number
+  request: SuggestRequest;
+  maxResults?: number;
 };

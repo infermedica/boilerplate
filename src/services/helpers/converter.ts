@@ -20,7 +20,7 @@ export const convertResponse = (item: unknown): unknown => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function convertRequest(request: { [key: string]: any; }) {
+export function convertRequest(request: { [key: string]: any }) {
   const parentKeys = Object.keys(request);
   parentKeys.forEach((key) => {
     const currentObj = request[key];

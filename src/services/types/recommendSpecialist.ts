@@ -3,11 +3,11 @@ import {
 } from '@/services';
 
 export type RecommendSpecialistType = {
-  id?: string,
-  name?: string,
+  id?: string;
+  name?: string;
 };
 
 export type RecommendSpecialistResponseType = {
-  recommendedSpecialist?: RecommendSpecialistType,
-  recommendedChannel?: RecommendedChannelType,
+  recommendedSpecialist?: RecommendSpecialistType;
+  recommendedChannel?: RecommendedChannelType;
 };
