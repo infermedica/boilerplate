@@ -3,4 +3,7 @@ export type EngineApiConfigType = {
   appId: string;
   appKey: string;
   interviewToken?: string;
+  model?: string;
+  interviewId?: string;
+  devMode?: string;
 };
