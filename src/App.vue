@@ -1,10 +1,9 @@
 <template>
-  <EvidenceSearch />
+  <WelcomeScreen />
 </template>
 
 <script setup lang="ts">
-
-import EvidenceSearch from './components/EvidenceSearch.vue';
+import WelcomeScreen from './components/views/WelcomeScreen.vue';
 
 </script>
 
