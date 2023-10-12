@@ -12,6 +12,7 @@ export * from './useRecommendSpecialist';
 export * from './useRiskFactors';
 export * from './useRiskFactorsById';
 export * from './useSearch';
+export * from './useSearchReactive';
 export * from './useSetAuthHeaders';
 export * from './useSuggest';
 export * from './useSymptoms';

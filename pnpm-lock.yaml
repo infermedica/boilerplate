@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@infermedica/component-library': ^0.7.2
+  '@infermedica/component-library': ^1.0.0
   '@types/node': ^20.4.7
   '@typescript-eslint/eslint-plugin': ^6.7.3
   '@typescript-eslint/parser': ^6.7.3
@@ -21,7 +21,7 @@ specifiers:
   vue-tsc: ^1.8.5
 
 dependencies:
-  '@infermedica/component-library': 0.7.2_iihxza32jbbr5mtvux7evzwl4m
+  '@infermedica/component-library': 1.0.0_iihxza32jbbr5mtvux7evzwl4m
   axios: 1.5.1
   vite-svg-loader: 4.0.0
   vue: 3.3.4
@@ -311,8 +311,8 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@infermedica/component-library/0.7.2_iihxza32jbbr5mtvux7evzwl4m:
-    resolution: {integrity: sha512-A/R78MsFxIbG5SFdwKKRBEB+F/5X6FwLeYRyio+oIUXAHJOHjxsh3nnYuCjGNXL42rvEJm9pdd+OvaH0Q4vxtg==}
+  /@infermedica/component-library/1.0.0_iihxza32jbbr5mtvux7evzwl4m:
+    resolution: {integrity: sha512-ucpNH+t+gvrNbyxZtsi6L04nuq1g/AA/e6+2jTIL4I1PTWVLGmL/+oAxxmH84pRodn2KZDoliRuL280aQcLClQ==}
     engines: {node: '>=16.13.2', pnpm: '>=6.32'}
     dependencies:
       '@vitejs/plugin-vue': 4.4.0_vite@4.4.11+vue@3.3.4

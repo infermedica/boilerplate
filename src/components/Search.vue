@@ -1,10 +1,10 @@
 <template>
   <UiFormField
-    class="evidence-search"
+    class="search"
   >
     <UiDropdown
       ref="dropdown"
-      class="ui-dropdown--compact evidence-search__dropdown"
+      class="ui-dropdown--compact search__dropdown"
       :toggle-element="inputElement"
       @update:model-value="updateHandler"
       @open="handleDropdownOpened"
@@ -12,20 +12,20 @@
     >
       <template #toggle="provideData">
         <UiInput
-          id="evidence-search"
+          id="search"
           ref="dropdowntoggle"
           :model-value="modelValue"
           v-bind="inputAttrs"
           autocomplete="off"
           role="combobox"
-          class="ui-input--has-icon evidence-search__input"
+          class="ui-input--has-icon search__input"
           @update:model-value="inputHandler($event, provideData.openHandler, provideData.closeHandler)"
         >
           <template #aside>
             <UiButton
               v-if="hasSearchQuery"
               tabindex="-1"
-              class="ui-button--text ui-button--secondary ui-button--has-icon ui-input__aside evidence-search__search-icon"
+              class="ui-button--text ui-button--secondary ui-button--has-icon ui-input__aside search__search-icon"
               aria-label="Clear"
               @click="inputHandler('', provideData.openHandler, provideData.closeHandler)"
             >
@@ -34,7 +34,7 @@
             <UiIcon
               v-else
               icon="search"
-              class="ui-input__aside evidence-search__search-icon"
+              class="ui-input__aside search__search-icon"
             />
           </template>
         </UiInput>
@@ -43,13 +43,13 @@
         <UiLoader
           :is-loading="isLoading"
           type="skeleton"
-          class="evidence-search__loader"
+          class="search__loader"
         >
           <div
             v-if="hasResults"
-            id="evidence-results"
+            id="results"
             role="listbox"
-            class="evidence-search__results"
+            class="search__results"
           >
             <UiDropdownItem
               v-for="(result, position) in filteredResults"
@@ -59,14 +59,18 @@
               :aria-setsize="filteredResults.length"
               :aria-posinset="position + 1"
               tabindex="-1"
-              class="evidence-search__button"
+              class="search__button"
             >
               <span
                 v-highlight="modelValue"
-                class="evidence-search__highlighted"
+                class="search__highlighted"
               >{{ result.label }}</span>
             </UiDropdownItem>
           </div>
+
+          <SearchNoResult
+            v-else
+          />
         </UiLoader>
       </template>
     </UiDropdown>
@@ -91,6 +95,7 @@ import {
 // eslint-disable-next-line import/extensions
 import { highlight as vHighlight } from '@infermedica/component-library/src/utilities/directives/index.ts';
 import UiDropdownItem from '@infermedica/component-library/src/components/molecules/UiDropdown/_internal/UiDropdownItem.vue';
+import SearchNoResult from '@/components/SearchNoResult.vue';
 import type { SearchResultType } from '@/services';
 
 type EvidenceSearchProps = {
@@ -153,22 +158,22 @@ async function inputHandler(
 </script>
 
 <style lang="scss">
-.evidence-search {
-  --evidence-search-width: 28.75rem;
+.search {
+  --search-width: 440px;
 
-  width: var(--evidence-search-width);
   margin-top: var(--space-16);
 
   &__dropdown {
-    --dropdown-popover-max-width: var(--evidence-search-width);
-    --popover-content-padding: var(--evidence-search-popover-content-padding, 0);
-    --dropdown-popover-min-height: var(--evidence-search-dropdown-popover-min-height, 8rem);
+    --dropdown-popover-max-width: var(--search-width);
+    --popover-content-padding: var(--search-popover-content-padding, 0);
+    --dropdown-popover-min-height: var(--search-dropdown-popover-min-height, 8rem);
+
     position: var(--evidence-search-position, relative);
     width: 100%;
   }
 
   &__input {
-    width: var(--evidence-search-input-width, 100%);
+    width: var(--search-input-width, var(--search-width));
   }
 
   &__search-icon {
