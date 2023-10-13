@@ -71,9 +71,8 @@ import UiBulletPointsItem from '@infermedica/component-library/src/components/mo
   --boy-laptop-logo: #91a5b1;
   --bullet-points-item-marker-color: var(--color-icon-primary);
 
-  width: 42.5rem;
+  width: var(--app-container-width);
   min-height: 22.75rem;
-  margin: var(--space-32) auto;
   display: flex;
   justify-content: space-between;
 
