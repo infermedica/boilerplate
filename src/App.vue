@@ -1,14 +1,13 @@
 <template>
   <div class="app-container">
-    <Question>
-      <QuestionGroupSingle />
-    </Question>
+    <WekcomeScreen />
   </div>
 </template>
 
 <script setup lang="ts">
-import Question from './components/views/Interview/Question.vue';
-import QuestionGroupSingle from './components/views/Interview/QuestionGroupSingle.vue';
+// import Question from './components/views/Interview/Question.vue';
+// import QuestionGroupSingle from './components/views/Interview/QuestionGroupSingle.vue';
+import WekcomeScreen from './components/views/WelcomeScreen.vue';
 
 </script>
 
@@ -16,7 +15,11 @@ import QuestionGroupSingle from './components/views/Interview/QuestionGroupSingl
 @import '~@infermedica/component-library/src/styles/styles.scss';
 
 .app-container {
-  --app-container-width: 42.5rem;
+  --app-container-width: 100%;
+
+  @media (min-width: 768px) {
+    --app-container-width: 42.5rem;
+  }
 
   margin: var(--space-32) auto;
   width: var(--app-container-width);

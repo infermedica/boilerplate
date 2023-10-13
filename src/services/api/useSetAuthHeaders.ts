@@ -10,6 +10,8 @@ export function useSetAuthHeaders(engineApiConfig: EngineApiConfigType) {
     baseURL,
     appId,
     appKey,
+    model,
+    devMode,
     // interviewToken,
   } = engineApiConfig;
 
@@ -20,7 +22,8 @@ export function useSetAuthHeaders(engineApiConfig: EngineApiConfigType) {
   engineApi.defaults.headers.common['App-Id'] = appId;
   engineApi.defaults.headers.common['App-Key'] = appKey;
   engineApi.defaults.headers.common['Content-Type'] = 'application/json';
-  engineApi.defaults.headers.common.Model = 'infermedica-pl';
+  engineApi.defaults.headers.common.Model = model;
+  engineApi.defaults.headers.common['Dev-Mode'] = devMode;
   // engineApi.defaults.headers.common['Interview-Token'] = interviewToken;
   // engineApi.defaults.headers.common['Access-Control-Allow-Headers'] = 'App-Id, App-Key, Content-Type, Interview-Token';
 
