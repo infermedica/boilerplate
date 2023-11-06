@@ -1,0 +1,11 @@
+body {
+  box-sizing: border-box;
+  height: 100%;
+  font: var(--font-body-1);
+  margin: 0;
+
+
+  @media (min-width: 768px) {
+    --app-container-width: 42.5rem;
+  }
+}

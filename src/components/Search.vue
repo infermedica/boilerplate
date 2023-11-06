@@ -92,8 +92,7 @@ import {
   UiInput,
   UiLoader,
 } from '@infermedica/component-library';
-// eslint-disable-next-line import/extensions
-import { highlight as vHighlight } from '@infermedica/component-library/src/utilities/directives/index.ts';
+import { highlight as vHighlight } from '@infermedica/component-library/src/utilities/directives';
 import UiDropdownItem from '@infermedica/component-library/src/components/molecules/UiDropdown/_internal/UiDropdownItem.vue';
 import SearchNoResult from '@/components/SearchNoResult.vue';
 import type { SearchResultType } from '@/services';

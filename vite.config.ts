@@ -24,7 +24,4 @@ export default defineConfig({
       { find: /^~(.*)$/, replacement: '$1' },
     ],
   },
-  optimizeDeps: {
-    include: ['fast-deep-equal'],
-  },
 });

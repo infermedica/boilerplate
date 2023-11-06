@@ -4,11 +4,14 @@
   >
     <UiLoader v-if="isLoading" is-loading type="spinner" tag="div" class="welcome-screen__loader" />
     <template v-else>
-      <div class="welcome-screen__column-left">
-        <UiHeading>Check your symptoms</UiHeading>
+      <UiMessage
+        title="Check your symptoms"
+        illustration="boy"
+      >
         <UiText class="welcome-screen__text">
           This is an example presents how easy create an application using only Infermedica products:
         </UiText>
+
         <UiBulletPoints>
           <UiBulletPointsItem>
             Triage Api
@@ -17,9 +20,11 @@
             Component Library
           </UiBulletPointsItem>
         </UiBulletPoints>
+
         <UiHeading level="4" class="welcome-screen__heading-about">
           Patient details and symptoms
         </UiHeading>
+
         <UiBulletPoints>
           <UiBulletPointsItem
             icon="checkmark"
@@ -43,13 +48,11 @@
         >
           Next
         </UiButton>
-      </div>
-      <div class="welcome-screen__column-right">
-        <UiIcon icon="boy" class="welcome-screen__icon" />
-      </div>
+      </UiMessage>
     </template>
   </div>
 </template>
+
 <script setup lang="ts">
 import {
   ref,
@@ -59,7 +62,7 @@ import {
   UiBulletPoints,
   UiButton,
   UiHeading,
-  UiIcon,
+  UiMessage,
   UiLoader,
   UiText,
 } from '@infermedica/component-library';
@@ -123,11 +126,12 @@ const handleGoNext = async () => {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  margin-inline: var(--space-8);
+  margin-inline: var(--space-16);
+  margin-top: var(--space-32);
 
   @media (min-width: 768px) {
     flex-direction: row;
-    margin-inline: unset;
+    margin-inline: auto;
   }
 
   &__loader {
@@ -148,9 +152,5 @@ const handleGoNext = async () => {
     margin-top: var(--space-32);
   }
 
-  &__icon {
-    width: var(--icon-size, 17.5rem);
-    height: var(--icon-size, 13.125rem);
-  }
 }
 </style>
