@@ -1,18 +1,31 @@
 <template>
   <div class="app__wrapper">
-    <Header />
+    <Header
+      @toogle-side-panel="handleToggleSidePanel"
+    />
     <main class="app__container">
       <WekcomeScreen />
     </main>
     <Footer />
+    <SidePanel
+      :is-side-panel-open="isSidePanelOpen"
+      @toogle-side-panel="handleToggleSidePanel"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+import SidePanel from './components/SidePanel.vue';
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import WekcomeScreen from '@/components/views/WelcomeScreen.vue';
 
+const isSidePanelOpen = ref(false);
+
+const handleToggleSidePanel = () => {
+  isSidePanelOpen.value = !isSidePanelOpen.value;
+};
 </script>
 
 <style lang="scss">
@@ -32,5 +45,4 @@ import WekcomeScreen from '@/components/views/WelcomeScreen.vue';
     }
   }
 }
-
 </style>

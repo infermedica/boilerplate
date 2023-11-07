@@ -7,15 +7,16 @@
     :button-hamburger-attrs="buttonHamburgerAttrs"
     :icon-logo-attrs="iconLogoAttrs"
     class="header"
-    @hamburger:close="onHamburgerClose"
-    @hamburger:open="onHamburgerOpen"
+    @hamburger:close="handleToggleSidePanel"
+    @hamburger:open="handleToggleSidePanel"
   />
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, ref } from 'vue';
+import { defineAsyncComponent } from 'vue';
 import { UiHeader } from '@infermedica/component-library';
 
+const emit = defineEmits(['toogleSidePanel']);
 const title = 'Infermedica';
 const logo = defineAsyncComponent(() => import('@/assets/logo.svg')) as SVGAElement;
 const navigation = [
@@ -44,21 +45,15 @@ const buttonHamburgerAttrs = { id: 'hamburger-button' };
 const iconLogoAttrs = {
   style: '--icon-color: var(--color-icon-on-brand)',
 };
-const isMenuOpen = ref(false);
 
-function onHamburgerClose() {
-  isMenuOpen.value = !isMenuOpen.value;
+function handleToggleSidePanel() {
+  emit('toogleSidePanel');
 }
 
-function onHamburgerOpen() {
-  isMenuOpen.value = !isMenuOpen.value;
-}
 </script>
 
 <style lang="scss">
 .header {
-  --header-max-width: 20rem;
-
   .ui-header__container {
     width: unset;
   }
