@@ -149,7 +149,12 @@ const handleGoNext = async () => {
   }
 
   &__button {
-    margin-top: var(--space-32);
+    margin: var(--space-32) auto var(--space-64);
+    width: 100%;
+
+    @media (min-width: 768px) {
+      width: unset;
+    }
   }
 
 }

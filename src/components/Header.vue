@@ -5,7 +5,6 @@
     :navigation="navigation"
     :button-brand-attrs="buttonBrandAttrs"
     :button-hamburger-attrs="buttonHamburgerAttrs"
-    :icon-hamburger-attrs="iconHamburgerAttrs"
     :icon-logo-attrs="iconLogoAttrs"
     class="header"
     @hamburger:close="onHamburgerClose"
@@ -39,13 +38,10 @@ const navigation = [
 ];
 const buttonBrandAttrs = {
   id: 'brand-button',
-  // onClick: events.onClickBrandButton,
-  onClick: () => console.log('brand button'),
+  onClick: () => window.open('https://infermedica.com/', '_blank'),
 };
 const buttonHamburgerAttrs = { id: 'hamburger-button' };
-const iconHamburgerAttrs = { 'data-testid': 'hamburger-icon' };
 const iconLogoAttrs = {
-  'data-testid': 'logo-icon',
   style: '--icon-color: var(--color-icon-on-brand)',
 };
 const isMenuOpen = ref(false);
@@ -62,6 +58,10 @@ function onHamburgerOpen() {
 <style lang="scss">
 .header {
   --header-max-width: 20rem;
+
+  .ui-header__container {
+    width: unset;
+  }
 
   @media (min-width: 768px) {
     --header-max-width: 42.5rem;
