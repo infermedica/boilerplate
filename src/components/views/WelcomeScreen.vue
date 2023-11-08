@@ -68,7 +68,7 @@ import {
 } from '@infermedica/component-library';
 import UiBulletPointsItem from '@infermedica/component-library/src/components/molecules/UiBulletPoints/_internal/UiBulletPointsItem.vue';
 import { patientData } from '@/patientData';
-import { useDiagnosis, useSymptomsById } from '@/services';
+import { useSymptomsById } from '@/services';
 import { capitalizeFirstLetter } from '@/helpers';
 
 const {
@@ -79,6 +79,8 @@ const {
 
 const symptomsNames = ref<unknown[]>([]);
 const isLoading = ref(true);
+
+const emit = defineEmits(['getNextQuestion']);
 
 onMounted(async () => {
   symptomsNames.value = await Promise.all(evidences.map(async (evidence) => {
@@ -94,14 +96,8 @@ onMounted(async () => {
   isLoading.value = false;
 });
 
-const handleGoNext = async () => {
-  await useDiagnosis({
-    sex,
-    age: {
-      value,
-    },
-    evidence: evidences,
-  });
+const handleGoNext = () => {
+  emit('getNextQuestion', patientData);
 };
 
 </script>
