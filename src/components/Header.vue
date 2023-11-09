@@ -59,7 +59,7 @@ function handleToggleSidePanel() {
   }
 
   @media (min-width: 768px) {
-    --header-max-width: 42.5rem;
+    --header-max-width: var(--app-container-width);
   }
 }
 </style>

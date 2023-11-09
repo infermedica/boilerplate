@@ -1,105 +1,49 @@
 <template>
-  <div
+  <UiMessage
+    title="Check your symptoms"
+    illustration="boy"
     class="welcome-screen"
   >
-    <UiLoader v-if="isLoading" is-loading type="spinner" tag="div" class="welcome-screen__loader" />
-    <template v-else>
-      <UiMessage
-        title="Check your symptoms"
-        illustration="boy"
-      >
-        <UiText class="welcome-screen__text">
-          This is an example presents how easy create an application using only Infermedica products:
-        </UiText>
+    <UiText class="welcome-screen__text">
+      This is an example presents how easy create an application using only Infermedica products:
+    </UiText>
 
-        <UiBulletPoints>
-          <UiBulletPointsItem>
-            Triage Api
-          </UiBulletPointsItem>
-          <UiBulletPointsItem>
-            Component Library
-          </UiBulletPointsItem>
-        </UiBulletPoints>
+    <UiBulletPoints>
+      <UiBulletPointsItem>
+        Triage Api
+      </UiBulletPointsItem>
+      <UiBulletPointsItem>
+        Component Library
+      </UiBulletPointsItem>
+    </UiBulletPoints>
 
-        <UiHeading level="4" class="welcome-screen__heading-about">
-          Patient details and symptoms
-        </UiHeading>
-
-        <UiBulletPoints>
-          <UiBulletPointsItem
-            icon="checkmark"
-            class="welcome-screen__bullet-point-item"
-          >
-            {{ capitalizeFirstLetter(sex) }}, {{ value }} year old
-          </UiBulletPointsItem>
-          <UiBulletPointsItem
-            v-for="(item, index) in symptomsNames"
-            :key="index"
-            icon="checkmark"
-            class="welcome-screen__bullet-point-item"
-          >
-            {{ item }}
-          </UiBulletPointsItem>
-        </UiBulletPoints>
-        <UiButton
-          id="welcome-screen-button"
-          class="welcome-screen__button"
-          @click="handleGoNext"
-        >
-          Next
-        </UiButton>
-      </UiMessage>
-    </template>
-  </div>
+    <PatientDetails />
+    <UiButton
+      id="welcome-screen-button"
+      class="welcome-screen__button"
+      @click="handleGoNext"
+    >
+      Next
+    </UiButton>
+  </UiMessage>
 </template>
 
 <script setup lang="ts">
 import {
-  ref,
-  onMounted,
-} from 'vue';
-import {
   UiBulletPoints,
   UiButton,
-  UiHeading,
   UiMessage,
-  UiLoader,
   UiText,
 } from '@infermedica/component-library';
 import UiBulletPointsItem from '@infermedica/component-library/src/components/molecules/UiBulletPoints/_internal/UiBulletPointsItem.vue';
+import PatientDetails from '../molecules/PatientDetails.vue';
 import { patientData } from '@/patientData';
-import { useSymptomsById } from '@/services';
-import { capitalizeFirstLetter } from '@/helpers';
-
-const {
-  sex,
-  age: { value },
-  evidences,
-} = patientData;
-
-const symptomsNames = ref<unknown[]>([]);
-const isLoading = ref(true);
 
 const emit = defineEmits(['getNextQuestion']);
-
-onMounted(async () => {
-  symptomsNames.value = await Promise.all(evidences.map(async (evidence) => {
-    const { name } = await useSymptomsById({
-      symptomId: evidence.id,
-      age: {
-        value: 40,
-      },
-    });
-
-    return name;
-  }));
-  isLoading.value = false;
-});
 
 const handleGoNext = () => {
   emit('getNextQuestion', patientData);
 };
-
 </script>
 
 <style lang="scss">
@@ -115,7 +59,7 @@ const handleGoNext = () => {
   --boy-browser: #ddd;
   --boy-laptop: #51636e;
   --boy-laptop-logo: #91a5b1;
-  --bullet-points-item-marker-color: var(--color-icon-primary);
+  --heading-margin-block-start: var(--space-32);
 
   width: var(--app-container-width);
   min-height: 22.75rem;
@@ -140,10 +84,6 @@ const handleGoNext = () => {
     margin-block: var(--space-12) var(--space-8);
   }
 
-  &__heading-about {
-    margin-block: var(--space-24) var(--space-8);
-  }
-
   &__button {
     margin: var(--space-32) auto var(--space-64);
     width: 100%;
@@ -152,6 +92,5 @@ const handleGoNext = () => {
       width: unset;
     }
   }
-
 }
 </style>

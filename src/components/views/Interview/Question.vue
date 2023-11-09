@@ -38,12 +38,11 @@ const handleGoNext = () => {
 
 <style lang="scss">
 .question {
-  margin: var(--space-32) var(--space-20);
-
-  @media (min-width: 768px) {
-    margin-inline: auto;
     width: var(--app-container-width);
-  }
+
+    @media (min-width: 768px) {
+      margin-top: var(--space-12);
+    }
 
   &__action-button {
     margin-top: var(--space-32)

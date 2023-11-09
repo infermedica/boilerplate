@@ -3,32 +3,40 @@
     <Header
       @toogle-side-panel="handleToggleSidePanel"
     />
-    <main class="app__container">
+    <main class="app__main">
       <WelcomeScreen
         v-if="isWelcomePage"
         @get-next-question="handleGetNextQuestion"
       />
-      <Question
+      <div
         v-else
-        :title="currentQuestion?.text"
-        @get-next-question="handleGetNextQuestion"
+        class="app__container"
       >
-        <QuestionGroupSingle
-          v-if="currentQuestion?.type === 'group_single'"
-          :answers="currentQuestion?.items"
-          @patient-evidence="handlePatientEvidences"
-        />
-        <QuestionMultiple
-          v-if="currentQuestion?.type === 'group_multiple'"
-          :answers="currentQuestion?.items"
-          @patient-evidence="handlePatientEvidenceGroupMultiple"
-        />
-        <QuestionSingle
-          v-if="currentQuestion?.type === 'single'"
-          :answers="currentQuestion?.items"
-          @patient-evidence="handlePatientEvidenceSingle"
-        />
-      </Question>
+        <aside class="app__aside">
+          <PatientDetails />
+        </aside>
+        <Question
+          :title="currentQuestion?.text"
+          @get-next-question="handleGetNextQuestion"
+        >
+          <QuestionGroupSingle
+            v-if="currentQuestion?.type === 'group_single'"
+            :answers="currentQuestion?.items"
+            @patient-evidence="handlePatientEvidences"
+          />
+          <QuestionMultiple
+            v-if="currentQuestion?.type === 'group_multiple'"
+            :answers="currentQuestion?.items"
+            @patient-evidence="handlePatientEvidenceGroupMultiple"
+          />
+          <QuestionSingle
+            v-if="currentQuestion?.type === 'single'"
+            :answers="currentQuestion?.items"
+            @patient-evidence="handlePatientEvidenceSingle"
+          />
+        </Question>
+      </div>
+
       <div v-if="isSurveyFinish">
         Finished survey
       </div>
@@ -43,13 +51,12 @@
 
 <script setup lang="ts">
 import {
-  // computed,
   ref,
-  // watch,
 } from 'vue';
 import SidePanel from './components/SidePanel.vue';
 import QuestionMultiple from './components/views/Interview/QuestionMultiple.vue';
 import QuestionSingle from './components/views/Interview/QuestionSingle.vue';
+import PatientDetails from '@/components/molecules/PatientDetails.vue';
 import WelcomeScreen from '@/components/views/WelcomeScreen.vue';
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
@@ -132,6 +139,30 @@ const handleGetNextQuestion = async (patient: PatientData) => {
 
     @media (min-width: 768px) {
       justify-content: flex-start;
+    }
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: var(--space-32) var(--space-20);
+    gap: var(--space-32);
+
+    @media (min-width: 768px) {
+      max-width: var(--app-container-width);
+      flex-direction: row;
+      align-items: flex-start;
+      margin: var(--space-32) var(--space-20);
+      margin-inline: auto;
+      gap: var(--space-40);
+    }
+  }
+
+  &__aside {
+    @media (min-width: 768px) {
+      max-width: 12.5rem;
+      margin-top: var(--space-12);
     }
   }
 }
