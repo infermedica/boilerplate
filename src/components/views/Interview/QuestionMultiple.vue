@@ -2,21 +2,41 @@
   <UiMultipleAnswer
     v-model="modelValue"
     :items="items"
+    :options="options"
   />
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import {
   UiMultipleAnswer,
 } from '@infermedica/component-library';
+import {
+  type QuestionItemsType,
+} from '@/services/types';
 
+type QuestionMultipleProps = {
+  answers: QuestionItemsType[];
+}
+
+const props = defineProps<QuestionMultipleProps>();
+const emit = defineEmits(['patient-evidence']);
 const modelValue = ref([]);
-const items = [
-  'Seconds to minutes',
-  'A few minutes to 4 hours',
-  '4 hours to 3 days',
-];
+const items = computed(() => props.answers.map(({ id, name }) => ({
+  id,
+  label: name,
+})));
+const options = computed(() => props.answers[0]?.choices
+  .map(({ id, label }) => ({ value: id, label })));
+
+watch(modelValue, (value) => {
+  const answer = value.map(({ id }) => ({
+    id,
+    choiceId: 'present',
+  }));
+  emit('patient-evidence', answer);
+});
+
 </script>
 
 <style lang="scss">

@@ -9,6 +9,7 @@
         @get-next-question="handleGetNextQuestion"
       />
       <Question
+        v-else
         :title="currentQuestion?.text"
         @get-next-question="handleGetNextQuestion"
       >
@@ -17,7 +18,20 @@
           :answers="currentQuestion?.items"
           @patient-evidence="handlePatientEvidences"
         />
+        <QuestionMultiple
+          v-if="currentQuestion?.type === 'group_multiple'"
+          :answers="currentQuestion?.items"
+          @patient-evidence="handlePatientEvidenceGroupMultiple"
+        />
+        <QuestionSingle
+          v-if="currentQuestion?.type === 'single'"
+          :answers="currentQuestion?.items"
+          @patient-evidence="handlePatientEvidenceSingle"
+        />
       </Question>
+      <div v-if="isSurveyFinish">
+        Finished survey
+      </div>
     </main>
     <Footer />
     <SidePanel
@@ -34,6 +48,8 @@ import {
   // watch,
 } from 'vue';
 import SidePanel from './components/SidePanel.vue';
+import QuestionMultiple from './components/views/Interview/QuestionMultiple.vue';
+import QuestionSingle from './components/views/Interview/QuestionSingle.vue';
 import WelcomeScreen from '@/components/views/WelcomeScreen.vue';
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
@@ -42,6 +58,7 @@ import QuestionGroupSingle from '@/components/views/Interview/QuestionGroupSingl
 import { type PatientData } from '@/patientData';
 import {
   useDiagnosis,
+  type ChoiceIdType,
   type QuestionType,
   type EvidenceType,
 } from '@/services';
@@ -50,6 +67,7 @@ const currentQuestion = ref<QuestionType | undefined>(undefined);
 const isWelcomePage = ref(true);
 const isSidePanelOpen = ref(false);
 const patientEvidence = ref<EvidenceType[]>([]);
+const isSurveyFinish = ref(false);
 
 const handleToggleSidePanel = () => {
   isSidePanelOpen.value = !isSidePanelOpen.value;
@@ -63,6 +81,18 @@ const handlePatientEvidences = (evidences: []) => {
   patientEvidence.value.push(...answers);
 };
 
+const handlePatientEvidenceGroupMultiple = (evidence: EvidenceType[]) => {
+  patientEvidence.value.push(...evidence);
+};
+
+const handlePatientEvidenceSingle = (evidence: ChoiceIdType) => {
+  const answer = {
+    id: currentQuestion.value?.items[0].id as string,
+    choiceId: evidence,
+  };
+  patientEvidence.value.push(answer);
+};
+
 const handleGetNextQuestion = async (patient: PatientData) => {
   const {
     sex,
@@ -70,7 +100,7 @@ const handleGetNextQuestion = async (patient: PatientData) => {
     evidences,
   } = patient;
 
-  const { question } = await useDiagnosis({
+  const { question, shouldStop } = await useDiagnosis({
     sex,
     age: {
       value,
@@ -84,6 +114,7 @@ const handleGetNextQuestion = async (patient: PatientData) => {
     currentQuestion.value = question;
     isWelcomePage.value = false;
   }
+  if (shouldStop) isSurveyFinish.value = shouldStop;
 };
 </script>
 
