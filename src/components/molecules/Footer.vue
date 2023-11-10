@@ -16,13 +16,10 @@ const year = new Date().getFullYear();
 .footer {
   --text-color: var(--color-text-action-secondary, #5773A1);
 
+  margin-top: auto;
   padding: var(--space-24);
   border-top: 1px solid var(--color-border-divider, #E6EAF0);
   display: flex;
   justify-content: center;
-
-  @media (min-width: 768px) {
-    margin-top: auto;
-  }
 }
 </style>

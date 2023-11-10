@@ -47,7 +47,7 @@ onMounted(async () => {
     const { name } = await useSymptomsById({
       symptomId: evidence.id,
       age: {
-        value: 40,
+        value,
       },
     });
     return name;

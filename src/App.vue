@@ -4,10 +4,11 @@
       @toogle-side-panel="handleToggleSidePanel"
     />
     <main class="app__main">
-      <WelcomeScreen
+      <Welcome
         v-if="isWelcomePage"
         @get-next-question="handleGetNextQuestion"
       />
+
       <div
         v-else-if="!isSurveyFinish"
         class="app__container"
@@ -37,11 +38,11 @@
         </Question>
       </div>
 
-      <div v-if="isSurveyFinish">
-        Finished survey
-      </div>
+      <Results v-if="isSurveyFinish" />
     </main>
+
     <Footer />
+
     <SidePanel
       :is-side-panel-open="isSidePanelOpen"
       @toogle-side-panel="handleToggleSidePanel"
@@ -53,8 +54,9 @@
 import {
   ref,
 } from 'vue';
-import WelcomeScreen from '@/components/views/WelcomeScreen.vue';
+import Welcome from '@/components/views/Welcome.vue';
 import Question from '@/components/views/Question.vue';
+import Results from '@/components/views/Results.vue';
 import QuestionGroupSingle from '@/components/views/Interview/QuestionGroupSingle.vue';
 import QuestionMultiple from '@/components/views/Interview/QuestionMultiple.vue';
 import QuestionSingle from '@/components/views/Interview/QuestionSingle.vue';
@@ -133,12 +135,19 @@ const handleGetNextQuestion = async (patient: PatientData) => {
   &__wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: 100vh;
     position: relative;
 
     @media (min-width: 768px) {
       justify-content: flex-start;
+    }
+  }
+
+  &__main {
+    width: var(--app-container-width);
+
+    @media (min-width: 768px) {
+      margin-inline: auto;
     }
   }
 

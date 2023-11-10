@@ -61,7 +61,6 @@ const handleGoNext = () => {
   --boy-laptop-logo: #91a5b1;
   --heading-margin-block-start: var(--space-32);
 
-  width: var(--app-container-width);
   min-height: 22.75rem;
   display: flex;
   justify-content: space-between;
