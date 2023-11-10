@@ -26,7 +26,7 @@ import {
   UiHeading,
   UiControls,
 } from '@infermedica/component-library';
-import Search from '@/components/Search.vue';
+import Search from './_internal/Search.vue';
 import {
   // useSearch,
   useSearchReactive,

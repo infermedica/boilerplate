@@ -9,7 +9,7 @@
         @get-next-question="handleGetNextQuestion"
       />
       <div
-        v-else
+        v-else-if="!isSurveyFinish"
         class="app__container"
       >
         <aside class="app__aside">
@@ -53,15 +53,15 @@
 import {
   ref,
 } from 'vue';
-import SidePanel from './components/SidePanel.vue';
-import QuestionMultiple from './components/views/Interview/QuestionMultiple.vue';
-import QuestionSingle from './components/views/Interview/QuestionSingle.vue';
-import PatientDetails from '@/components/molecules/PatientDetails.vue';
 import WelcomeScreen from '@/components/views/WelcomeScreen.vue';
-import Header from '@/components/Header.vue';
-import Footer from '@/components/Footer.vue';
-import Question from '@/components/views/Interview/Question.vue';
+import Question from '@/components/views/Question.vue';
 import QuestionGroupSingle from '@/components/views/Interview/QuestionGroupSingle.vue';
+import QuestionMultiple from '@/components/views/Interview/QuestionMultiple.vue';
+import QuestionSingle from '@/components/views/Interview/QuestionSingle.vue';
+import SidePanel from '@/components/organisms/SidePanel.vue';
+import Header from '@/components/molecules/Header.vue';
+import Footer from '@/components/molecules/Footer.vue';
+import PatientDetails from '@/components/molecules/PatientDetails.vue';
 import { type PatientData } from '@/patientData';
 import {
   useDiagnosis,

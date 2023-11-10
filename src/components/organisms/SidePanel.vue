@@ -42,7 +42,7 @@ import {
   scrollTabindex as vScrollTabindex,
   keyboardFocus as vKeyboardFocus,
 } from '@infermedica/component-library/src/utilities/directives';
-import Footer from './Footer.vue';
+import Footer from '@/components/molecules/Footer.vue';
 
 type SidePanelPropsType = {
   isSidePanelOpen: boolean;
