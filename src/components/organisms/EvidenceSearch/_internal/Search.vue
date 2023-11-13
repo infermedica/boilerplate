@@ -94,7 +94,7 @@ import {
 } from '@infermedica/component-library';
 import { highlight as vHighlight } from '@infermedica/component-library/src/utilities/directives';
 import UiDropdownItem from '@infermedica/component-library/src/components/molecules/UiDropdown/_internal/UiDropdownItem.vue';
-import SearchNoResult from '@/components/SearchNoResult.vue';
+import SearchNoResult from '@/components/organisms/EvidenceSearch/_internal/SearchNoResult.vue';
 import type { SearchResultType } from '@/services';
 
 type EvidenceSearchProps = {

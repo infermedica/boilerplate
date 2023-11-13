@@ -44,7 +44,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import {
+  computed,
+  inject,
+  ref,
+  onMounted,
+} from 'vue';
 import {
   UiCard,
   UiHeading,
@@ -58,7 +63,13 @@ import {
   type RecommendSpecialistType,
   type TriageLevelType,
 } from '@/services';
-import { patientData } from '@/patientData';
+import { type GlobalStateType } from '@/main';
+
+const { state } = inject<GlobalStateType>('state') as GlobalStateType;
+
+const sex = computed(() => state.patientData.sex);
+const age = computed(() => state.patientData.age.value);
+const evidences = computed(() => state.patientData.evidences);
 
 const title = ref('');
 const description = ref('');
@@ -86,13 +97,7 @@ const cardData = {
     description: 'Your symptoms are very serious, and you may require emergency care. Do not delay. Call an ambulance right now.',
   },
 };
-const {
-  sex,
-  age: {
-    value,
-  },
-  evidences,
-} = patientData;
+
 const seriousEvidences = ref<string[] | undefined>([]);
 const recommendedSpecialistChannel = ref('');
 const recommendedSpecialistName = ref<RecommendSpecialistType | undefined>(undefined);
@@ -102,11 +107,11 @@ onMounted(async () => {
     triageLevel,
     serious,
   } = await useTriage({
-    sex,
+    sex: sex.value,
     age: {
-      value,
+      value: age.value,
     },
-    evidence: evidences,
+    evidence: evidences.value,
   });
   seriousEvidences.value = serious?.map((symptom) => symptom.name);
 
@@ -120,11 +125,11 @@ onMounted(async () => {
     recommendedChannel,
     recommendedSpecialist,
   } = await useRecommendSpecialist({
-    sex,
+    sex: sex.value,
     age: {
-      value,
+      value: age.value,
     },
-    evidence: evidences,
+    evidence: evidences.value,
   });
 
   if (recommendedChannel) recommendedSpecialistChannel.value = recommendedChannel;

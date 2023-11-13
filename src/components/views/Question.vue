@@ -17,10 +17,18 @@
 
 <script setup lang="ts">
 import {
+  computed,
+  inject,
+} from 'vue';
+import {
   UiButton,
   UiQuestion,
 } from '@infermedica/component-library';
-import { patientData } from '@/patientData';
+import { type GlobalStateType } from '@/main';
+import { type PatientData } from '@/types/patientData';
+
+const { state } = inject<GlobalStateType>('state') as GlobalStateType;
+const patientData = computed<PatientData>(() => state.patientData);
 
 type QuestionProps = {
   title?: string;
@@ -32,7 +40,7 @@ withDefaults(defineProps<QuestionProps>(), {
 const emit = defineEmits(['getNextQuestion']);
 
 const handleGoNext = () => {
-  emit('getNextQuestion', patientData);
+  emit('getNextQuestion', patientData.value);
 };
 </script>
 

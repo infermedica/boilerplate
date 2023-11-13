@@ -8,7 +8,7 @@
       <UiBulletPointsItem
         icon="checkmark"
       >
-        {{ capitalizeFirstLetter(sex) }}, {{ value }} year old
+        {{ capitalizeFirstLetter(sex) }}, {{ age }} year old
       </UiBulletPointsItem>
       <UiBulletPointsItem
         v-for="(item, index) in symptomsNames"
@@ -23,6 +23,8 @@
 
 <script setup lang="ts">
 import {
+  computed,
+  inject,
   ref,
   onMounted,
 } from 'vue';
@@ -31,28 +33,33 @@ import {
   UiHeading,
 } from '@infermedica/component-library';
 import UiBulletPointsItem from '@infermedica/component-library/src/components/molecules/UiBulletPoints/_internal/UiBulletPointsItem.vue';
-import { patientData } from '../../patientData';
-import { capitalizeFirstLetter } from '../../helpers';
-import { useSymptomsById } from '../../services';
+import { capitalizeFirstLetter } from '@/helpers';
+import { useSymptomsById } from '@/services';
+import { initialEvidences, type GlobalStateType } from '@/main';
 
 const {
-  sex,
-  age: { value },
-  evidences,
-} = patientData;
+  state,
+  toogleIsLoading,
+} = inject<GlobalStateType>('state') as GlobalStateType;
+
+const sex = computed(() => state.patientData.sex);
+const age = computed(() => state.patientData.age.value);
+const evidences = ref(initialEvidences);
 const symptomsNames = ref<unknown[]>([]);
 
 onMounted(async () => {
-  symptomsNames.value = await Promise.all(evidences.map(async (evidence) => {
+  symptomsNames.value = await Promise.all(evidences.value.map(async (evidence) => {
     const { name } = await useSymptomsById({
       symptomId: evidence.id,
       age: {
-        value,
+        value: age.value,
       },
     });
     return name;
   }));
+  toogleIsLoading(false);
 });
+
 </script>
 
 <style lang="scss">

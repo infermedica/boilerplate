@@ -1,59 +1,67 @@
 <template>
   <div class="app__wrapper">
     <Header
-      @toogle-side-panel="handleToggleSidePanel"
+      @toogle-side-panel="toogleSidePanel"
     />
     <main class="app__main">
-      <Welcome
-        v-if="isWelcomePage"
-        @get-next-question="handleGetNextQuestion"
-      />
-
-      <div
-        v-else-if="!isSurveyFinish"
-        class="app__container"
+      <UiLoader
+        :is-loading="isLoading"
+        class="app__loader"
       >
-        <aside class="app__aside">
-          <PatientDetails />
-        </aside>
-        <Question
-          :title="currentQuestion?.text"
+        <Welcome
+          v-if="isWelcomePage"
           @get-next-question="handleGetNextQuestion"
-        >
-          <QuestionGroupSingle
-            v-if="currentQuestion?.type === 'group_single'"
-            :answers="currentQuestion?.items"
-            @patient-evidence="handlePatientEvidences"
-          />
-          <QuestionMultiple
-            v-if="currentQuestion?.type === 'group_multiple'"
-            :answers="currentQuestion?.items"
-            @patient-evidence="handlePatientEvidenceGroupMultiple"
-          />
-          <QuestionSingle
-            v-if="currentQuestion?.type === 'single'"
-            :answers="currentQuestion?.items"
-            @patient-evidence="handlePatientEvidenceSingle"
-          />
-        </Question>
-      </div>
+        />
 
-      <Results v-if="isSurveyFinish" />
+        <div
+          v-else-if="!isSurveyFinish"
+          class="app__container"
+        >
+          <aside class="app__aside">
+            <PatientDetails />
+          </aside>
+          <Question
+            :title="currentQuestion?.text"
+            @get-next-question="handleGetNextQuestion"
+          >
+            <QuestionGroupSingle
+              v-if="currentQuestion?.type === 'group_single'"
+              :answers="currentQuestion?.items"
+              @patient-evidence="handlePatientEvidences"
+            />
+            <QuestionMultiple
+              v-if="currentQuestion?.type === 'group_multiple'"
+              :answers="currentQuestion?.items"
+              @patient-evidence="handlePatientEvidenceGroupMultiple"
+            />
+            <QuestionSingle
+              v-if="currentQuestion?.type === 'single'"
+              :answers="currentQuestion?.items"
+              @patient-evidence="handlePatientEvidenceSingle"
+            />
+          </Question>
+        </div>
+
+        <Results v-if="isSurveyFinish" />
+      </UiLoader>
     </main>
 
     <Footer />
 
     <SidePanel
       :is-side-panel-open="isSidePanelOpen"
-      @toogle-side-panel="handleToggleSidePanel"
+      @toogle-side-panel="toogleSidePanel"
     />
   </div>
 </template>
 
 <script setup lang="ts">
 import {
+  computed,
   ref,
+  inject,
 } from 'vue';
+import { UiLoader } from '@infermedica/component-library';
 import Welcome from '@/components/views/Welcome.vue';
 import Question from '@/components/views/Question.vue';
 import Results from '@/components/views/Results.vue';
@@ -64,34 +72,40 @@ import SidePanel from '@/components/organisms/SidePanel.vue';
 import Header from '@/components/molecules/Header.vue';
 import Footer from '@/components/molecules/Footer.vue';
 import PatientDetails from '@/components/molecules/PatientDetails.vue';
-import { type PatientData } from '@/patientData';
 import {
   useDiagnosis,
   type ChoiceIdType,
   type QuestionType,
   type EvidenceType,
 } from '@/services';
+import { type PatientData } from '@/types/patientData';
+import { type GlobalStateType } from '@/main';
+
+const {
+  state,
+  toogleSidePanel,
+  toogleIsLoading,
+  toogleIsSurveyFinish,
+  handleUpdatePatientEvidences,
+} = inject<GlobalStateType>('state') as GlobalStateType;
 
 const currentQuestion = ref<QuestionType | undefined>(undefined);
 const isWelcomePage = ref(true);
-const isSidePanelOpen = ref(false);
-const patientEvidence = ref<EvidenceType[]>([]);
-const isSurveyFinish = ref(false);
-
-const handleToggleSidePanel = () => {
-  isSidePanelOpen.value = !isSidePanelOpen.value;
-};
+const isSidePanelOpen = computed(() => state.isSidePanelOpen);
+const isLoading = computed(() => state.isLoading);
+const isSurveyFinish = computed(() => state.isSurveyFinish);
 
 const handlePatientEvidences = (evidences: []) => {
-  const answers = evidences.map<EvidenceType>((el, index) => ({
+  const answers = evidences.map<EvidenceType>((evidence, index) => ({
     id: currentQuestion.value?.items[index].id as string,
-    choiceId: el,
+    choiceId: evidence,
   }));
-  patientEvidence.value.push(...answers);
+
+  handleUpdatePatientEvidences(answers);
 };
 
-const handlePatientEvidenceGroupMultiple = (evidence: EvidenceType[]) => {
-  patientEvidence.value.push(...evidence);
+const handlePatientEvidenceGroupMultiple = (evidences: EvidenceType[]) => {
+  handleUpdatePatientEvidences(evidences);
 };
 
 const handlePatientEvidenceSingle = (evidence: ChoiceIdType) => {
@@ -99,7 +113,8 @@ const handlePatientEvidenceSingle = (evidence: ChoiceIdType) => {
     id: currentQuestion.value?.items[0].id as string,
     choiceId: evidence,
   };
-  patientEvidence.value.push(answer);
+
+  handleUpdatePatientEvidences([answer]);
 };
 
 const handleGetNextQuestion = async (patient: PatientData) => {
@@ -109,6 +124,8 @@ const handleGetNextQuestion = async (patient: PatientData) => {
     evidences,
   } = patient;
 
+  toogleIsLoading(true);
+
   const { question, shouldStop } = await useDiagnosis({
     sex,
     age: {
@@ -116,14 +133,17 @@ const handleGetNextQuestion = async (patient: PatientData) => {
     },
     evidence: [
       ...evidences,
-      ...patientEvidence.value,
     ],
   });
+
   if (question) {
     currentQuestion.value = question;
     isWelcomePage.value = false;
   }
-  if (shouldStop) isSurveyFinish.value = shouldStop;
+
+  toogleIsLoading(false);
+
+  if (shouldStop) toogleIsSurveyFinish(shouldStop);
 };
 </script>
 
@@ -149,6 +169,14 @@ const handleGetNextQuestion = async (patient: PatientData) => {
     @media (min-width: 768px) {
       margin-inline: auto;
     }
+  }
+
+  &__loader {
+    position: fixed;
+    inset: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #fff;
   }
 
   &__container {

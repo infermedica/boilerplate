@@ -30,6 +30,10 @@
 
 <script setup lang="ts">
 import {
+  computed,
+  inject,
+} from 'vue';
+import {
   UiBulletPoints,
   UiButton,
   UiMessage,
@@ -37,12 +41,16 @@ import {
 } from '@infermedica/component-library';
 import UiBulletPointsItem from '@infermedica/component-library/src/components/molecules/UiBulletPoints/_internal/UiBulletPointsItem.vue';
 import PatientDetails from '../molecules/PatientDetails.vue';
-import { patientData } from '@/patientData';
+import { type GlobalStateType } from '@/main';
+import { type PatientData } from '@/types/patientData';
+
+const { state } = inject<GlobalStateType>('state') as GlobalStateType;
+const patientData = computed<PatientData>(() => state.patientData);
 
 const emit = defineEmits(['getNextQuestion']);
 
 const handleGoNext = () => {
-  emit('getNextQuestion', patientData);
+  emit('getNextQuestion', patientData.value);
 };
 </script>
 

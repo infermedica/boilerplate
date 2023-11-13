@@ -7,7 +7,10 @@
 
 <script setup lang="ts">
 import {
-  computed, type ComputedRef, ref, watch,
+  computed,
+  ref,
+  watch,
+  type ComputedRef,
 } from 'vue';
 import {
   UiSimpleQuestion,
