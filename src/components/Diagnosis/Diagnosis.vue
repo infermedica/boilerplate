@@ -36,8 +36,8 @@ import {
   UiQuestion,
 } from '@infermedica/component-library';
 import QuestionGroupSingle from '@/components/QuestionGroupSingle/QuestionGroupSingle.vue';
-// import QuestionMultiple from '@/components/QuestionMultiple/QuestionMultiple.vue';
-// import QuestionSingle from '@/components/QuestionSingle/QuestionSingle.vue';
+import QuestionMultiple from '@/components/QuestionMultiple/QuestionMultiple.vue';
+import QuestionSingle from '@/components/QuestionSingle/QuestionSingle.vue';
 import PatientDetails from '@/components/PatientDetails/PatientDetails.vue';
 import {
   type ChoiceIdType,
@@ -72,8 +72,28 @@ const templateQuestions = computed(() => [
       },
     },
   },
-  // { name: 'group_multiple', component: QuestionMultiple, props: undefined },
-  // { name: 'single', component: QuestionSingle, props: undefined },
+  {
+    name: 'group_multiple',
+    component: QuestionMultiple,
+    props: {
+      answers: props.currentQuestion.items,
+      handlePatientEvidences: (evidences: EvidenceType[]) => emit('updateEvidences', evidences),
+    },
+  },
+  {
+    name: 'single',
+    component: QuestionSingle,
+    props: {
+      answers: props.currentQuestion.items,
+      handlePatientEvidences: (evidence: ChoiceIdType) => {
+        const answer = {
+          id: props.currentQuestion.items[0].id as string,
+          choiceId: evidence,
+        };
+        emit('updateEvidences', [answer]);
+      },
+    },
+  },
 ]);
 
 const handleGoNext = () => {

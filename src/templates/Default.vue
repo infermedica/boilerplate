@@ -13,6 +13,7 @@
           v-if="view.name === currentComponent"
           v-bind="view.props"
           @update-evidences="handleUpdate"
+          @get-next-question="handleGetNextQuestion(patientData)"
         >
           <template #submit>
             <UiButton

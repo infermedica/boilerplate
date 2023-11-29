@@ -17,15 +17,16 @@ import {
   type SimpleQuestionItem,
 } from '@infermedica/component-library';
 import {
+  type ChoiceIdType,
   type QuestionItemsType,
 } from '@/services/types';
 
 type QuestionMultipleProps = {
   answers: QuestionItemsType[];
+  handlePatientEvidences: (evidence: ChoiceIdType) => void;
 }
 
 const props = defineProps<QuestionMultipleProps>();
-const emit = defineEmits(['patient-evidence']);
 
 const items: ComputedRef<SimpleQuestionItem[]> = computed(() => props.answers[0].choices.map(({ id, label }) => ({
   value: id,
@@ -33,10 +34,10 @@ const items: ComputedRef<SimpleQuestionItem[]> = computed(() => props.answers[0]
   icon: label === 'Don\'t know' ? 'dont-know' : label?.toLocaleLowerCase(),
 } as SimpleQuestionItem)));
 
-const modelValue = ref('');
+const modelValue = ref<ChoiceIdType | undefined>(undefined);
 
 watch(modelValue, (value) => {
-  emit('patient-evidence', value);
+  if (value) props.handlePatientEvidences(value);
 });
 
 </script>

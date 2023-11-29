@@ -16,15 +16,16 @@ import {
   UiMultipleAnswer,
 } from '@infermedica/component-library';
 import {
+  type EvidenceType,
   type QuestionItemsType,
 } from '@/services/types';
 
 type QuestionMultipleProps = {
   answers: QuestionItemsType[];
+  handlePatientEvidences: (evidences: EvidenceType[]) => void;
 }
 
 const props = defineProps<QuestionMultipleProps>();
-const emit = defineEmits(['patient-evidence']);
 const modelValue = ref([]);
 const items = computed(() => props.answers.map(({ id, name }) => ({
   id,
@@ -34,19 +35,12 @@ const options = computed(() => props.answers[0]?.choices
   .map(({ id, label }) => ({ value: id, label })));
 
 watch(modelValue, (value) => {
-  const answer = value.map(({ id }) => ({
+  const answer: EvidenceType[] = value.map(({ id }) => ({
     id,
     choiceId: 'present',
   }));
-  emit('patient-evidence', answer);
+  props.handlePatientEvidences(answer);
 });
 
 </script>
 
-<style lang="scss">
-.question {
-  &__action-button {
-    margin-top: var(--space-32)
-  }
-}
-</style>
