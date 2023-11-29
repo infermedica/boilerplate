@@ -17,41 +17,21 @@
       </UiBulletPointsItem>
     </UiBulletPoints>
     <PatientDetails />
-    <UiButton
-      id="welcome-screen-button"
-      class="welcome-screen__button"
-      @click="handleGoNext"
-    >
-      Next
-    </UiButton>
+    <div class="welcome-screen__button">
+      <slot name="submit" />
+    </div>
   </UiMessage>
 </template>
 
 <script setup lang="ts">
-// import {
-//   // computed,
-//   // inject,
-//   ref,
-// } from 'vue';
 import {
   UiBulletPoints,
-  UiButton,
   UiMessage,
   UiText,
 } from '@infermedica/component-library';
 import UiBulletPointsItem from '@infermedica/component-library/src/components/molecules/UiBulletPoints/_internal/UiBulletPointsItem.vue';
 import PatientDetails from '@/components/PatientDetails/PatientDetails.vue';
-import { type PatientData } from '@/templates/Default.vue';
 
-type WelcomeProps = {
-  patientData: PatientData;
-}
-const props = defineProps<WelcomeProps>();
-const emit = defineEmits(['getNextQuestion']);
-
-const handleGoNext = () => {
-  emit('getNextQuestion', props);
-};
 </script>
 
 <style lang="scss">
