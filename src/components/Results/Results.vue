@@ -46,7 +46,6 @@
 <script setup lang="ts">
 import {
   computed,
-  inject,
   ref,
   onMounted,
 } from 'vue';
@@ -63,13 +62,17 @@ import {
   type RecommendSpecialistType,
   type TriageLevelType,
 } from '@/services';
-import { type GlobalStateType } from '@/main';
+import { type PatientData } from '@/templates/Default.vue';
 
-const { state } = inject<GlobalStateType>('state') as GlobalStateType;
+type ResultsProps = {
+  patientData: PatientData;
+};
 
-const sex = computed(() => state.patientData.sex);
-const age = computed(() => state.patientData.age.value);
-const evidences = computed(() => state.patientData.evidences);
+const props = defineProps<ResultsProps>();
+
+const sex = computed(() => props.patientData.sex);
+const age = computed(() => props.patientData.age.value);
+const evidences = computed(() => props.patientData.evidences);
 
 const title = ref('');
 const description = ref('');

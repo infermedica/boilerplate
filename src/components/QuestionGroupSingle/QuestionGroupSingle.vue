@@ -39,7 +39,7 @@ const items = computed<MultipleChoicesItemAttrsProps[]>(
 const options = computed(() => props.answers && props.answers[0]?.choices
   .map(({ id, label }) => ({ value: id, label })));
 
-const modelValue = ref<ChoiceIdType[] | []>([]);
+const modelValue = ref([]);
 
 // const modelValue = computed<ChoiceIdType[]>({
 //   get: () => [],

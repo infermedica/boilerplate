@@ -1,7 +1,7 @@
 <template>
   <section class="diagnosis">
     <aside class="diagnosis__aside">
-      <PatientDetails />
+      <PatientDetails :patient-data="patientData" />
     </aside>
     <UiQuestion
       :title="title"

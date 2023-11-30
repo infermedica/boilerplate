@@ -16,7 +16,7 @@
         Component Library
       </UiBulletPointsItem>
     </UiBulletPoints>
-    <PatientDetails />
+    <PatientDetails :patient-data="patientData" />
     <div class="welcome-screen__button">
       <slot name="submit" />
     </div>
@@ -31,6 +31,13 @@ import {
 } from '@infermedica/component-library';
 import UiBulletPointsItem from '@infermedica/component-library/src/components/molecules/UiBulletPoints/_internal/UiBulletPointsItem.vue';
 import PatientDetails from '@/components/PatientDetails/PatientDetails.vue';
+import { type PatientData } from '@/templates/Default.vue';
+
+type WelcomeProps = {
+  patientData: PatientData;
+};
+
+defineProps<WelcomeProps>();
 
 </script>
 

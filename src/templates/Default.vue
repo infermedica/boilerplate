@@ -113,7 +113,7 @@ const templateContents = computed<{
       patientData,
     },
   },
-  { name: CONTENT.RESULTS, component: Results, props: undefined },
+  { name: CONTENT.RESULTS, component: Results, props: { patientData } },
   { name: CONTENT.WELCOME, component: Welcome, props: { patientData } },
 ]);
 
