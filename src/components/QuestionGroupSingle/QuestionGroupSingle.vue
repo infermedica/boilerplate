@@ -1,8 +1,9 @@
 <template>
-  <UiMultipleChoices
+  <UiMultipleAnswer
     v-model="modelValue"
     :items="items"
     :options="options"
+    :hint="'Select one answer'"
     name="group-single"
   />
 </template>
@@ -14,17 +15,16 @@ import {
   watch,
 } from 'vue';
 import {
-  UiMultipleChoices,
+  UiMultipleAnswer,
 } from '@infermedica/component-library';
 import type { MultipleChoicesItemAttrsProps } from '@infermedica/component-library/src/components/organisms/UiMultipleChoices/_internal/UiMultipleChoicesItem.vue';
 import {
-  type ChoiceIdType,
   type QuestionItemsType,
 } from '@/services/types';
 
 type QuestionGroupSingleProps = {
   answers: QuestionItemsType[];
-  handlePatientEvidences: (evidences: ChoiceIdType[]) => void;
+  handlePatientEvidences: (evidences: Record<string, unknown>) => void;
 }
 
 const props = defineProps<QuestionGroupSingleProps>();
@@ -39,15 +39,7 @@ const items = computed<MultipleChoicesItemAttrsProps[]>(
 const options = computed(() => props.answers && props.answers[0]?.choices
   .map(({ id, label }) => ({ value: id, label })));
 
-const modelValue = ref([]);
-
-// const modelValue = computed<ChoiceIdType[]>({
-//   get: () => [],
-//   set: (newValue, oldValue) => {
-//     console.log('newValue', newValue);
-//     props.handlePatientEvidences(newValue);
-//   },
-// });
+const modelValue = ref<Record<string, unknown>>({});
 
 watch(modelValue, (value) => {
   props.handlePatientEvidences(value);

@@ -1,5 +1,5 @@
 <template>
-  <UiMultipleAnswer
+  <UiMultipleChoices
     v-model="modelValue"
     :items="items"
     :options="options"
@@ -13,7 +13,7 @@ import {
   watch,
 } from 'vue';
 import {
-  UiMultipleAnswer,
+  UiMultipleChoices,
 } from '@infermedica/component-library';
 import {
   type EvidenceType,
@@ -22,23 +22,29 @@ import {
 
 type QuestionMultipleProps = {
   answers: QuestionItemsType[];
-  handlePatientEvidences: (evidences: EvidenceType[]) => void;
+  handlePatientEvidences: (evidences: Record<string, unknown>[]) => void;
 }
 
+const OPTIONS = {
+  absent: 'No',
+  present: 'Yes',
+  unknown: 'Don\'t know',
+} as const;
+
 const props = defineProps<QuestionMultipleProps>();
-const modelValue = ref([]);
-const items = computed(() => props.answers.map(({ id, name }) => ({
-  id,
+const modelValue = ref<EvidenceType[]>([]);
+const items = computed(() => props.answers.map(({ name }) => ({
   label: name,
 })));
 const options = computed(() => props.answers[0]?.choices
-  .map(({ id, label }) => ({ value: id, label })));
+  .map(({ id }) => ({ value: id, label: OPTIONS[id] })));
 
-watch(modelValue, (value) => {
-  const answer: EvidenceType[] = value.map(({ id }) => ({
-    id,
-    choiceId: 'present',
+watch(modelValue, (value: Record<string, unknown>[]) => {
+  const answer = value.map((choice, index) => ({
+    id: props.answers[index].id,
+    choiceId: choice,
   }));
+
   props.handlePatientEvidences(answer);
 });
 

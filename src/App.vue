@@ -1,5 +1,10 @@
 <template>
-  <Default />
+  <Default>
+    <!--TODO:  dodać template:-->
+    <!-- <template #main>
+
+    </template> -->
+  </Default>
 </template>
 
 <script setup lang="ts">

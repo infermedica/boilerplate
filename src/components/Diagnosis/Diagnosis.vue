@@ -41,7 +41,6 @@ import QuestionSingle from '@/components/QuestionSingle/QuestionSingle.vue';
 import PatientDetails from '@/components/PatientDetails/PatientDetails.vue';
 import {
   type ChoiceIdType,
-  type EvidenceType,
   type QuestionType,
 } from '@/services';
 import { type PatientData } from '@/types';
@@ -62,13 +61,8 @@ const templateQuestions = computed(() => [
     component: QuestionGroupSingle,
     props: {
       answers: props.currentQuestion.items,
-      handlePatientEvidences: (evidences: ChoiceIdType[]) => {
-        const answers = evidences.map<EvidenceType>((evidence, index) => ({
-          id: props.currentQuestion.items[index].id as string,
-          choiceId: evidence,
-        }));
-
-        emit('updateEvidences', answers);
+      handlePatientEvidences: (evidences: Record<string, unknown>) => {
+        emit('updateEvidences', [{ id: evidences.id, choiceId: 'present' }]);
       },
     },
   },
@@ -77,7 +71,9 @@ const templateQuestions = computed(() => [
     component: QuestionMultiple,
     props: {
       answers: props.currentQuestion.items,
-      handlePatientEvidences: (evidences: EvidenceType[]) => emit('updateEvidences', evidences),
+      handlePatientEvidences: (evidences: Record<string, unknown>[]) => {
+        emit('updateEvidences', evidences);
+      },
     },
   },
   {
@@ -99,6 +95,7 @@ const templateQuestions = computed(() => [
 const handleGoNext = () => {
   emit('getNextQuestion', props.patientData);
 };
+
 </script>
 
 <style lang="scss">
