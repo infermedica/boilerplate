@@ -23,8 +23,8 @@ import {
 } from '@/services';
 
 type QuestionGroupSingleProps = {
-  answers: QuestionItemsType[];
-  handlePatientEvidences: (evidences: Record<string, unknown>) => void;
+  answers?: QuestionItemsType[];
+  handlePatientEvidences?: (evidences: Record<string, unknown>) => void;
 }
 
 const props = defineProps<QuestionGroupSingleProps>();
@@ -42,7 +42,7 @@ const options = computed(() => props.answers && props.answers[0]?.choices
 const modelValue = ref<Record<string, unknown>>({});
 
 watch(modelValue, (value) => {
-  props.handlePatientEvidences(value);
+  if (props.handlePatientEvidences) { props.handlePatientEvidences(value); }
 });
 
 </script>

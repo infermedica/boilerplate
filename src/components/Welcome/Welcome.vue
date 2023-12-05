@@ -24,7 +24,6 @@
 </template>
 
 <script setup lang="ts">
-// import { inject } from 'vue';
 import {
   UiBulletPoints,
   UiMessage,
@@ -33,7 +32,6 @@ import {
 import UiBulletPointsItem from '@infermedica/component-library/src/components/molecules/UiBulletPoints/_internal/UiBulletPointsItem.vue';
 import PatientDetails from '@/components/PatientDetails/PatientDetails.vue';
 
-// const patientData = inject('patientData');
 </script>
 
 <style lang="scss">

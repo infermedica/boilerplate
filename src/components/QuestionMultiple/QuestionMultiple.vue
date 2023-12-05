@@ -21,8 +21,8 @@ import {
 } from '@/services';
 
 type QuestionMultipleProps = {
-  answers: QuestionItemsType[];
-  handlePatientEvidences: (evidences: Record<string, unknown>[]) => void;
+  answers?: QuestionItemsType[];
+  handlePatientEvidences?: (evidences: Record<string, unknown>[]) => void;
 }
 
 const OPTIONS = {
@@ -34,19 +34,19 @@ const OPTIONS = {
 const props = defineProps<QuestionMultipleProps>();
 
 const modelValue = ref<EvidenceType[]>([]);
-const items = computed(() => props.answers.map(({ name }) => ({
+const items = computed(() => props.answers && props.answers.map(({ name }) => ({
   label: name,
 })));
-const options = computed(() => props.answers[0]?.choices
+const options = computed(() => props.answers && props.answers[0]?.choices
   .map(({ id }) => ({ value: id, label: OPTIONS[id] })));
 
 watch(modelValue, (value: Record<string, unknown>[]) => {
   const answer = value.map((choice, index) => ({
-    id: props.answers[index].id,
+    id: props.answers && props.answers[index].id,
     choiceId: choice,
   }));
 
-  props.handlePatientEvidences(answer);
+  if (props.handlePatientEvidences) props.handlePatientEvidences(answer);
 });
 
 </script>

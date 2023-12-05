@@ -22,22 +22,24 @@ import {
 } from '@/services';
 
 type QuestionMultipleProps = {
-  answers: QuestionItemsType[];
-  handlePatientEvidences: (evidence: ChoiceIdType) => void;
+  answers?: QuestionItemsType[];
+  handlePatientEvidences?: (evidence: ChoiceIdType) => void;
 }
 
 const props = defineProps<QuestionMultipleProps>();
 
-const items: ComputedRef<SimpleQuestionItem[]> = computed(() => props.answers[0].choices.map(({ id, label }) => ({
-  value: id,
-  label,
-  icon: label === 'Don\'t know' ? 'dont-know' : label?.toLocaleLowerCase(),
-} as SimpleQuestionItem)));
+const items: ComputedRef<SimpleQuestionItem[] | undefined> = computed(
+  () => props.answers && props.answers[0].choices.map(({ id, label }) => ({
+    value: id,
+    label,
+    icon: label === 'Don\'t know' ? 'dont-know' : label?.toLocaleLowerCase(),
+  } as SimpleQuestionItem)),
+);
 
 const modelValue = ref<ChoiceIdType | undefined>(undefined);
 
 watch(modelValue, (value) => {
-  if (value) props.handlePatientEvidences(value);
+  if (value && props.handlePatientEvidences) props.handlePatientEvidences(value);
 });
 
 </script>

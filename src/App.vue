@@ -10,7 +10,6 @@
 import {
   provide,
   reactive,
-  // ref,
 } from 'vue';
 import Default from '@/templates/Default.vue';
 import Main from '@/templates/Main/Main.vue';
@@ -52,6 +51,7 @@ const patientData = reactive<PatientData>({
 
 provide('patientData', patientData);
 provide('initialEvidence', initialEvidence);
+
 </script>
 
 <style scope lang="scss">

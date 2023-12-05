@@ -9,11 +9,11 @@
         v-if="view.name === currentComponent"
         v-bind="view.props"
         @update-evidences="handleUpdate"
-        @get-next-question="handleGetNextQuestion(patientData)"
+        @update-survey-should-stop="handleShouldStop"
       >
         <template #submit>
           <UiButton
-            @click="handleGetNextQuestion(patientData)"
+            @click="handleGetDiagnosis"
           >
             Next
           </UiButton>
@@ -35,9 +35,7 @@ import Welcome from '@/components/Welcome/Welcome.vue';
 import Diagnosis from '@/components/Diagnosis/Diagnosis.vue';
 import Results from '@/components/Results/Results.vue';
 import {
-  getDiagnosis,
   type EvidenceType,
-  type QuestionType,
   type ObjectValues,
 } from '@/services';
 import { type PatientData } from '@/App.vue';
@@ -53,7 +51,6 @@ type ContentType = ObjectValues<typeof CONTENT>;
 const patientDetails = inject('patientData') as PatientData;
 
 const patientData = computed(() => patientDetails);
-const currentQuestion = ref<QuestionType | null>(null);
 const currentComponent = ref<ContentType>(CONTENT.WELCOME);
 
 const handleUpdate = (evidences: EvidenceType[]) => {
@@ -73,7 +70,6 @@ const templateContents = computed<{
     name: CONTENT.DIAGNOSIS,
     component: Diagnosis,
     props: {
-      currentQuestion: currentQuestion.value,
       patientData: patientData.value,
     },
   },
@@ -81,30 +77,14 @@ const templateContents = computed<{
   { name: CONTENT.WELCOME, component: Welcome },
 ]);
 
-const handleGetNextQuestion = async (patient: PatientData) => {
-  const {
-    sex,
-    age: { value },
-    evidences,
-  } = patient;
-
-  const { question, shouldStop } = await getDiagnosis({
-    sex,
-    age: {
-      value,
-    },
-    evidence: [
-      ...evidences,
-    ],
-  });
-
-  if (question) {
-    currentQuestion.value = question;
-    currentComponent.value = CONTENT.DIAGNOSIS;
-  }
-
-  if (shouldStop) currentComponent.value = CONTENT.RESULTS;
+const handleGetDiagnosis = () => {
+  currentComponent.value = CONTENT.DIAGNOSIS;
 };
+
+const handleShouldStop = () => {
+  currentComponent.value = CONTENT.RESULTS;
+};
+
 </script>
 
 <style lang="scss">

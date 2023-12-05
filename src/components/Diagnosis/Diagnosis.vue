@@ -1,36 +1,43 @@
 <template>
   <section class="diagnosis">
     <aside class="diagnosis__aside">
-      <PatientDetails :patient-data="patientData" />
+      <PatientDetails />
     </aside>
-    <UiQuestion
-      :title="title"
-      class="diagnosis__question"
-    >
-      <template
-        v-for="question in templateQuestions"
-        :key="question.name"
+    <template v-if="currentQuestion">
+      <UiQuestion
+        :title="currentQuestion.text"
+        class="diagnosis__question"
       >
-        <component
-          :is="question.component"
-          v-if="question.name === currentQuestion.type"
-          v-bind="question.props"
-        />
-      </template>
-      <template #actions-bottom>
-        <UiButton
-          class="diagnosis__action-button"
-          @click="handleGoNext"
+        <template
+          v-for="question in templateQuestions"
+          :key="question.name"
         >
-          Next
-        </UiButton>
-      </template>
-    </UiQuestion>
+          <component
+            :is="question.component"
+            v-if="question.name === currentQuestion.type"
+            v-bind="question.props"
+          />
+        </template>
+
+        <template #actions-bottom>
+          <UiButton
+            class="diagnosis__action-button"
+            @click="handleGetQuestion(patientData)"
+          >
+            Next
+          </UiButton>
+        </template>
+      </UiQuestion>
+    </template>
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import {
+  computed,
+  onMounted,
+  ref,
+} from 'vue';
 import {
   UiButton,
   UiQuestion,
@@ -40,27 +47,27 @@ import QuestionMultiple from '@/components/QuestionMultiple/QuestionMultiple.vue
 import QuestionSingle from '@/components/QuestionSingle/QuestionSingle.vue';
 import PatientDetails from '@/components/PatientDetails/PatientDetails.vue';
 import {
+  getDiagnosis,
   type ChoiceIdType,
   type QuestionType,
 } from '@/services';
 import { type PatientData } from '@/types';
 
 type QuestionProps = {
-  currentQuestion: QuestionType;
   patientData: PatientData;
 }
 
 const props = defineProps<QuestionProps>();
-const emit = defineEmits(['getNextQuestion', 'updateEvidences']);
+const emit = defineEmits(['updateEvidences', 'updateSurveyShouldStop']);
 
-const title = computed(() => props.currentQuestion.text);
+const currentQuestion = ref<QuestionType>();
 
 const templateQuestions = computed(() => [
   {
     name: 'group_single',
     component: QuestionGroupSingle,
     props: {
-      answers: props.currentQuestion.items,
+      answers: currentQuestion.value && currentQuestion.value.items,
       handlePatientEvidences: (evidences: Record<string, unknown>) => {
         emit('updateEvidences', [{ id: evidences.id, choiceId: 'present' }]);
       },
@@ -70,7 +77,7 @@ const templateQuestions = computed(() => [
     name: 'group_multiple',
     component: QuestionMultiple,
     props: {
-      answers: props.currentQuestion.items,
+      answers: currentQuestion.value && currentQuestion.value.items,
       handlePatientEvidences: (evidences: Record<string, unknown>[]) => {
         emit('updateEvidences', evidences);
       },
@@ -80,10 +87,10 @@ const templateQuestions = computed(() => [
     name: 'single',
     component: QuestionSingle,
     props: {
-      answers: props.currentQuestion.items,
+      answers: currentQuestion.value && currentQuestion.value.items,
       handlePatientEvidences: (evidence: ChoiceIdType) => {
         const answer = {
-          id: props.currentQuestion.items[0].id as string,
+          id: currentQuestion.value?.items[0].id as string,
           choiceId: evidence,
         };
         emit('updateEvidences', [answer]);
@@ -92,9 +99,37 @@ const templateQuestions = computed(() => [
   },
 ]);
 
-const handleGoNext = () => {
-  emit('getNextQuestion', props.patientData);
+const handleGetQuestion = async (patient: PatientData) => {
+  const {
+    sex,
+    age: { value },
+    evidences,
+  } = patient;
+
+  const {
+    question,
+    shouldStop,
+  } = await getDiagnosis({
+    sex,
+    age: {
+      value,
+    },
+    evidence: [
+      ...evidences,
+    ],
+  });
+  currentQuestion.value = question;
+
+  if (shouldStop) {
+    emit('updateSurveyShouldStop');
+  }
+
+  return question;
 };
+
+onMounted(async () => {
+  currentQuestion.value = await handleGetQuestion(props.patientData);
+});
 
 </script>
 
