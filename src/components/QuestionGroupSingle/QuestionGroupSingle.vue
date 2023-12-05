@@ -20,7 +20,7 @@ import {
 import type { MultipleChoicesItemAttrsProps } from '@infermedica/component-library/src/components/organisms/UiMultipleChoices/_internal/UiMultipleChoicesItem.vue';
 import {
   type QuestionItemsType,
-} from '@/services/types';
+} from '@/services';
 
 type QuestionGroupSingleProps = {
   answers: QuestionItemsType[];

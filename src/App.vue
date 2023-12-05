@@ -1,13 +1,17 @@
 <template>
   <Default>
     <template #main>
-      <Main :patient-data="patientData" />
+      <Main />
     </template>
   </Default>
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import {
+  provide,
+  reactive,
+  // ref,
+} from 'vue';
 import Default from '@/templates/Default.vue';
 import Main from '@/templates/Main/Main.vue';
 import {
@@ -22,27 +26,32 @@ export type PatientData = {
   evidences: EvidenceType[];
 }
 
+const initialEvidence = reactive<EvidenceType[]>([
+  {
+    id: 's_1193',
+    choiceId: 'present',
+    source: 'initial',
+  },
+  {
+    id: 's_488',
+    choiceId: 'present',
+  },
+  {
+    id: 's_418',
+    choiceId: 'present',
+  },
+]);
+
 const patientData = reactive<PatientData>({
   sex: 'female',
   age: {
     value: 30,
   },
-  evidences: [
-    {
-      id: 's_1193',
-      choiceId: 'present',
-      source: 'initial',
-    },
-    {
-      id: 's_488',
-      choiceId: 'present',
-    },
-    {
-      id: 's_418',
-      choiceId: 'present',
-    },
-  ],
+  evidences: [...initialEvidence],
 });
+
+provide('patientData', patientData);
+provide('initialEvidence', initialEvidence);
 </script>
 
 <style scope lang="scss">

@@ -18,7 +18,7 @@ import {
 import {
   type EvidenceType,
   type QuestionItemsType,
-} from '@/services/types';
+} from '@/services';
 
 type QuestionMultipleProps = {
   answers: QuestionItemsType[];
@@ -32,6 +32,7 @@ const OPTIONS = {
 } as const;
 
 const props = defineProps<QuestionMultipleProps>();
+
 const modelValue = ref<EvidenceType[]>([]);
 const items = computed(() => props.answers.map(({ name }) => ({
   label: name,

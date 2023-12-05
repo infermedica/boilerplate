@@ -49,6 +49,7 @@ type SidePanelPropsType = {
 }
 
 defineProps<SidePanelPropsType>();
+
 const emit = defineEmits(['toogleSidePanel']);
 
 const navigation = [

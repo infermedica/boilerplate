@@ -26,6 +26,7 @@
 <script setup lang="ts">
 import {
   computed,
+  inject,
   ref,
   type Component,
 } from 'vue';
@@ -49,20 +50,18 @@ const CONTENT = {
 
 type ContentType = ObjectValues<typeof CONTENT>;
 
-type MainProps = {
-  patientData: PatientData;
-}
+const patientDetails = inject('patientData') as PatientData;
 
-const props = defineProps<MainProps>();
-
-const patientData = computed(() => props.patientData);
+const patientData = computed(() => patientDetails);
 const currentQuestion = ref<QuestionType | null>(null);
 const currentComponent = ref<ContentType>(CONTENT.WELCOME);
 
 const handleUpdate = (evidences: EvidenceType[]) => {
-  patientData.value.evidences = [...new Set(
-    [...patientData.value.evidences, ...evidences],
-  )];
+  if (patientData.value) {
+    patientData.value.evidences = [...new Set(
+      [...patientData.value.evidences, ...evidences],
+    )];
+  }
 };
 
 const templateContents = computed<{
@@ -79,7 +78,7 @@ const templateContents = computed<{
     },
   },
   { name: CONTENT.RESULTS, component: Results, props: { patientData: patientData.value } },
-  { name: CONTENT.WELCOME, component: Welcome, props: { patientData: patientData.value } },
+  { name: CONTENT.WELCOME, component: Welcome },
 ]);
 
 const handleGetNextQuestion = async (patient: PatientData) => {

@@ -62,7 +62,7 @@ import {
   type RecommendSpecialistType,
   type TriageLevelType,
 } from '@/services';
-import { type PatientData } from '@/templates/Default.vue';
+import { type PatientData } from '@/App.vue';
 
 type ResultsProps = {
   patientData: PatientData;

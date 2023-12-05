@@ -24,8 +24,9 @@
 <script setup lang="ts">
 import {
   computed,
-  ref,
+  inject,
   onMounted,
+  ref,
 } from 'vue';
 import {
   UiBulletPoints,
@@ -33,17 +34,17 @@ import {
 } from '@infermedica/component-library';
 import UiBulletPointsItem from '@infermedica/component-library/src/components/molecules/UiBulletPoints/_internal/UiBulletPointsItem.vue';
 import { capitalizeFirstLetter } from '@/helpers';
-import { getSymptomsById } from '@/services/api';
-import { type PatientData } from '@/templates/Default.vue';
+import {
+  getSymptomsById,
+  type EvidenceType,
+} from '@/services';
+import { type PatientData } from '@/App.vue';
 
-type PatientDetailsProps = {
-  patientData: PatientData;
-};
-const props = defineProps<PatientDetailsProps>();
-
-const sex = computed(() => props.patientData.sex);
-const age = computed(() => props.patientData.age.value);
-const evidences = computed(() => props.patientData.evidences);
+const patientDetails = inject('patientData') as PatientData;
+const initialEvidences = inject('initialEvidence') as EvidenceType[];
+const sex = computed(() => patientDetails.sex);
+const age = computed(() => patientDetails.age.value);
+const evidences = computed(() => initialEvidences);
 const symptomsNames = ref<unknown[]>([]);
 
 onMounted(async () => {

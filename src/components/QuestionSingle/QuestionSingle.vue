@@ -19,7 +19,7 @@ import {
 import {
   type ChoiceIdType,
   type QuestionItemsType,
-} from '@/services/types';
+} from '@/services';
 
 type QuestionMultipleProps = {
   answers: QuestionItemsType[];
