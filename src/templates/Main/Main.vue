@@ -48,15 +48,14 @@ const CONTENT = {
 
 type ContentType = ObjectValues<typeof CONTENT>;
 
-const patientDetails = inject('patientData') as PatientData;
+const patientData = inject('patientData') as PatientData;
 
-const patientData = computed(() => patientDetails);
 const currentComponent = ref<ContentType>(CONTENT.WELCOME);
 
 const handleUpdate = (evidences: EvidenceType[]) => {
-  if (patientData.value) {
-    patientData.value.evidences = [...new Set(
-      [...patientData.value.evidences, ...evidences],
+  if (patientData) {
+    patientData.evidences = [...new Set(
+      [...patientData.evidences, ...evidences],
     )];
   }
 };
@@ -70,10 +69,10 @@ const templateContents = computed<{
     name: CONTENT.DIAGNOSIS,
     component: Diagnosis,
     props: {
-      patientData: patientData.value,
+      patientData,
     },
   },
-  { name: CONTENT.RESULTS, component: Results, props: { patientData: patientData.value } },
+  { name: CONTENT.RESULTS, component: Results, props: { patientData } },
   { name: CONTENT.WELCOME, component: Welcome },
 ]);
 

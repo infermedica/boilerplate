@@ -11,8 +11,6 @@
 <script setup lang="ts">
 import {
   computed,
-  ref,
-  watch,
 } from 'vue';
 import {
   UiMultipleAnswer,
@@ -24,11 +22,11 @@ import {
 
 type QuestionGroupSingleProps = {
   answers?: QuestionItemsType[];
+  userAnswer: Record<string, unknown>;
   handlePatientEvidences?: (evidences: Record<string, unknown>) => void;
 }
 
 const props = defineProps<QuestionGroupSingleProps>();
-
 const items = computed<MultipleChoicesItemAttrsProps[]>(
   () => (props.answers as QuestionItemsType[]).map(({ id, name }) => ({
     id,
@@ -39,10 +37,13 @@ const items = computed<MultipleChoicesItemAttrsProps[]>(
 const options = computed(() => props.answers && props.answers[0]?.choices
   .map(({ id, label }) => ({ value: id, label })));
 
-const modelValue = ref<Record<string, unknown>>({});
-
-watch(modelValue, (value) => {
-  if (props.handlePatientEvidences) { props.handlePatientEvidences(value); }
+const modelValue = computed({
+  get: () => (props.userAnswer),
+  set: (value) => {
+    if (props.handlePatientEvidences) {
+      props.handlePatientEvidences(value);
+    }
+  },
 });
 
 </script>

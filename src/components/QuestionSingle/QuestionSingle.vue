@@ -8,8 +8,6 @@
 <script setup lang="ts">
 import {
   computed,
-  ref,
-  watch,
   type ComputedRef,
 } from 'vue';
 import {
@@ -23,6 +21,7 @@ import {
 
 type QuestionMultipleProps = {
   answers?: QuestionItemsType[];
+  userAnswer?: ChoiceIdType;
   handlePatientEvidences?: (evidence: ChoiceIdType) => void;
 }
 
@@ -36,10 +35,11 @@ const items: ComputedRef<SimpleQuestionItem[] | undefined> = computed(
   } as SimpleQuestionItem)),
 );
 
-const modelValue = ref<ChoiceIdType | undefined>(undefined);
-
-watch(modelValue, (value) => {
-  if (value && props.handlePatientEvidences) props.handlePatientEvidences(value);
+const modelValue = computed({
+  get: () => props.userAnswer,
+  set: (value) => {
+    if (value && props.handlePatientEvidences) props.handlePatientEvidences(value);
+  },
 });
 
 </script>

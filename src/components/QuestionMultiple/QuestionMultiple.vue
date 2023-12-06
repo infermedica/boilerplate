@@ -9,19 +9,17 @@
 <script setup lang="ts">
 import {
   computed,
-  ref,
-  watch,
 } from 'vue';
 import {
   UiMultipleChoices,
 } from '@infermedica/component-library';
 import {
-  type EvidenceType,
   type QuestionItemsType,
 } from '@/services';
 
 type QuestionMultipleProps = {
   answers?: QuestionItemsType[];
+  userAnswers: Record<string, unknown>[];
   handlePatientEvidences?: (evidences: Record<string, unknown>[]) => void;
 }
 
@@ -33,21 +31,19 @@ const OPTIONS = {
 
 const props = defineProps<QuestionMultipleProps>();
 
-const modelValue = ref<EvidenceType[]>([]);
+const modelValue = computed({
+  get: () => props.userAnswers,
+  set: (value) => {
+    if (props.handlePatientEvidences) props.handlePatientEvidences(value);
+  },
+});
+
 const items = computed(() => props.answers && props.answers.map(({ name }) => ({
   label: name,
 })));
+
 const options = computed(() => props.answers && props.answers[0]?.choices
   .map(({ id }) => ({ value: id, label: OPTIONS[id] })));
-
-watch(modelValue, (value: Record<string, unknown>[]) => {
-  const answer = value.map((choice, index) => ({
-    id: props.answers && props.answers[index].id,
-    choiceId: choice,
-  }));
-
-  if (props.handlePatientEvidences) props.handlePatientEvidences(answer);
-});
 
 </script>
 
