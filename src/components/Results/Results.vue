@@ -1,45 +1,50 @@
 <template>
   <section class="results">
-    <UiCard
-      :title="title"
-      :description="description"
-      :type="triageType"
-      class="ui-card--modern"
+    <UiLoader
+      :is-loading="isLoading"
+      type="skeleton"
     >
-      <template #details>
-        <section v-if="triageType === ('consultation' || 'consultation_24')" class="results__explanation">
-          <div>
-            <UiHeading
-              level="4"
-            >
-              Recommended doctor
+      <UiCard
+        :title="title"
+        :description="description"
+        :type="triageType"
+        class="ui-card--modern"
+      >
+        <template #details>
+          <section v-if="triageType === ('consultation' || 'consultation_24')" class="results__explanation">
+            <div>
+              <UiHeading
+                level="4"
+              >
+                Recommended doctor
+              </UiHeading>
+              <UiText>{{ recommendedSpecialistName }}</UiText>
+            </div>
+            <div>
+              <UiHeading
+                level="4"
+              >
+                Recommended appointment type
+              </UiHeading>
+              <UiText>{{ recommendedSpecialistChannel }}</UiText>
+            </div>
+          </section>
+          <section v-if="triageType === ('emergency' || 'emergency_ambulance')" class="results__explanation">
+            <UiHeading level="4">
+              Be sure to report:
             </UiHeading>
-            <UiText>{{ recommendedSpecialistName }}</UiText>
-          </div>
-          <div>
-            <UiHeading
-              level="4"
-            >
-              Recommended appointment type
-            </UiHeading>
-            <UiText>{{ recommendedSpecialistChannel }}</UiText>
-          </div>
-        </section>
-        <section v-if="triageType === ('emergency' || 'emergency_ambulance')" class="results__explanation">
-          <UiHeading level="4">
-            Be sure to report:
-          </UiHeading>
-          <UiBulletPoints>
-            <UiBulletPointsItem
-              v-for="(item, index) in seriousEvidences"
-              :key="index"
-            >
-              {{ item }}
-            </UiBulletPointsItem>
-          </UiBulletPoints>
-        </section>
-      </template>
-    </UiCard>
+            <UiBulletPoints>
+              <UiBulletPointsItem
+                v-for="(item, index) in seriousEvidences"
+                :key="index"
+              >
+                {{ item }}
+              </UiBulletPointsItem>
+            </UiBulletPoints>
+          </section>
+        </template>
+      </UiCard>
+    </UiLoader>
   </section>
 </template>
 
@@ -52,6 +57,7 @@ import {
 import {
   UiCard,
   UiHeading,
+  UiLoader,
   UiText,
   UiBulletPoints,
 } from '@infermedica/component-library';
@@ -77,6 +83,7 @@ const evidences = computed(() => props.patientData.evidences);
 const title = ref('');
 const description = ref('');
 const triageType = ref<TriageLevelType | undefined>(undefined);
+const isLoading = ref(true);
 
 const cardData = {
   self_care: {
@@ -137,6 +144,8 @@ onMounted(async () => {
 
   if (recommendedChannel) recommendedSpecialistChannel.value = recommendedChannel;
   if (recommendedSpecialist) recommendedSpecialistName.value = recommendedSpecialist;
+
+  isLoading.value = false;
 });
 
 </script>

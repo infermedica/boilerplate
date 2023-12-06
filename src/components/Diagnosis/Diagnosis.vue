@@ -1,34 +1,40 @@
 <template>
   <section class="diagnosis">
-    <aside class="diagnosis__aside">
-      <PatientDetails />
-    </aside>
-    <template v-if="currentQuestion">
-      <UiQuestion
-        :title="currentQuestion.text"
-        class="diagnosis__question"
-      >
-        <template
-          v-for="question in templateQuestions"
-          :key="question.name"
+    <UiLoader
+      :is-loading="isLoading"
+      type="skeleton"
+      class="diagnosis__loader"
+    >
+      <aside class="diagnosis__aside">
+        <PatientDetails />
+      </aside>
+      <template v-if="currentQuestion">
+        <UiQuestion
+          :title="currentQuestion.text"
+          class="diagnosis__question"
         >
-          <component
-            :is="question.component"
-            v-if="question.name === currentQuestion.type"
-            v-bind="question.props"
-          />
-        </template>
-
-        <template #actions-bottom>
-          <UiButton
-            class="diagnosis__action-button"
-            @click="handleGetQuestion(patientData)"
+          <template
+            v-for="question in templateQuestions"
+            :key="question.name"
           >
-            Next
-          </UiButton>
-        </template>
-      </UiQuestion>
-    </template>
+            <component
+              :is="question.component"
+              v-if="question.name === currentQuestion.type"
+              v-bind="question.props"
+            />
+          </template>
+
+          <template #actions-bottom>
+            <UiButton
+              class="diagnosis__action-button"
+              @click="handleGetQuestion(patientData)"
+            >
+              Next
+            </UiButton>
+          </template>
+        </UiQuestion>
+      </template>
+    </UiLoader>
   </section>
 </template>
 
@@ -40,6 +46,7 @@ import {
 } from 'vue';
 import {
   UiButton,
+  UiLoader,
   UiQuestion,
 } from '@infermedica/component-library';
 import QuestionGroupSingle from '@/components/QuestionGroupSingle/QuestionGroupSingle.vue';
@@ -64,6 +71,7 @@ const currentQuestion = ref<QuestionType>();
 const questionGroupSingleUserAnswer = ref({});
 const questionGroupMultipleUserAnswer = ref<Record<string, unknown>[]>([]);
 const questionSingleUserAnswer = ref<ChoiceIdType | undefined>(undefined);
+const isLoading = ref(true);
 
 const templateQuestions = computed(() => [
   {
@@ -143,6 +151,8 @@ const handleGetQuestion = async (patient: PatientData) => {
     emit('updateSurveyShouldStop');
   }
 
+  isLoading.value = false;
+
   return question;
 };
 
@@ -167,6 +177,10 @@ onMounted(async () => {
     margin: var(--space-32) var(--space-20);
     margin-inline: auto;
     gap: var(--space-40);
+  }
+
+  &__loader {
+    width: 100%;
   }
 
   &__aside {

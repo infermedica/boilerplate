@@ -3,21 +3,25 @@
     <UiHeading level="4" class="patient-details__heading">
       Patient details and symptoms
     </UiHeading>
-
-    <UiBulletPoints>
-      <UiBulletPointsItem
-        icon="checkmark"
-      >
-        {{ capitalizeFirstLetter(sex) }}, {{ age }} year old
-      </UiBulletPointsItem>
-      <UiBulletPointsItem
-        v-for="(item, index) in symptomsNames"
-        :key="index"
-        icon="checkmark"
-      >
-        {{ item }}
-      </UiBulletPointsItem>
-    </UiBulletPoints>
+    <UiLoader
+      :is-loading="isLoading"
+      type="skeleton"
+    >
+      <UiBulletPoints>
+        <UiBulletPointsItem
+          icon="checkmark"
+        >
+          {{ capitalizeFirstLetter(sex) }}, {{ age }} year old
+        </UiBulletPointsItem>
+        <UiBulletPointsItem
+          v-for="(item, index) in symptomsNames"
+          :key="index"
+          icon="checkmark"
+        >
+          {{ item }}
+        </UiBulletPointsItem>
+      </UiBulletPoints>
+    </UiLoader>
   </section>
 </template>
 
@@ -31,6 +35,7 @@ import {
 import {
   UiBulletPoints,
   UiHeading,
+  UiLoader,
 } from '@infermedica/component-library';
 import UiBulletPointsItem from '@infermedica/component-library/src/components/molecules/UiBulletPoints/_internal/UiBulletPointsItem.vue';
 import { capitalizeFirstLetter } from '@/helpers';
@@ -46,6 +51,7 @@ const sex = computed(() => patientDetails.sex);
 const age = computed(() => patientDetails.age.value);
 const evidences = computed(() => initialEvidences);
 const symptomsNames = ref<unknown[]>([]);
+const isLoading = ref(true);
 
 onMounted(async () => {
   symptomsNames.value = await Promise.all(evidences.value.map(async (evidence) => {
@@ -55,6 +61,9 @@ onMounted(async () => {
         value: age.value,
       },
     });
+
+    if (name) isLoading.value = false;
+
     return name;
   }));
 });
@@ -65,5 +74,6 @@ onMounted(async () => {
 .patient-details {
   --bullet-points-item-marker-color: var(--color-icon-primary);
   --heading-margin-block-end: var(--space-8);
+
 }
 </style>
