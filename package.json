@@ -1,0 +1,39 @@
+{
+  "name": "boilerplate",
+  "private": true,
+  "version": "0.0.0",
+  "engines": {
+    "node": ">=16.13.2",
+    "pnpm": ">=6.32"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "check-types": "vue-tsc --noEmit",
+    "lint": "eslint --fix --ext .js,.vue,.ts ./src"
+  },
+  "dependencies": {
+    "@infermedica/component-library": "^1.0.0",
+    "axios": "*",
+    "vite-svg-loader": "^4.0.0",
+    "vue": "^3.3.8",
+    "vue-axios": "^3.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.7",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
+    "@vitejs/plugin-vue": "^4.5.0",
+    "@vue/eslint-config-airbnb": "^7.0.0",
+    "@vue/eslint-config-typescript": "^12.0.0",
+    "eslint": "^8.50.0",
+    "eslint-plugin-vue": "^9.17.0",
+    "eslint-plugin-vuejs-accessibility": "^1.1.0",
+    "sass": "^1.64.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0",
+    "vue-eslint-parser": "^9.3.1",
+    "vue-tsc": "^1.8.22"
+  }
+}
