@@ -21,12 +21,16 @@ import {
 } from '@/services';
 
 type QuestionGroupSingleProps = {
-  answers?: QuestionItemsType[];
+  answers?: QuestionItemsType[] | [];
   userAnswer: Record<string, unknown>;
   handlePatientEvidences?: (evidences: Record<string, unknown>) => void;
 }
 
-const props = defineProps<QuestionGroupSingleProps>();
+const props = withDefaults(defineProps<QuestionGroupSingleProps>(), {
+  answers: () => [],
+  handlePatientEvidences: () => {},
+});
+
 const items = computed<MultipleChoicesItemAttrsProps[]>(
   () => (props.answers as QuestionItemsType[]).map(({ id, name }) => ({
     id,

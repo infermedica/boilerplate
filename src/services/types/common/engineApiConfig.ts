@@ -5,5 +5,5 @@ export type EngineApiConfigType = {
   interviewToken?: string;
   model?: string;
   interviewId?: string;
-  devMode?: string;
+  devMode?: boolean;
 };

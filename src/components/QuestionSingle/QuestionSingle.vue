@@ -25,7 +25,10 @@ type QuestionMultipleProps = {
   handlePatientEvidences?: (evidence: ChoiceIdType) => void;
 }
 
-const props = defineProps<QuestionMultipleProps>();
+const props = withDefaults(defineProps<QuestionMultipleProps>(), {
+  answers: () => [],
+  handlePatientEvidences: () => {},
+});
 
 const items: ComputedRef<SimpleQuestionItem[] | undefined> = computed(
   () => props.answers && props.answers[0].choices.map(({ id, label }) => ({

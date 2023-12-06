@@ -74,6 +74,5 @@ onMounted(async () => {
 .patient-details {
   --bullet-points-item-marker-color: var(--color-icon-primary);
   --heading-margin-block-end: var(--space-8);
-
 }
 </style>

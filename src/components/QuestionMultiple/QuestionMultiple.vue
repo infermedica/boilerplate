@@ -29,7 +29,10 @@ const OPTIONS = {
   unknown: 'Don\'t know',
 } as const;
 
-const props = defineProps<QuestionMultipleProps>();
+const props = withDefaults(defineProps<QuestionMultipleProps>(), {
+  answers: () => [],
+  handlePatientEvidences: () => {},
+});
 
 const modelValue = computed({
   get: () => props.userAnswers,

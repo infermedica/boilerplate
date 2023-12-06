@@ -18,7 +18,7 @@ import { UiHeader } from '@infermedica/component-library';
 
 const emit = defineEmits(['toogleSidePanel']);
 const title = 'Infermedica';
-const logo = defineAsyncComponent(() => import('@/assets/logo.svg')) as SVGAElement;
+const logo = defineAsyncComponent(() => import('@/assets/logo.svg')) as SVGElement;
 const navigation = [
   {
     text: 'Infermedica',

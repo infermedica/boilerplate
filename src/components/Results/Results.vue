@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
 import {
-  computed,
+  inject,
   ref,
   onMounted,
 } from 'vue';
@@ -70,15 +70,7 @@ import {
 } from '@/services';
 import { type PatientData } from '@/App.vue';
 
-type ResultsProps = {
-  patientData: PatientData;
-};
-
-const props = defineProps<ResultsProps>();
-
-const sex = computed(() => props.patientData.sex);
-const age = computed(() => props.patientData.age.value);
-const evidences = computed(() => props.patientData.evidences);
+const patientData = inject('patientData') as PatientData;
 
 const title = ref('');
 const description = ref('');
@@ -117,12 +109,13 @@ onMounted(async () => {
     triageLevel,
     serious,
   } = await getTriage({
-    sex: sex.value,
+    sex: patientData.sex,
     age: {
-      value: age.value,
+      value: patientData.age.value,
     },
-    evidence: evidences.value,
+    evidence: patientData.evidences,
   });
+
   seriousEvidences.value = serious?.map((symptom) => symptom.name);
 
   if (triageLevel) {
@@ -135,11 +128,11 @@ onMounted(async () => {
     recommendedChannel,
     recommendedSpecialist,
   } = await getRecommendSpecialist({
-    sex: sex.value,
+    sex: patientData.sex,
     age: {
-      value: age.value,
+      value: patientData.age.value,
     },
-    evidence: evidences.value,
+    evidence: patientData.evidences,
   });
 
   if (recommendedChannel) recommendedSpecialistChannel.value = recommendedChannel;
