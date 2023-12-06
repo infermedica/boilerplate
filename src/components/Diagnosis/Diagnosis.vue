@@ -56,6 +56,7 @@ import PatientDetails from '@/components/PatientDetails/PatientDetails.vue';
 import {
   getDiagnosis,
   type ChoiceIdType,
+  type ChoiceType,
   type QuestionType,
 } from '@/services';
 import { type PatientData } from '@/types';
@@ -64,12 +65,14 @@ type QuestionProps = {
   patientData: PatientData;
 }
 
+export type EmptyObj = Record<PropertyKey, never>;
+
 const props = defineProps<QuestionProps>();
 const emit = defineEmits(['updateEvidences', 'updateSurveyShouldStop']);
 
 const currentQuestion = ref<QuestionType>();
-const questionGroupSingleUserAnswer = ref({});
-const questionGroupMultipleUserAnswer = ref<Record<string, unknown>[]>([]);
+const questionGroupSingleUserAnswer = ref<ChoiceType | EmptyObj>({});
+const questionGroupMultipleUserAnswer = ref<ChoiceIdType[]>([]);
 const questionSingleUserAnswer = ref<ChoiceIdType | ''>('');
 const isLoading = ref(true);
 
@@ -80,8 +83,9 @@ const templateQuestions = computed(() => [
     props: {
       userAnswer: questionGroupSingleUserAnswer.value,
       answers: currentQuestion.value && currentQuestion.value.items,
-      handlePatientEvidences: (evidences: Record<string, unknown>) => {
+      handlePatientEvidences: (evidences: ChoiceType | EmptyObj) => {
         questionGroupSingleUserAnswer.value = evidences;
+
         emit('updateEvidences', [{ id: evidences.id, choiceId: 'present' }]);
       },
     },
@@ -92,7 +96,7 @@ const templateQuestions = computed(() => [
     props: {
       answers: currentQuestion.value && currentQuestion.value.items,
       userAnswers: questionGroupMultipleUserAnswer.value,
-      handlePatientEvidences: (evidences: Record<string, unknown>[]) => {
+      handlePatientEvidences: (evidences: ChoiceIdType[]) => {
         questionGroupMultipleUserAnswer.value = [...evidences];
 
         const answer = evidences.map((choice, index) => ({

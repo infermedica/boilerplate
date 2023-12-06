@@ -15,12 +15,13 @@ import {
 } from '@infermedica/component-library';
 import {
   type QuestionItemsType,
+  type ChoiceIdType,
 } from '@/services';
 
 type QuestionMultipleProps = {
   answers?: QuestionItemsType[];
-  userAnswers: Record<string, unknown>[];
-  handlePatientEvidences?: (evidences: Record<string, unknown>[]) => void;
+  userAnswers: ChoiceIdType[];
+  handlePatientEvidences: (evidences: ChoiceIdType[]) => void;
 }
 
 const OPTIONS = {
@@ -31,7 +32,6 @@ const OPTIONS = {
 
 const props = withDefaults(defineProps<QuestionMultipleProps>(), {
   answers: () => [],
-  handlePatientEvidences: () => {},
 });
 
 const modelValue = computed({

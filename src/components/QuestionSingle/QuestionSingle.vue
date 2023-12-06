@@ -22,12 +22,11 @@ import {
 type QuestionMultipleProps = {
   answers?: QuestionItemsType[];
   userAnswer: ChoiceIdType | '';
-  handlePatientEvidences?: (evidence: ChoiceIdType) => void;
+  handlePatientEvidences: (evidence: ChoiceIdType) => void;
 }
 
 const props = withDefaults(defineProps<QuestionMultipleProps>(), {
   answers: () => [],
-  handlePatientEvidences: () => {},
 });
 
 const items: ComputedRef<SimpleQuestionItem[] | undefined> = computed(

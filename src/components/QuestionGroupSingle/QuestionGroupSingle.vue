@@ -16,19 +16,20 @@ import {
   UiMultipleAnswer,
 } from '@infermedica/component-library';
 import type { MultipleChoicesItemAttrsProps } from '@infermedica/component-library/src/components/organisms/UiMultipleChoices/_internal/UiMultipleChoicesItem.vue';
+import { type EmptyObj } from '@/components/Diagnosis/Diagnosis.vue';
 import {
+  type ChoiceType,
   type QuestionItemsType,
 } from '@/services';
 
 type QuestionGroupSingleProps = {
   answers?: QuestionItemsType[] | [];
-  userAnswer: Record<string, unknown>;
-  handlePatientEvidences?: (evidences: Record<string, unknown>) => void;
+  userAnswer: ChoiceType | EmptyObj;
+  handlePatientEvidences: (evidences: ChoiceType | EmptyObj) => void;
 }
 
 const props = withDefaults(defineProps<QuestionGroupSingleProps>(), {
   answers: () => [],
-  handlePatientEvidences: () => {},
 });
 
 const items = computed<MultipleChoicesItemAttrsProps[]>(
