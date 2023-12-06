@@ -70,7 +70,7 @@ const emit = defineEmits(['updateEvidences', 'updateSurveyShouldStop']);
 const currentQuestion = ref<QuestionType>();
 const questionGroupSingleUserAnswer = ref({});
 const questionGroupMultipleUserAnswer = ref<Record<string, unknown>[]>([]);
-const questionSingleUserAnswer = ref<ChoiceIdType | undefined>(undefined);
+const questionSingleUserAnswer = ref<ChoiceIdType | ''>('');
 const isLoading = ref(true);
 
 const templateQuestions = computed(() => [
@@ -111,10 +111,13 @@ const templateQuestions = computed(() => [
       answers: currentQuestion.value && currentQuestion.value.items,
       userAnswer: questionSingleUserAnswer.value,
       handlePatientEvidences: (evidence: ChoiceIdType) => {
+        questionSingleUserAnswer.value = evidence;
+
         const answer = {
           id: currentQuestion.value?.items[0].id as string,
           choiceId: evidence,
         };
+
         emit('updateEvidences', [answer]);
       },
     },
@@ -145,7 +148,7 @@ const handleGetQuestion = async (patient: PatientData) => {
 
   questionGroupSingleUserAnswer.value = {};
   questionGroupMultipleUserAnswer.value = [];
-  questionSingleUserAnswer.value = undefined;
+  questionSingleUserAnswer.value = '';
 
   if (shouldStop) {
     emit('updateSurveyShouldStop');

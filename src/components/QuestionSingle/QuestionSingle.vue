@@ -21,7 +21,7 @@ import {
 
 type QuestionMultipleProps = {
   answers?: QuestionItemsType[];
-  userAnswer?: ChoiceIdType;
+  userAnswer: ChoiceIdType | '';
   handlePatientEvidences?: (evidence: ChoiceIdType) => void;
 }
 

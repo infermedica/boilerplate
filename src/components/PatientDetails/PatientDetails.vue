@@ -62,7 +62,7 @@ onMounted(async () => {
       },
     });
 
-    if (name) isLoading.value = false;
+    isLoading.value = false;
 
     return name;
   }));
